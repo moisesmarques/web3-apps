@@ -1,0 +1,50 @@
+processFileInvitations:
+  handler: lambda/processFileInvitations/index.handler
+  description: "Function triggered from near-wallets stream upon item creation/update/delete"
+  timeout: 15
+  events:
+    - stream:
+        type: dynamodb
+        arn: ${self:custom.file-service.dynamodb.wallets.streamArn}
+        startingPosition: LATEST
+        bisectBatchOnFunctionError: true
+        maximumRetryAttempts: 2
+        parallelizationFactor: 1
+        batchSize: 100
+        destinations:
+          onFailure:
+            type: sqs
+            arn: !GetAtt DLQonWalletStreamEvent.Arn
+  environment:
+    TABLE_NAME_FILES: ${self:custom.file-service.dynamodb.files.name}
+    TABLE_NAME_FILES_INVITATION: ${self:custom.file-service.dynamodb.invitations.name}
+    TABLE_NAME_WALLETS: near-wallets
+    TABLE_NAME_USERS: near-users
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - sqs:SendMessage
+      Resource:
+        - !GetAtt DLQonWalletStreamEvent.Arn
+    - Effect: Allow
+      Action:
+        - dynamodb:DeleteItem
+        - dynamodb:GetItem
+        - dynamodb:UpdateItem
+      Resource:
+         - ${self:custom.file-service.dynamodb.files.arn}
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:UpdateItem
+      Resource:
+        - ${self:custom.file-service.dynamodb.invitations.arn}
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+        - dynamodb:Query
+      Resource:
+        ## TODO: arn ssm variable not set
+        - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/near-users
+        - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/near-users/*

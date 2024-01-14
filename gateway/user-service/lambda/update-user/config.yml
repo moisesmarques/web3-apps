@@ -1,0 +1,18 @@
+update-user:
+  handler: lambda/update-user/index.handler
+  description: 'Update user by userId'
+  events:
+    - httpApi:
+        path: /users/{userId}
+        method: put
+        authorizer:            
+          type: request
+          id: !ImportValue NearGatewayAuthorizerId                                   
+    # - http:
+    #     path: /users/{userId}
+    #     method: put
+    #     authorizer:
+    #       type: request
+    #       arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  environment:
+    TABLE_NAME_USERS: near-users

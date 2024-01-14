@@ -1,0 +1,24 @@
+verify-refresh-token:
+  handler: lambda/refresh-token/index.handler
+  description: ''
+  environment:
+    #TODO: use ssm to retrieve this value during deployment
+    SENDGRID_API_KEY: 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
+    CUSTOMER_IO_API_KEY: 1112ca5890c53ae137418ffafefb0360
+    CLOUDFRONT_SECRET_NAME: /storage-service/cloudfront/signers
+    CLOUDFRONT_URL: storage.cdn.nearlogin.io
+
+  events:
+    - httpApi:
+        path: /users/refresh-token
+        method: post
+
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - secretsmanager:GetSecretValue
+      Resource:
+        - arn:aws:secretsmanager:${aws:region}:${aws:accountId}:secret:/storage-service/cloudfront/signers*
+
+    

@@ -1,0 +1,17 @@
+create-user:
+  handler: lambda/create-user/index.handler
+  environment:
+    #TODO: use ssm to retrieve this value during deployment
+    SENDGRID_API_KEY: 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
+    CUSTOMER_IO_API_KEY: 1112ca5890c53ae137418ffafefb0360
+
+  events:
+    - httpApi:
+        path: /users
+        method: post
+    #  - http:
+    #     path: /users
+    #     method: post
+    #     authorizer:
+    #       type: request
+    #       arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}

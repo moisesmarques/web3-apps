@@ -1,0 +1,17 @@
+{
+  "invalidAuthResponse": {
+    "message": "You are not authenticated"
+  },
+  "invalidParamsResponse": {
+    "message": "folderId missing in the request!"
+  },
+  "walletNotFoundResponse": {
+    "message": "Wallet 'testuser123.near not found'"
+  },
+  "walletMissmatchResponse": {
+    "message": "Wallet associated with user mismatch with stored wallet"
+  },
+  "folderNotExistResponse": {
+    "message": "No folder 'f2c44718-12f6-4f4e-9813-18087726dccb' associated with this wallet"
+  }
+}

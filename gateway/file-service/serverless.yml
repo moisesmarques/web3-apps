@@ -1,0 +1,141 @@
+service: file-service
+
+frameworkVersion: '3'
+
+plugins:
+  - serverless-iam-roles-per-function
+  - serverless-offline
+  - serverless-webpack
+package:
+  individually: true
+  excludeDevDependencies: true
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: ${file(../serverless-config.json):region}
+  stage: ${opt:stage, 'dev'}
+  timeout: 5
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1 # https://go.aws/3InkVao
+    REGION: ${self:provider.region}
+    TABLE_NAME_FOLDERS: 'near-storage'
+    TABLE_NAME_FILES: 'near-files'
+  apiGateway:
+    # Attach to an externally created REST API via its ID:
+    restApiId: ${ssm:/rest-service/apiGateway/restApi/id}
+    # Root resource ID, represent as / path
+    restApiRootResourceId: ${ssm:/rest-service/apiGateway/restApi/rootResourceId}
+  httpApi:
+    id: !ImportValue NearGatewayHttpApiId
+  iam:
+    role:
+      statements: []
+
+custom:
+  webpack:
+    webpackConfig: 'webpack.config.js'
+    packager: 'yarn'
+    excludeFiles: /**/*.test.js
+    includeModules:
+      forceExclude:
+        - aws-sdk
+    packagerOptions:
+      scripts:
+        - yarn autoclean --force
+  cdn:
+    url:
+      dev: ${ssm:/storage-service/clodufront/distribution/cdn/domainName}
+      sandbox: ${ssm:/storage-service/clodufront/distribution/cdn/domainName}
+    subDomain:
+      dev: storage
+      sandbox: sandbox
+
+  file-service:
+    s3:
+      files:
+        arn: !ImportValue FileServiceFilesBucketArn
+        name: !ImportValue FileServiceFilesBucketName
+      storage:
+        arn: ${ssm:/storage-service/s3/bucket/files/arn}
+        name: ${ssm:/storage-service/s3/bucket/files/name}
+    dynamodb:
+      storage:
+        streamArn: ${ssm:/file-service/dynamodb/storage/streamArn}
+        name: ${ssm:/file-service/dynamodb/storage/name}
+        arn: ${ssm:/file-service/dynamodb/storage/arn}
+      files:
+        name: ${ssm:/file-service/dynamodb/files/name}
+        arn: ${ssm:/file-service/dynamodb/files/arn}
+        streamArn: ${ssm:/file-service/dynamodb/files/streamArn}
+      invitations:
+        name: ${ssm:/file-service/dynamodb/invitations/name}
+        arn: ${ssm:/file-service/dynamodb/invitations/arn}
+        streamArn: ${ssm:/file-service/dynamodb/invitations/streamArn}
+      wallets:
+        name: ${ssm:/wallet-service/dynamodb/wallets/name}
+        arn: ${ssm:/wallet-service/dynamodb/wallets/arn}
+        streamArn: ${ssm:/wallet-service/dynamodb/wallets/streamArn}
+    cloudfront:
+      url: ${ssm:/storage-service/clodufront/distribution/cdn/domainName}
+      secret-name: '/storage-service/cloudfront/signers'
+  startup-service:
+# TODO: uncomment this section when https://github.com/nearcomponents/gateway/pull/14 is merged
+#    filesBucket:
+#      name: !ImportValue near-gateway-FileServiceFilesBucketName
+#      arn: !ImportValue near-gateway-FileServiceFilesBucketArn
+
+### TODO: Package each file into a separate zip file
+#package:
+#  individually: true
+#  excludeDevDependencies: true
+#  patterns:
+#    - '!**/*'
+
+functions:
+  - ${file(./lambda/listAccess/config.yml)}
+  - ${file(./lambda/acceptShare/config.yml)}
+  - ${file(./lambda/completeUpload/config.yml)}
+  - ${file(./lambda/completeStorageUpload/config.yml)}
+  - ${file(./lambda/createFile/config.yml)}
+  - ${file(./lambda/deleteFile/config.yml)}
+  - ${file(./lambda/getFile/config.yml)}
+  - ${file(./lambda/getSharedFiles/config.yml)}
+  - ${file(./lambda/getFilesShared/config.yml)}
+  - ${file(./lambda/listFiles/config.yml)}
+  - ${file(./lambda/listFilesStorage/config.yml)}
+  - ${file(./lambda/onFilesStreamEvent/config.yml)}
+  - ${file(./lambda/onFileStorageUploaded/config.yml)}
+  - ${file(./lambda/onlyOfficeUpdateCallback/config.yml)}
+  - ${file(./lambda/requestShare/config.yml)}
+  - ${file(./lambda/createFileShareInvitation/config.yml)}
+  - ${file(./lambda/revokeShare/config.yml)}
+  - ${file(./lambda/rejectShare/config.yml)}
+  - ${file(./lambda/updateFile/config.yml)}
+  - ${file(./lambda/copyFile/config.yml)}
+  - ${file(./lambda/grantAccessPermission/config.yml)}
+  - ${file(./lambda/transferOwnership/config.yml)}
+  - ${file(./lambda/getFileStorage/config.yml)}
+  - ${file(./lambda/createFileStorage/config.yml)}
+  - ${file(./lambda/copyFileStorage/config.yml)}
+  - ${file(./lambda/deleteFileStorage/config.yml)}
+  - ${file(./lambda/deleteFilesStorage/config.yml)}
+  - ${file(./lambda/createFolder/config.yml)}
+  - ${file(./lambda/fetchFoldersList/config.yml)}
+  - ${file(./lambda/listFilesByFolder/config.yml)}
+  - ${file(./lambda/deleteFolder/config.yml)}
+  - ${file(./lambda/removeItems/config.yml)}
+  - ${file(./lambda/removeFiles/config.yml)}
+  - ${file(./lambda/processFileInvitations/config.yml)}
+  - ${file(./lambda/moveFolderStorage/config.yml)}
+  - ${file(./lambda/updateFolder/config.yml)}
+  - ${file(./lambda/shareFolder/config.yml)}
+  - ${file(./lambda/shareChildFolders/config.yml)}
+  - ${file(./lambda/unShareFolder/config.yml)}
+  - ${file(./lambda/unShareChildFolders/config.yml)}
+  - ${file(./lambda/getFolder/config.yml)}
+
+resources:
+  - Description: File Management Service API stack
+  ### SQS
+  - ${file(./sqs/queue.yml)}

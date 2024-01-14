@@ -1,0 +1,24 @@
+index-wallet:
+  handler: lambda/index-wallet/index.handler
+  description: "Index wallet in open search service"
+  events:
+    - stream:
+        type: dynamodb
+        arn: ${self:custom.wallet-service.dynamodb.wallets.streamArn}
+        startingPosition: LATEST
+        bisectBatchOnFunctionError: true
+        maximumRetryAttempts: 2
+        parallelizationFactor: 1
+  environment:
+    ES_ENDPOINT: https://${self:custom.startup-service.opensearch.data.endpoint}
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - es:ESHttpPost
+        - es:ESHttpPut
+        - es:ESHttpHead
+        - es:ESHttpDelete
+      Resource:
+        - ${self:custom.startup-service.opensearch.data.arn}
+        - "${self:custom.startup-service.opensearch.data.arn}/*"

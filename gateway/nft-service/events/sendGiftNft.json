@@ -1,0 +1,21 @@
+{
+  "Records": [
+    {
+      "messageId": "d43e1f41-fa4f-4406-b127-019f96c81af2",
+      "receiptHandle": "AQEBHT8w9WAIo/5XkC4yFPbtSET5qhCLeag2zA5ghpRthzaaAYPzbSjYnEkd0Lqp5HdObCqhCrfTdGxTFgINexSa83Xnqssgr9XAJR1JeE1adBPoZDwkyhaaBemQgJkoD+GhNDvSGqXHN+Je9SapqyizuIP4mAmYYaTCopusMzShObrCqNZJALwvbBysobyKb8JIqKRjc82dLTKDRaqkfhTlnVqqfIUmJ6sKspDMhnUwiEL7QfrovaWMEaYbfyJPr0xz2uo52jRXPxY2q2TZOVFsF/wgZX3gSafdrl7F3UQm6ZRh8CSgWJYtHiMGsf7LJofcpxVFW6J8ZxlrTz3kkfaAGfgT6X6hb0AIC/dSX7YAwfGo9DfArWpD6btdXO1Gb7qTpsZ5SK6yF8hREAuWTdNajm2fO8rjdFDWDPwUv/1UtPk=",
+      "body": "{\"receiver\":{\"walletId\":\"adnnalfa.near\",\"user\":{\"created\":1647896106429,\"status\":\"active\",\"isPhoneVerified\":false,\"isEmailVerified\":false,\"firstName\":\"adne\",\"lastName\":\"adne\",\"email\":\"adn.en.e.k.halfa@gmail.com\",\"userId\":\"ztTruwBg83yCmz84nL1De\",\"walletName\":\"adnnalfa.near\",\"wallets\":[{\"status\":\"pending\",\"created\":\"2022-03-21T20:55:06.619Z\",\"walletId\":\"adnnalfa.near\",\"transactionId\":\"lOEdSvz4U4v_rbhcPcAqm\",\"isBlockchainVerified\":\"verified\",\"kycProvider\":\"kyc_provider\",\"balance\":\"0.00\",\"publicKey\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"updated\":\"2022-03-21T20:55:06.619Z\",\"walletName\":\"adnnalfa.near\",\"storageProvider\":\"storage_provider\",\"userId\":\"ztTruwBg83yCmz84nL1De\",\"blockchainHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\"}]}},\"transactionType\":\"gift-nft\",\"nft\":{\"nftId\":\"l6AGZbfV1F3vyawxuj34B\",\"status\":\"pending\",\"created\":1647895864365,\"filePath\":\"https://near-files-dev.s3.amazonaws.com/adnkha2.near/63f5e8c5-9e60-4cb9-9f3a-fb9b4d71c40d_near.jpeg\",\"transactionId\":\"D6wNTujYE57PzvV3r-HeY\",\"ownerId\":\"dSc60c4M--3w-p43xMYT8\",\"ownerWalletId\":\"adnkha2.near\",\"updated\":1647895864365,\"categoryId\":\"XNwyaIOPKkfc1iFngXorm\",\"description\":\"test\",\"tags\":[],\"title\":\"test\"},\"sender\":{\"walletId\":\"adnkha2.near\",\"user\":{\"lastName\":\"Khalfa\",\"userId\":\"dSc60c4M--3w-p43xMYT8\",\"status\":\"active\",\"created\":1647890135232,\"isPhoneVerified\":false,\"email\":\"adnene.khalf.a+2@gmail.com\",\"firstName\":\"Adnene\",\"isEmailVerified\":false,\"walletName\":\"adnkha2.near\",\"iat\":1647895831,\"exp\":1647982231,\"walletId\":\"adnkha2.near\"},\"jwt\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsYXN0TmFtZSI6IktoYWxmYSIsInVzZXJJZCI6ImRTYzYwYzRNLS0zdy1wNDN4TVlUOCIsInN0YXR1cyI6ImFjdGl2ZSIsImNyZWF0ZWQiOjE2NDc4OTAxMzUyMzIsImlzUGhvbmVWZXJpZmllZCI6ZmFsc2UsImVtYWlsIjoiYWRuZW5lLmtoYWxmLmErMkBnbWFpbC5jb20iLCJmaXJzdE5hbWUiOiJBZG5lbmUiLCJpc0VtYWlsVmVyaWZpZWQiOmZhbHNlLCJ3YWxsZXROYW1lIjoiYWRua2hhMi5uZWFyIiwiaWF0IjoxNjQ3ODk1ODMxLCJleHAiOjE2NDc5ODIyMzF9.eQID4_LEgUMAEfOytlWOa6w_OxoqIMu0c-QIRkOFVJo\"}}",
+      "attributes": {
+        "ApproximateReceiveCount": "1",
+        "SentTimestamp": "1647896107184",
+        "SenderId": "AROATJZRO4GD6Q23CFO3E:nfts-service-dev-gift-nft",
+        "ApproximateFirstReceiveTimestamp": "1647896107188"
+      },
+      "messageAttributes": {},
+      "md5OfMessageAttributes": null,
+      "md5OfBody": "f9a6347fcf9c81e8a5d54f23e8686100",
+      "eventSource": "aws:sqs",
+      "eventSourceARN": "arn:aws:sqs:us-east-1:227200131463:nfts-service-dev-sendNftGiftQueue",
+      "awsRegion": "us-east-1"
+    }
+  ]
+}

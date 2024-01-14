@@ -1,0 +1,24 @@
+{
+  "name": "transferownership",
+  "version": "0.0.1",
+  "description": "Transfer file onership to another wallet",
+  "scripts": {
+    "npm:upgrade": "ncu -u && yarn --production",
+    "npm:check": "ncu"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.74.0"
+  },
+  "peerDependencies": {
+    "@middy/sts": "2.x",
+    "@nearprime/lambda-powertools-logger": "0.x",
+    "@nearprime/lambda-powertools-wrapper": "0.x",
+    "source-map-support": "0.x",
+    "@nearprime/client-dynamodb": "0.x",
+    "@nearprime/core": "0.x",
+    "@nearprime/gateway-data-model": "0.x",
+    "@nearprime/lambda-middleware-http-parser": "0.x",
+    "aws-sdk": "x.x"
+  },
+  "license": "MIT"
+}

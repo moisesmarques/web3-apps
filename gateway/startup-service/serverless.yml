@@ -1,0 +1,126 @@
+service: near-gateway
+frameworkVersion: '3'
+
+package:
+  patterns:
+    - '!cloudfront'
+    - '!dynamodb'
+    - '!s3'
+    - '!ssm'
+provider:  
+  name: aws
+  stage: ${opt:stage, 'dev'}
+  runtime: nodejs14.x
+  region: ${file(../serverless-config.json):region}
+  environment:
+    SECRET_KEY: ${ssm:SECRET_KEY}
+    REFRESH_SECRET_KEY: ${ssm:REFRESH_SECRET_KEY}
+  apiGateway:
+    apiKeys:
+      - defaultKey
+  httpApi:
+    cors:
+      ### TODO: set a list of allowed origins
+      allowedOrigins:
+        - https://*
+        - http://localhost:3000
+      allowedHeaders:
+        - Content-Type
+        - Authorization
+      allowedMethods:
+        - OPTIONS
+        - GET
+        - POST
+        - PUT
+        - PATCH
+        - DELETE
+      allowCredentials: true
+
+custom:
+  cdn:
+    subDomain:
+      dev: storage
+      sandbox: sandbox
+
+functions:  
+  token-authorizer:
+      handler: authorizer.handler
+  jwtAuthorizer:
+    handler: authorizer.handler
+
+  get-status-service:
+    handler: index.handler
+    events:
+     - httpApi:
+         path: /
+         method: get
+
+resources:
+  - Description: "Stack holding all Stateful resources"
+### ACM
+  - ${file(./acm/certificates.yml)}
+### S3 Service
+  - ${file(./s3/bucket/file-service.yml)}
+  - ${file(./s3/bucket/storage-service.yml)}
+### OpenSearch
+  - ${file(./opensearch/domain/startup-service.yml)}
+### Cloudfront
+  - ${file(./cloudfront/distribution/storage-service.yml)}
+  - ${file(./cloudfront/oai/storage-service.yml)}
+### Dynamodb
+  - ${file(./dynamodb/table/storage-service.yml)}
+### SSM
+  - ${file(./ssm/parameters/storage-service.yml)}
+  - ${file(./ssm/parameters/startup-service.yml)}
+### API Gateway
+  - Resources:
+      NearGatewayAuthorizer:
+        Type: AWS::ApiGatewayV2::Authorizer
+        Properties:
+          Name: NearGatewayAuthorizer
+          ApiId: !Ref HttpApi
+          AuthorizerType: REQUEST
+          AuthorizerPayloadFormatVersion: "2.0"
+          EnableSimpleResponses: true
+          IdentitySource:
+            - $request.header.Authorization
+          AuthorizerUri: !Join
+            - ''
+            - - 'arn:'
+              - !Ref 'AWS::Partition'
+              - ':apigateway:'
+              - !Ref 'AWS::Region'
+              - ':lambda:path/2015-03-31/functions/'
+              - !Sub arn:aws:lambda:${aws:region}:${aws:accountId}:function:near-gateway-${self:provider.stage}-token-authorizer
+              - /invocations
+
+  - Outputs:
+
+      NearGatewayServerlessDeploymentBucketName:
+        Value: !Ref ServerlessDeploymentBucket
+        Export:
+          Name: NearGatewayServerlessDeploymentBucketName
+
+      NearGatewayHttpApiId:
+        Description: Id of the HTTP API
+        Value: !Ref HttpApi
+        Export:
+          Name: NearGatewayHttpApiId
+
+      NearGatewayAuthorizerId:
+        Value: !Ref NearGatewayAuthorizer
+        Export:
+          Name: NearGatewayAuthorizerId
+
+      NearGatewayHttpApiUrl:
+        Description: URL of the HTTP API
+        Value: !Join
+          - ''
+          - - 'https://'
+            - !Ref HttpApi
+            - .execute-api.
+            - !Ref 'AWS::Region'
+            - .
+            - !Ref 'AWS::URLSuffix'
+        Export:
+          Name: NearGatewayUrl

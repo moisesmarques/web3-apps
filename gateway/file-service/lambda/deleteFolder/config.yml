@@ -1,0 +1,39 @@
+deleteFolder:
+  handler: lambda/deleteFolder/index.handler
+  description: "Delete folder and its sub folders and files."
+  events:
+    - httpApi:
+        path: /wallets/{walletId}/storage/folders/{folderId}
+        method: delete
+        authorizer:
+          type: request
+          id: !ImportValue NearGatewayAuthorizerId
+  environment:
+    TABLE_NAME_FOLDERS: near-storage
+    TABLE_NAME_WALLETS: near-wallets
+
+    BUCKET_NAME_FILES: ${self:custom.file-service.s3.files.name}
+    TABLE_NAME_FILES: ${self:custom.file-service.dynamodb.files.name}
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+      Resource:
+        - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/near-wallets
+    - Effect: Allow
+      Action:
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+        - dynamodb:GetItem
+        - dynamodb:Query
+      Resource:
+        - ${self:custom.file-service.dynamodb.files.arn}
+        - ${self:custom.file-service.dynamodb.storage.arn}
+    - Effect: Allow
+      Action:
+        - s3:PutObject
+        - s3:PutObjectAcl
+        - s3:AbortMultipartUpload
+      Resource:
+        - Fn::Join: ["/", [!ImportValue FileServiceFilesBucketArn, "*"]]

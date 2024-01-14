@@ -1,0 +1,93 @@
+service: wallet-service
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: ${file(../serverless-config.json):region}
+  stage: ${opt:stage, 'dev'}
+  timeout: 5
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1 # https://go.aws/3InkVao
+    REGION: ${self:provider.region}
+    ES_WALLET_INDEX: wallets-index
+    DYNAMODB_WALLET_TABLE: 'near-wallets'
+    TABLE_NAME_FILES: 'near-files'
+    INDEXER_API_URL: 'https://api.nearindexer.io'
+  apiGateway:
+    # Attach to an externally created REST API via its ID:
+    restApiId: ${ssm:/rest-service/apiGateway/restApi/id}
+    # Root resource ID, represent as / path
+    restApiRootResourceId: ${ssm:/rest-service/apiGateway/restApi/rootResourceId}
+  httpApi:
+    id: !ImportValue NearGatewayHttpApiId
+  iam:
+    role:
+      statements:
+        - Effect: 'Allow'
+          Action:
+            - dynamodb:BatchGet*
+            - dynamodb:DescribeStream
+            - dynamodb:DescribeTable
+            - dynamodb:Get*
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:BatchWrite*
+            - dynamodb:CreateTable
+            - dynamodb:Delete*
+            - dynamodb:Update*
+            - dynamodb:PutItem
+            - ssm:DescribeParameters
+            - ssm:GetParameter
+            - ssm:GetParameters
+          Resource:
+            - arn:aws:dynamodb:*:*:*
+            - arn:aws:dynamodb:*:*:*/*/index/*
+            - arn:aws:ssm:*
+
+plugins:
+  - serverless-offline
+  - serverless-dynamodb-local
+  - serverless-iam-roles-per-function
+  - serverless-webpack
+
+package:
+  individually: true
+  excludeDevDependencies: true
+
+
+custom:
+  webpack:
+    webpackConfig: 'webpack.config.js'
+    packager: 'yarn'
+    excludeFiles: /**/*.test.js
+    includeModules:
+      forceExclude:
+        - aws-sdk
+    packagerOptions:
+      scripts:
+        - yarn autoclean --force
+  startup-service:
+    opensearch:
+      data:
+        endpoint: ${ssm:/startup-service/opensearch/domain/data/endpoint}
+        arn: ${ssm:/startup-service/opensearch/domain/data/arn}
+  wallet-service:
+    dynamodb:
+      wallets:
+        name: ${ssm:/wallet-service/dynamodb/wallets/name}
+        arn: ${ssm:/wallet-service/dynamodb/wallets/arn}
+        streamArn: ${ssm:/wallet-service/dynamodb/wallets/streamArn}
+
+functions:
+  - ${file(./lambda/index-wallet/config.yml)}
+  - ${file(./lambda/import-wallet/config.yml)}
+  - ${file(./lambda/create-wallet/config.yml)}
+  - ${file(./lambda/retrieve-wallet/config.yml)}
+  - ${file(./lambda/edit-wallet/config.yml)}
+  - ${file(./lambda/fetch-wallets/config.yml)}
+  - ${file(./lambda/delete-wallet/config.yml)}
+  - ${file(./lambda/verify-wallet/config.yml)}
+  - ${file(./lambda/search-wallets/config.yml)}
+  - ${file(./lambda/balance-wallet/config.yml)}

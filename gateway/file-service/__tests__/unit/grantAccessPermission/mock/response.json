@@ -1,0 +1,21 @@
+[
+  {
+    "size": 214950,
+    "path": "blob:https://sandbox.myweb3cloud.io/b3403e80-098c-4aaa-8423-482b48bfaff4",
+    "created": "2022-04-04T11:58:24.980Z",
+    "dataEncryptionKey": {
+      "encrypted": "373ed4da-a9c2-45c5-bd54-4ad1dccac1f1",
+      "md5": "Qki2wbXJRR9EdB3aaPkkiw=="
+    },
+    "walletId": "moisesmarquesti.testnet",
+    "name": "einstein-nft.jpg",
+    "ownerId": "moisesmarquesti.testnet",
+    "hash": "ca9094a30fe6481facd462f4f55cd445ae791667758575c52ec32c3b29c27973c6363c774510be1850a0c52d9b81d4a8",
+    "updated": "2022-04-04T11:58:27.734Z",
+    "storageProvider": "S3",
+    "fileId": "5841f891-a0c8-409f-b718-836df5e3e59c",
+    "sharedAt": "2022-04-06T01:43:20.102Z",
+    "userId": "AeOYF9MXQDrLzSugCfMqB",
+    "description": "{\"name\":\"einstein-nft.jpg\",\"type\":\"image/jpeg\",\"size\":214950}"
+  }
+]

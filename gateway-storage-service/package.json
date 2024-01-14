@@ -1,0 +1,85 @@
+{
+  "name": "gateway-storage-service",
+  "version": "0.0.1",
+  "description": "Stack holding Stateless resources for gateway-storage",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "lambda/*"
+  ],
+  "scripts": {
+    "cm": "git-cz",
+    "cmr": "git-cz --retry",
+    "cmp": "git add src && yarn cm && git push",
+    "lint": "eslint --ignore-path .gitignore --ignore-pattern \\\"!**/.*\\\" src",
+    "fix": "yarn run lint --fix",
+    "stats": "OPEN_ANALYZER=true sls webpack",
+    "npm:upgrade": "yarn ncu --upgrade && yarn",
+    "npm:upgrade-all": "node ./node_modules/@nearprime/serverless/scripts/npmUpgradeRecursive.js",
+    "npm:check": "yarn ncu",
+    "test": "sls invoke test",
+    "audit:ci": "node ./node_modules/@nearprime/serverless/scripts/audit",
+    "deploy": "sls deploy",
+    "deploy:sandbox": "yarn deploy --stage sandbox",
+    "deploy:dev": "yarn deploy --stage dev",
+    "deploy:staging": "yarn deploy --stage staging",
+    "deploy:production": "yarn deploy --stage production",
+    "remove:sandbox": "sls remove --verbose --stage sandbox",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "@babel/core": "^7.17.10",
+    "@babel/plugin-proposal-class-properties": "^7.16.7",
+    "@babel/plugin-proposal-export-default-from": "^7.16.7",
+    "@babel/plugin-proposal-optional-chaining": "^7.16.7",
+    "@babel/plugin-proposal-private-methods": "^7.16.11",
+    "@babel/preset-env": "^7.17.10",
+    "@middy/core": "^2.5.7",
+    "@middy/secrets-manager": "^2.5.7",
+    "@middy/sts": "^2.5.7",
+    "@nearprime/client-dynamodb": "^0.0.3",
+    "@nearprime/client-eventbridge": "^0.0.6",
+    "@nearprime/core": "^0.0.2",
+    "@nearprime/eslint-config-serverless": "^0.0.7",
+    "@nearprime/gateway-data-model": "^0.0.1-dev.44",
+    "@nearprime/generator-serverless": "0.0.25",
+    "@nearprime/git-cz-engine": "^0.0.5",
+    "@nearprime/lambda-middleware-http-parser": "^0.0.8",
+    "@nearprime/lambda-powertools-correlation-ids": "^0.0.3",
+    "@nearprime/lambda-powertools-logger": "^0.0.5",
+    "@nearprime/lambda-powertools-wrapper": "^0.0.12",
+    "@nearprime/serverless": "^0.2.18",
+    "@types/aws-lambda": "^8.10.95",
+    "aws-sdk": "^2.1129.0",
+    "aws-xray-sdk-core": "^3.3.5",
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^28.0.3",
+    "babel-loader": "^8.2.5",
+    "babel-plugin-minify-mangle-names": "^0.5.0",
+    "bluebird": "^3.7.2",
+    "cz-conventional-changelog-emoji": "^0.1.0",
+    "debug": "^4.3.4",
+    "eslint": "^8.14.0",
+    "global": "^4.4.0",
+    "husky": "^7.0.4",
+    "lodash": "^4.17.21",
+    "npm-check-updates": "^12.5.11",
+    "source-map-support": "^0.5.21",
+    "typescript": "^4.6.4",
+    "webpack": "^5.72.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/@nearprime/git-cz-engine/src"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,js}": [
+      "prettier --write",
+      "eslint --cache --format=stylish --fix"
+    ],
+    "*.{md,json}": [
+      "prettier --write"
+    ]
+  }
+}

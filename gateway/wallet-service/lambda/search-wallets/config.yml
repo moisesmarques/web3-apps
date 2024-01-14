@@ -1,0 +1,20 @@
+search-wallets:
+  handler: lambda/search-wallets/index.handler
+  description: "Search wallets by wallet name"
+  environment:
+    ES_ENDPOINT: https://${self:custom.startup-service.opensearch.data.endpoint}
+  events:
+    - httpApi:
+        path: /searchwallets/{searchTerm}
+        method: get
+        authorizer:            
+          type: request
+          id: !ImportValue NearGatewayAuthorizerId
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - es:ESHttpGet
+      Resource:
+        - ${self:custom.startup-service.opensearch.data.arn}
+        - "${self:custom.startup-service.opensearch.data.arn}/*"

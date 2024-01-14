@@ -1,0 +1,42 @@
+{
+  "version": "2.0",
+  "routeKey": "POST /wallets/{walletId}/storage/{fileId}/updateCallback",
+  "rawPath": "/wallets/adnsandbox.testnet/storage/e62d7ff0-6f64-4159-aa84-1cb208b81e38/updateCallback",
+  "rawQueryString": "",
+  "headers": {
+    "accept-encoding": "gzip, deflate",
+    "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImtleSI6ImU2MmQ3ZmYwLTZmNjQtNDE1OS1hYTg0LTFjYjIwOGI4MWUzOCIsInN0YXR1cyI6MiwidXJsIjoiaHR0cHM6Ly9vbmx5b2ZmaWNlLnNhbmRib3gubmVhcmxvZ2luLmlvL2NhY2hlL2ZpbGVzL2U2MmQ3ZmYwLTZmNjQtNDE1OS1hYTg0LTFjYjIwOGI4MWUzOF80MDg2L291dHB1dC5kb2N4L291dHB1dC5kb2N4P21kNT0zYkNEc1ZJNUFhOXFGQXZYd2VLTVNnJmV4cGlyZXM9MTY0ODIwMjA2MSZmaWxlbmFtZT1vdXRwdXQuZG9jeCIsImNoYW5nZXN1cmwiOiJodHRwczovL29ubHlvZmZpY2Uuc2FuZGJveC5uZWFybG9naW4uaW8vY2FjaGUvZmlsZXMvZTYyZDdmZjAtNmY2NC00MTU5LWFhODQtMWNiMjA4YjgxZTM4XzQwODYvY2hhbmdlcy56aXAvY2hhbmdlcy56aXA_bWQ1PUY1VzdUbmhKZW5VdWtVaVlxQmxuamcmZXhwaXJlcz0xNjQ4MjAyMDYxJmZpbGVuYW1lPWNoYW5nZXMuemlwIiwiaGlzdG9yeSI6eyJzZXJ2ZXJWZXJzaW9uIjoiNy4wLjAiLCJjaGFuZ2VzIjpbeyJjcmVhdGVkIjoiMjAyMi0wMy0yNSAwOTozOTowOSIsInVzZXIiOnsiaWQiOiJ1aWQtMTY0ODE5MDU0NTQ0MCIsIm5hbWUiOiJBbm9ueW1vdXMifX1dfSwidXNlcnMiOlsidWlkLTE2NDgxOTA1NDU0NDAiXSwiYWN0aW9ucyI6W3sidHlwZSI6MCwidXNlcmlkIjoidWlkLTE2NDgxOTA1NDU0NDAifV0sImxhc3RzYXZlIjoiMjAyMi0wMy0yNVQwOTozOTowOS4wMDBaIiwibm90bW9kaWZpZWQiOmZhbHNlLCJmaWxldHlwZSI6ImRvY3gifSwiaWF0IjoxNjQ4MjAxMTYwLCJleHAiOjE2NDgyMDE0NjB9.JK6PtKUzNQCJemw0S0fpfWl-m8ZB0K6Jgsu83dAOpNU",
+    "content-length": "743",
+    "content-type": "application/json",
+    "host": "api.sandbox.nearlogin.io",
+    "user-agent": "Node.js/6.13",
+    "x-amzn-trace-id": "Root=1-623d8dc8-45e484354f4483e34a314dc1",
+    "x-forwarded-for": "44.198.53.33",
+    "x-forwarded-port": "443",
+    "x-forwarded-proto": "https"
+  },
+  "requestContext": {
+    "accountId": "540203704025",
+    "apiId": "2puo0gvdl0",
+    "domainName": "api.sandbox.nearlogin.io",
+    "domainPrefix": "api",
+    "http": {
+      "method": "POST",
+      "path": "/wallets/adnsandbox.testnet/storage/e62d7ff0-6f64-4159-aa84-1cb208b81e38/updateCallback",
+      "protocol": "HTTP/1.1",
+      "sourceIp": "44.198.53.33",
+      "userAgent": "Node.js/6.13"
+    },
+    "requestId": "PiMXXjtTIAMEJXg=",
+    "routeKey": "POST /wallets/{walletId}/storage/{fileId}/updateCallback",
+    "stage": "$default",
+    "time": "25/Mar/2022:09:39:20 +0000",
+    "timeEpoch": 1648201160560
+  },
+  "pathParameters": {
+    "fileId": "e62d7ff0-6f64-4159-aa84-1cb208b81e38",
+    "walletId": "adnsandbox.testnet"
+  },
+  "body": "{\"key\":\"e62d7ff0-6f64-4159-aa84-1cb208b81e38\",\"status\":2,\"url\":\"https://onlyoffice.sandbox.nearlogin.io/cache/files/e62d7ff0-6f64-4159-aa84-1cb208b81e38_4086/output.docx/output.docx?md5=3bCDsVI5Aa9qFAvXweKMSg&expires=1648202061&filename=output.docx\",\"changesurl\":\"https://onlyoffice.sandbox.nearlogin.io/cache/files/e62d7ff0-6f64-4159-aa84-1cb208b81e38_4086/changes.zip/changes.zip?md5=F5W7TnhJenUukUiYqBlnjg&expires=1648202061&filename=changes.zip\",\"history\":{\"serverVersion\":\"7.0.0\",\"changes\":[{\"created\":\"2022-03-25 09:39:09\",\"user\":{\"id\":\"uid-1648190545440\",\"name\":\"Anonymous\"}}]},\"users\":[\"uid-1648190545440\"],\"actions\":[{\"type\":0,\"userid\":\"uid-1648190545440\"}],\"lastsave\":\"2022-03-25T09:39:09.000Z\",\"notmodified\":false,\"filetype\":\"docx\"}",
+  "isBase64Encoded": false
+}

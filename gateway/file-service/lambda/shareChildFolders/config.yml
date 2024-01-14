@@ -1,0 +1,25 @@
+shareChildFolders:
+  handler: lambda/shareChildFolders/index.handler
+  description: 'Triggers when a folder is shared'
+  events:
+    - stream:
+        type: dynamodb
+        batchSize: 1
+        startingPosition: TRIM_HORIZON
+        arn: ${self:custom.file-service.dynamodb.storage.streamArn}
+        filterPatterns:
+          - eventName: [INSERT]
+  environment:
+    TABLE_NAME_FOLDERS: near-storage
+    TABLE_NAME_WALLETS: near-wallets
+    TABLE_NAME_FILES: ${self:custom.file-service.dynamodb.files.name}
+    BUCKET_NAME_FILES: ${self:custom.file-service.s3.storage.name}
+    iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:UpdateItem
+      Resource:
+        - ${self:custom.file-service.dynamodb.storage.arn}
+        - ${self:custom.file-service.dynamodb.storage.arn}/*

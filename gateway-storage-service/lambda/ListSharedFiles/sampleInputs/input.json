@@ -1,0 +1,50 @@
+{
+  "resource": "/wallets/{wId}/storage/files/shared",
+  "path": "/wallets/{wId}/storage/files/shared",
+  "httpMethod": "GET",
+  "headers": {
+    "content-type": "application/json",
+    "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwY2Y3NDQ5Zi1mNzIwLTQyNTQtYWQ5MC04ZDllZDQ2ZTdkN2UiLCJ3SWQiOiJleGFtcGxlLm5lYXIiLCJpYXQiOjE2NTEyNDU3NzEsImV4cCI6MjI1NjA0NTc3MX0.-vIel_UVHBMY23fg8jfq9gidVB-JRLPyVyBM5s9H_5w"
+  },
+  "multiValueHeaders": null,
+  "queryStringParameters": null,
+  "multiValueQueryStringParameters": null,
+  "pathParameters": {
+    "wId": "example.near"
+  },
+  "stageVariables": null,
+  "requestContext": {
+    "resourceId": "dmhdkc",
+    "resourcePath": "/wallets/{wId}/storage/files/shared",
+    "httpMethod": "GET",
+    "extendedRequestId": "Qs6-5GHxIAMFecg=",
+    "requestTime": "17/Apr/2022:01:48:40 +0000",
+    "path": "/wallets/{wId}/storage/files/shared",
+    "accountId": "020930497257",
+    "protocol": "HTTP/1.1",
+    "stage": "test-invoke-stage",
+    "domainPrefix": "testPrefix",
+    "requestTimeEpoch": 1650160120712,
+    "requestId": "9637b568-07bf-449e-80d9-da51ec7b468b",
+    "identity": {
+      "cognitoIdentityPoolId": null,
+      "cognitoIdentityId": null,
+      "apiKey": "test-invoke-api-key",
+      "principalOrgId": null,
+      "cognitoAuthenticationType": null,
+      "userArn": "arn:aws:sts::020930497257:assumed-role/AWSReservedSSO_cloud-account-administrator_4502c0ff6fc3d117/adnene.khalfa@primelab.io",
+      "apiKeyId": "test-invoke-api-key-id",
+      "userAgent": "aws-internal/3 aws-sdk-java/1.12.182 Linux/5.4.176-103.347.amzn2int.x86_64 OpenJDK_64-Bit_Server_VM/25.322-b06 java/1.8.0_322 vendor/Oracle_Corporation cfg/retry-mode/standard",
+      "accountId": "020930497257",
+      "caller": "AROAQJX4OBLURSPIOCJAD:adnene.khalfa@primelab.io",
+      "sourceIp": "test-invoke-source-ip",
+      "accessKey": "ASIAQJX4OBLU3IEPAT4S",
+      "cognitoAuthenticationProvider": null,
+      "user": "AROAQJX4OBLURSPIOCJAD:adnene.khalfa@primelab.io"
+    },
+    "domainName": "testPrefix.testDomainName",
+    "apiId": "p6tqcndkji"
+  },
+  "body": null,
+  "isBase64Encoded": false
+}

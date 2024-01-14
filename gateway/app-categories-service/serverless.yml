@@ -1,0 +1,93 @@
+service: app-categories-service
+frameworkVersion: '3'
+
+plugins:
+  - serverless-offline
+  - serverless-webpack
+
+package:
+  individually: true
+  excludeDevDependencies: true
+
+provider:
+  name: aws
+  # stage: sandbox
+  # profile: titus
+  runtime: nodejs14.x
+  region: ${file(../serverless-config.json):region}
+  timeout: 6
+  apiGateway:
+    # Attach to an externally created REST API via its ID:
+    restApiId: ${ssm:/rest-service/apiGateway/restApi/id}
+    # Root resource ID, represent as / path
+    restApiRootResourceId: ${ssm:/rest-service/apiGateway/restApi/rootResourceId}
+  environment:
+    APP_LINK_BASE_URL: "APP_LINK_BASE_URL"
+    SECRET_KEY: ${file(../serverless-config.json):SECRET_KEY}    
+    IS_OFFLINE: false
+    TOKEN_EXPIRY_IN_MILLISECONDS: '1d'
+    DYNAMODB_NEAR_APP_CATEGORY_TABLE: 'near-app-categories'
+    DEV_BASEURL: ${file(../serverless-config.json):DEV_BASE_URL}
+    PROD_BASEURL: ${file(../serverless-config.json):PROD_BASE_URL}
+    TABLE_NEAR_APPS: "near-apps"
+    DYNAMODB_APP_CATEGORIES_TABLE: "near-app-categories"
+  httpApi:
+    id: !ImportValue NearGatewayHttpApiId
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - dynamodb:BatchGet*
+            - dynamodb:DescribeStream
+            - dynamodb:DescribeTable
+            - dynamodb:Get*
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:BatchWrite*
+            - dynamodb:CreateTable
+            - dynamodb:Delete*
+            - dynamodb:Update*
+            - dynamodb:PutItem
+            - "ses:SendEmail"
+          Resource: 
+            - "arn:aws:dynamodb:*:*:*"
+            - "arn:aws:ses:*"
+custom:
+  webpack:
+    webpackConfig: 'webpack.config.js'
+    packager: 'yarn'
+    excludeFiles: /**/*.test.js
+    includeModules:
+      forceExclude:
+        - aws-sdk
+    packagerOptions:
+      scripts:
+        - yarn autoclean --force
+
+functions:
+  updateAppsCategory:
+    handler: update.main
+    events:
+      - httpApi:
+          path: /apps/categories/{categoryId}
+          method: put
+  getAppsCategory:
+    handler: get.handler
+    events:
+      - httpApi:
+          path: /apps/categories/{categoryId}
+          method: get
+  createAppsCategory:
+    handler: create.handler
+    events:
+      - httpApi:
+          path: /apps/categories
+          method: post   
+  deleteAppsCategory:
+    handler: delete.handler
+    events:
+      - httpApi:
+          path: /apps/categories/{categoryId}
+          method: delete
+

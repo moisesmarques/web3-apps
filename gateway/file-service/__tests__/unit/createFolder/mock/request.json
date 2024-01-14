@@ -1,0 +1,47 @@
+{
+"payload": {
+  "name": "myFolder"
+  },
+
+"payloadWithInvalidParent": {
+  "name": "myFolder",
+  "parentFolderId": "630eb68f-e0fa-5ecc-887a-7c7a62614681"
+  },
+
+"payloadWithValidParent": {
+  "name": "myFolder",
+  "parentFolderId": "630eb68f-e0fa-5ecc-887a-7c7a62614681"
+  },
+
+"jwtMock": {
+  "lastName": "Kivite",
+  "userId": "_BE_Ou5exXqW-wFLuTxud",
+  "status": "active",
+  "created": 1646209318710,
+  "isPhoneVerified": false,
+  "email": "tkivite@gmail.com",
+  "firstName": "Titus",
+  "isEmailVerified": false,
+  "walletName": "titusWallet.near"
+  },
+
+"AuthCode": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsYXN0TmFtZSI6Iktpdml0ZSIsInVzZXJJZCI6Il9CRV9PdTVleFhxVy13Rkx1VHh1ZCIsInN0YXR1cyI6ImFjdGl2ZSIsImNyZWF0ZWQiOjE2NDYyMDkzMTg3MTAsImlzUGhvbmVWZXJpZmllZCI6ZmFsc2UsImVtYWlsIjoidGtpdml0ZUBnbWFpbC5jb20iLCJmaXJzdE5hbWUiOiJUaXR1cyIsImlzRW1haWxWZXJpZmllZCI6ZmFsc2UsIndhbGxldE5hbWUiOiJ0aXR1c1dhbGxldC5uZWFyIiwiaWF0IjoxNjQ2MzI3MTMzLCJleHAiOjE2NDY0MTM1MzN9.PFA57GwzBuIM8O04XICee1xFTciApptbDCGTjTWPtyU",
+
+"emptyPayload": {},
+
+"folder": {
+  "size": 0,
+  "parentFolderId": "root",
+  "status": "active",
+  "created": 1648757247986,
+  "walletId": "titusdemo.testnet",
+  "name": "mySampleFolder",
+  "ownerId": "titusdemo.testnet",
+  "updated": "2022-03-31T20: 07: 27.987Z",
+  "pk1": "FOLDER#walletId=titusdemo.testnet#parentFolderId=root",
+  "sk": "walletId=titusdemo.testnet",
+  "sk1": "id=101a60f3-3c88-460f-88eb-afece2c73299",
+  "id": "101a60f3-3c88-460f-88eb-afece2c73299",
+  "pk": "FOLDER#id=101a60f3-3c88-460f-88eb-afece2c73299"
+  }
+}

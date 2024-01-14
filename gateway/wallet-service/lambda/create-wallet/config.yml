@@ -1,0 +1,26 @@
+create-Wallet:
+  handler: lambda/create-wallet/index.handler
+  description: "Wallet creation"
+  events:
+    - httpApi:
+        path: /wallets
+        method: post
+        authorizer:            
+          type: request
+          id: !ImportValue NearGatewayAuthorizerId                                   
+#    - http:
+#        path: /wallets
+#        method: post
+#        authorizer:
+#          name: ${self:service}-JWTAuthorizer
+#          type: request
+#          arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  environment:
+    TABLE_NAME_WALLETS: near-wallets
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:UpdateItem
+      Resource:
+        - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/near-wallets

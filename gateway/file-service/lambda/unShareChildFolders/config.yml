@@ -1,0 +1,30 @@
+unShareChildFolders:
+  handler: lambda/unShareChildFolders/index.handler
+  description: 'Triggers when shared folder is deleted then it invokes whenever a record in near-storage is deleted'
+  events:
+    - stream:
+        type: dynamodb
+        batchSize: 1
+        startingPosition: TRIM_HORIZON
+        arn: ${self:custom.file-service.dynamodb.storage.streamArn}
+        filterPatterns:
+          - eventName: [REMOVE]
+  environment:
+    TABLE_NAME_FOLDERS: near-storage
+    TABLE_NAME_WALLETS: near-wallets
+    TABLE_NAME_FILES: ${self:custom.file-service.dynamodb.files.name}
+    BUCKET_NAME_FILES: ${self:custom.file-service.s3.storage.name}
+    iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+      Resource:
+        - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/near-wallets
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:DeleteItem
+      Resource:
+        - ${self:custom.file-service.dynamodb.storage.arn}
+        - ${self:custom.file-service.dynamodb.storage.arn}/*

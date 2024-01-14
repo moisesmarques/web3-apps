@@ -1,0 +1,20 @@
+{
+    "response": {
+    "data": {
+      "size": 0,
+      "parentFolderId": "root",
+      "status": "active",
+      "created": 1648757247986,
+      "walletId": "titusdemo.testnet",
+      "name": "mySampleFolder",
+      "ownerId": "titusdemo.testnet",
+      "updated": "2022-03-31T20:07:27.987Z",
+      "pk1": "FOLDER#walletId=titusdemo.testnet#parentFolderId=root",
+      "sk": "walletId=titusdemo.testnet",
+      "sk1": "id=101a60f3-3c88-460f-88eb-afece2c73299",
+      "id": "101a60f3-3c88-460f-88eb-afece2c73299",
+      "pk": "FOLDER#id=101a60f3-3c88-460f-88eb-afece2c73299"
+    },
+    "message": "Folder created successfully"
+  }
+}

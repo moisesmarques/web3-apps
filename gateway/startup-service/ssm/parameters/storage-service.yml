@@ -1,0 +1,59 @@
+Resources:
+################################# DYNAMODB #########################################################
+  StorageServiceTableNameSSM:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Description: Storage service main table name
+      Name: /storage-service/dynamodb/table/storage/name
+      Type: 'String'
+      Value: !Ref StorageServiceTable
+
+  StorageServiceTableArnSSM:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Description: Storage service main table arn
+      Name: /storage-service/dynamodb/table/storage/arn
+      Type: 'String'
+      Value: !GetAtt StorageServiceTable.Arn
+
+  StorageServiceTableStreamArnSSM:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Description: Storage service main table streamArn
+      Name: /storage-service/dynamodb/table/storage/streamArn
+      Type: 'String'
+      Value: !GetAtt StorageServiceTable.StreamArn
+
+################################### S3 #############################################################
+  StorageServiceFilesBucketName:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Description: Storage service files bucket name
+      Name: /storage-service/s3/bucket/files/name
+      Type: 'String'
+      Value: !Ref StorageServiceFilesBucket
+
+  StorageServiceFilesBucketArn:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Description: Storage service files bucket arn
+      Name: /storage-service/s3/bucket/files/arn
+      Type: 'String'
+      Value: !GetAtt StorageServiceFilesBucket.Arn
+
+################################### CLOUDFRONT #####################################################
+  StorageCDNDistirbutionId:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Description: Storage service cdn cloudfront distribution id
+      Name: /storage-service/clodufront/distribution/cdn/id
+      Type: 'String'
+      Value: !Ref StorageServiceCDNDistribution
+
+  StorageCDNDistirbutionDomainName:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Description: Storage service cdn cloudfront distribution domain name
+      Name: /storage-service/clodufront/distribution/cdn/domainName
+      Type: 'String'
+      Value: !GetAtt StorageServiceCDNDistribution.DomainName

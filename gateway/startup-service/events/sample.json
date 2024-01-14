@@ -1,0 +1,47 @@
+{
+  "version": "2.0",
+  "type": "REQUEST",
+  "routeArn": "arn:aws:execute-api:us-east-1:227200131463:bty54yixsa/$default/POST/wallets/0658182526.near/storage",
+  "identitySource": [
+    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsYXN0TmFtZSI6Ik1hcnF1ZXMgRGEgU2lsdmEiLCJ1c2VySWQiOiJhYWFhYWFhYWFhYWFhYWFhYWFhYWEiLCJzdGF0dXMiOiJhY3RpdmUiLCJjcmVhdGVkIjoxNjQ3NDcwNjc3MTgyLCJpc1Bob25lVmVyaWZpZWQiOmZhbHNlLCJlbWFpbCI6Im1vaXNlc0BwcmltZWxhYi5pbyIsImZpcnN0TmFtZSI6Ik1vaXNlcyIsImlzRW1haWxWZXJpZmllZCI6dHJ1ZSwid2FsbGV0TmFtZSI6Ijc1MjQyOTA5NDEubmVhciIsImlhdCI6MTY0NzQ4MzczOCwiZXhwIjoxNjQ3NTcwMTM4fQ.cBDTq24gCpiNOO42lmROR7ht0kIVUPa48Z8l0oY5zFo"
+  ],
+  "routeKey": "POST /wallets/{walletId}/storage",
+  "rawPath": "/wallets/0658182526.near/storage",
+  "rawQueryString": "",
+  "headers": {
+    "accept": "*/*",
+    "accept-encoding": "gzip, deflate, br",
+    "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsYXN0TmFtZSI6Ik1hcnF1ZXMgRGEgU2lsdmEiLCJ1c2VySWQiOiJhYWFhYWFhYWFhYWFhYWFhYWFhYWEiLCJzdGF0dXMiOiJhY3RpdmUiLCJjcmVhdGVkIjoxNjQ3NDcwNjc3MTgyLCJpc1Bob25lVmVyaWZpZWQiOmZhbHNlLCJlbWFpbCI6Im1vaXNlc0BwcmltZWxhYi5pbyIsImZpcnN0TmFtZSI6Ik1vaXNlcyIsImlzRW1haWxWZXJpZmllZCI6dHJ1ZSwid2FsbGV0TmFtZSI6Ijc1MjQyOTA5NDEubmVhciIsImlhdCI6MTY0NzQ4MzczOCwiZXhwIjoxNjQ3NTcwMTM4fQ.cBDTq24gCpiNOO42lmROR7ht0kIVUPa48Z8l0oY5zFo",
+    "cache-control": "no-cache",
+    "content-length": "137",
+    "content-type": "application/json",
+    "host": "bty54yixsa.execute-api.us-east-1.amazonaws.com",
+    "postman-token": "abc28749-1e9a-4a9c-93ad-8df6569784ea",
+    "user-agent": "PostmanRuntime/7.29.0",
+    "x-amzn-trace-id": "Root=1-62350886-7b23ce84387819df6af5fd9f",
+    "x-forwarded-for": "54.86.50.139",
+    "x-forwarded-port": "443",
+    "x-forwarded-proto": "https"
+  },
+  "requestContext": {
+    "accountId": "227200131463",
+    "apiId": "bty54yixsa",
+    "domainName": "bty54yixsa.execute-api.us-east-1.amazonaws.com",
+    "domainPrefix": "bty54yixsa",
+    "http": {
+      "method": "POST",
+      "path": "/wallets/0658182526.near/storage",
+      "protocol": "HTTP/1.1",
+      "sourceIp": "54.86.50.139",
+      "userAgent": "PostmanRuntime/7.29.0"
+    },
+    "requestId": "PM5FFiGyoAMEJ-A=",
+    "routeKey": "POST /wallets/{walletId}/storage",
+    "stage": "$default",
+    "time": "18/Mar/2022:22:32:38 +0000",
+    "timeEpoch": 1647642758715
+  },
+  "pathParameters": {
+    "walletId": "0658182526.near"
+  }
+}

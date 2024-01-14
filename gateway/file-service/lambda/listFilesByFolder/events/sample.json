@@ -1,0 +1,44 @@
+{
+  "version": "2.0",
+  "routeKey": "GET /wallets/{walletId}/storage/{folderId}/files/list",
+  "rawPath": "/wallets/vipulpanchal01.testnet/storage/123/files/list",
+  "rawQueryString": "",
+  "cookies": [],
+  "headers": {
+    "User-Agent": "PostmanRuntime/7.29.0",
+    "Accept": "*/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "2eb67b59-af04-439a-968e-2ddcd7d7d527",
+    "Host": "localhost:3000",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive"
+  },
+  "queryStringParameters": null,
+  "requestContext": {
+    "accountId": "offlineContext_accountId",
+    "apiId": "offlineContext_apiId",
+    "authorizer": {
+      "jwt": {}
+    },
+    "domainName": "offlineContext_domainName",
+    "domainPrefix": "offlineContext_domainPrefix",
+    "http": {
+      "method": "GET",
+      "path": "/wallets/vipulpanchal01.testnet/storage/123/files/list",
+      "protocol": "HTTP/1.1",
+      "sourceIp": "127.0.0.1",
+      "userAgent": "PostmanRuntime/7.29.0"
+    },
+    "requestId": "offlineContext_resourceId",
+    "routeKey": "GET /wallets/{walletId}/storage/{folderId}/files/list",
+    "stage": "$default",
+    "time": "29/Mar/2022:03:34:39 +0530",
+    "timeEpoch": 1648505079887
+  },
+  "body": null,
+  "pathParameters": {
+    "walletId": "vipulpanchal01.testnet",
+    "folderId": "123"
+  },
+  "isBase64Encoded": false
+}

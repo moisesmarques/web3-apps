@@ -1,0 +1,15 @@
+get-user:
+  handler: lambda/get-user/index.handler
+  description: 'Fetch user by userId'
+  events:
+    - httpApi:
+        path: /users/{userId}
+        method: get
+    # - http:
+    #     path: /users/{userId}
+    #     method: get
+    #     authorizer:
+    #       type: request
+    #       arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  environment:
+    TABLE_NAME_USERS: near-users

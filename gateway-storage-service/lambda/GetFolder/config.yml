@@ -1,0 +1,19 @@
+GetFolder:
+  handler: lambda/GetFolder/index.handler
+  description: "Gets the folder details based on wallet ID and folder ID"
+  memorySize: 512
+  timeout: 5
+  environment:
+    TABLE_NAME_STORAGE_DATA: ${self:custom.dynamodb.StorageDataTable.name}
+  events:
+    - http:
+        path: wallets/{wId}/storage/folders/{folderId}
+        method: get
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+      Resource:
+        - ${self:custom.dynamodb.StorageDataTable.arn}
+        - ${self:custom.dynamodb.StorageDataTable.arn}/*

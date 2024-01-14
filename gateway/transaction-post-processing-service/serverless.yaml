@@ -1,0 +1,81 @@
+service: transaction-post-service
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  stage: ${opt:stage, 'dev'}
+  runtime: nodejs14.x
+  region: us-east-1
+  environment:
+    STAGE: ${self:provider.stage}
+    REGION: ${self:provider.region}
+    CONTRACT_ANALYTICS_MAINNET: "analytics.nearapps.near"
+    CONTRACT_ANALYTICS_TESTNET: "dev-1646119635378-66362145397237"
+    CONTRACT_LOG_FILE_MAINNET: "file.nearapps.near"
+    CONTRACT_LOG_FILE_TESTNET: "dev-1649279243060-91907010799897"
+    NETWORK_MAINNET: 'mainnet'
+    NETWORK_TESTNET: 'testnet'
+    CONTRACTS_SERVICE_POST_SQS_MAINNET: 'https://sqs.us-east-2.amazonaws.com/015753658222/nearPendingQueue.fifo'
+    CONTRACTS_SERVICE_POST_SQS_TESTNET: 'https://sqs.us-east-2.amazonaws.com/015753658222/nearPendingQueueTest.fifo'
+    CONTRACT_MINT_NFT_MAINNET: "nft.nearapps.near"
+    CONTRACT_MINT_NFT_TESTNET: "nft.naps.testnet"
+    CONTRACT_SEND_MAINNET: 'send-near.nearapps.near'
+    CONTRACT_SEND_TESTNET: 'send-near.naps.testnet'
+    CONTRACT_USERID_MAINNET: "v2.nearapps.near"
+    CONTRACT_USERID_TESTNET: "moisesmarques.testnet"
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - dynamodb:BatchGet*
+            - dynamodb:DescribeStream
+            - dynamodb:DescribeTable
+            - dynamodb:Get*
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:BatchWrite*
+            - dynamodb:CreateTable
+            - dynamodb:Delete*
+            - dynamodb:Update*
+            - dynamodb:PutItem
+          Resource: "arn:aws:dynamodb:*:*:*"
+        - Effect: Allow
+          Action:
+            - sqs:*
+          Resource: "*"
+        - Effect: "Allow"
+          Action:
+            - logs:*
+            - ssm:*
+          Resource: "*"
+        - Effect: Allow
+          Action:
+            - secretsmanager:*
+          Resource: "*"
+
+functions:
+  process-get-fee-analytics:
+    handler: process-get-fee-analytics.handler
+    timeout: 30
+    events:
+      - sqs: "arn:aws:sqs:us-east-1:${aws:accountId}:callAnalytics"
+  process-analytics:
+    handler: process-analytics.handler
+    timeout: 30
+    events:
+      - sqs: "arn:aws:sqs:us-east-1:${aws:accountId}:callAnalyticsV2"
+    layers:
+      - "arn:aws:lambda:us-east-1:${aws:accountId}:layer:near-cli:5"
+  process-transaction:
+    handler: process-transaction.handler
+    timeout: 30
+    events:
+      - sqs: "arn:aws:sqs:us-east-1:${aws:accountId}:callPostTransaction"
+  process-log-file:
+    handler: process-log-file.handler
+    timeout: 30
+    events:
+      - sqs: "arn:aws:sqs:us-east-1:${aws:accountId}:callLogFile"
+    layers:
+      - "arn:aws:lambda:us-east-1:${aws:accountId}:layer:near-cli:5"

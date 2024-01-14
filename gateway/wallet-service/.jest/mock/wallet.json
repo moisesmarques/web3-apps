@@ -1,0 +1,16 @@
+{
+  "status": "pending",
+  "created": "2022-03-15T06:58:52.045Z",
+  "walletId": "codetestkit.near",
+  "transactionId": "CW9o7EISJcIB1aR9BzV7_",
+  "isBlockchainVerified": "verified",
+  "kycProvider": "kyc_provider",
+  "balance": "0.00",
+  "publicKey": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "updated": "2022-03-16T07:21:04.918Z",
+  "walletName": "codetestkit.near",
+  "storageProvider": "storage_provider",
+  "userId": "V1StGXR8_Z65dHi6B-myT",
+  "blockchainHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "blockchainStatus": "complete"
+}

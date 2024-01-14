@@ -1,0 +1,30 @@
+{
+  "phoneSignupSuccessEvent": {
+    "body": {
+      "firstName": "mino",
+      "lastName": "ons",
+      "walletName": "minion121.near",
+      "phone": "1139302409",
+      "countryCode": "+1"
+    }
+  },
+  "phoneSample": {
+    "firstName": "kassspil",
+    "lastName": "karsssda",
+    "walletName": "user.near",
+    "phone": "7773259169",
+    "countryCode": "+92"
+  },
+  "emailSample": {
+    "firstName": "kassspil",
+    "lastName": "karsssda",
+    "walletName": "user.near",
+    "email": "abc@abc.com"
+  },
+  "phoneWithoutCountryCodeSample": {
+    "firstName": "kassspil",
+    "lastName": "karsssda",
+    "walletName": "user.near",
+    "phone": "7773259169"
+  }
+}

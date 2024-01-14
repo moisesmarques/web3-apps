@@ -1,0 +1,4 @@
+.webpack
+.DS_Store
+.env.development
+coverage/*

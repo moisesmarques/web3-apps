@@ -1,0 +1,7 @@
+{
+  "DYNAMODB_NFTS_TABLE" : "near-nfts",
+  "DYNAMODB_NFT_COLLECTIONS_TABLE": "near-nft-collections",
+  "DYNAMODB_NFT_OFFERS_TABLE": "near-nft-offers",
+  "DYNAMODB_NFT_ACTIVITIES_TABLE": "near-nft-activities",
+  "SECRET_KEY": "MyAwesomeKey"
+}

@@ -1,0 +1,19 @@
+DeleteFiles:
+  handler: lambda/DeleteFiles/index.handler
+  description: "Delete File by Wallet Id and File Id"
+  memorySize: 512
+  timeout: 5
+  environment:
+    TABLE_NAME_STORAGE_DATA: ${self:custom.dynamodb.StorageDataTable.name}
+  events:
+    - http:
+        path: wallets/{wId}/storage/files/{fileId}
+        method: delete
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:DeleteItem
+      Resource:
+        - ${self:custom.dynamodb.StorageDataTable.arn}
+        - ${self:custom.dynamodb.StorageDataTable.arn}/*

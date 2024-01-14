@@ -1,0 +1,39 @@
+unShareFolder:
+  handler: lambda/unShareFolder/index.handler
+  description: 'Allows user to revoke permission access for a folder and all child folders'
+  events:
+    - httpApi:
+        path: /wallets/{walletId}/storage/folders/{folderId}/unshare
+        method: post
+        authorizer:
+          type: request
+          id: !ImportValue NearGatewayAuthorizerId
+    - httpApi:
+        path: /wallets/{walletId}/files/folders/{folderId}/unshare
+        method: post
+        authorizer:
+          type: request
+          id: !ImportValue NearGatewayAuthorizerId
+  environment:
+    TABLE_NAME_FILES: ${self:custom.file-service.dynamodb.files.name}
+    ## TODO: use ${ssm:/dynamodb/wallet-service/wallets/name} when exported by Terraform
+    TABLE_NAME_WALLETS: near-wallets
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:DeleteItem
+        - dynamodb:GetItem
+      Resource:
+        - ${self:custom.file-service.dynamodb.files.arn}
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource:
+        - ${self:custom.file-service.dynamodb.storage.arn}
+        - ${self:custom.file-service.dynamodb.storage.arn}/*
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+      Resource:
+        - ${self:custom.file-service.dynamodb.wallets.arn}

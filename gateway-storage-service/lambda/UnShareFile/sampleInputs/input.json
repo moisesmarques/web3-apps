@@ -1,0 +1,51 @@
+{
+  "resource": "wallets/{wId}/storage/files/{fileId}/unshare",
+  "path": "wallets/{wId}/storage/files/{fileId}/unshare",
+  "httpMethod": "POST",
+  "headers": {
+    "content-type": "application/json",
+    "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cGRhdGVkIjoiMjAyMi0wMy0xMVQwNDoxMTozNy44MzdaIiwiY291bnRyeUNvZGUiOiIrMzMiLCJsYXN0TmFtZSI6IktoYWxmYSIsInVzZXJJZCI6IjlGMVNNVmJEQVQtaXVpVUlmeDZsXyIsInN0YXR1cyI6ImFjdGl2ZSIsImNyZWF0ZWQiOjE2NDY5NjMwNjQwMzEsImlzUGhvbmVWZXJpZmllZCI6ZmFsc2UsInBob25lIjoiNjU4MTgyNTI2IiwiZmlyc3ROYW1lIjoiQWRuZW5lIiwiaXNFbWFpbFZlcmlmaWVkIjpmYWxzZSwid2FsbGV0TmFtZSI6InRlc3RXYWxsZXQudGVzdG5ldCIsImlhdCI6MTY0NzY0Mjg1MSwiZXhwIjoxNjQ3NzI5MjUxLCJ3SWQiOiJ0ZXN0V2FsbGV0LnRlc3RuZXQifQ.spuFLbr233AG_qUTJR-Vn7MpLljErGacR-kR1Humtqk"
+  },
+  "multiValueHeaders": null,
+  "queryStringParameters": null,
+  "multiValueQueryStringParameters": null,
+  "pathParameters": {
+    "wId": "testWallet.testnet",
+    "fileId": "33a23649-fc56-49c7-823b-55af22815468"
+  },
+  "stageVariables": null,
+  "requestContext": {
+    "resourceId": "dmhdkc",
+    "resourcePath": "wallets/{wId}/storage/files/{fileId}/unshare",
+    "httpMethod": "POST",
+    "extendedRequestId": "Qs6-5GHxIAMFecg=",
+    "requestTime": "17/Apr/2022:01:48:40 +0000",
+    "path": "wallets/{wId}/storage/files/{fileId}/unshare",
+    "accountId": "020930497257",
+    "protocol": "HTTP/1.1",
+    "stage": "test-invoke-stage",
+    "domainPrefix": "testPrefix",
+    "requestTimeEpoch": 1650160120712,
+    "requestId": "dcbfcd16-94b3-450c-9a90-47a2d3fdb9d3",
+    "identity": {
+      "cognitoIdentityPoolId": null,
+      "cognitoIdentityId": null,
+      "apiKey": "test-invoke-api-key",
+      "principalOrgId": null,
+      "cognitoAuthenticationType": null,
+      "userArn": "arn:aws:sts::020930497257:assumed-role/AWSReservedSSO_cloud-account-administrator_4502c0ff6fc3d117/adnene.khalfa@primelab.io",
+      "apiKeyId": "test-invoke-api-key-id",
+      "userAgent": "aws-internal/3 aws-sdk-java/1.12.182 Linux/5.4.176-103.347.amzn2int.x86_64 OpenJDK_64-Bit_Server_VM/25.322-b06 java/1.8.0_322 vendor/Oracle_Corporation cfg/retry-mode/standard",
+      "accountId": "020930497257",
+      "caller": "AROAQJX4OBLURSPIOCJAD:adnene.khalfa@primelab.io",
+      "sourceIp": "test-invoke-source-ip",
+      "accessKey": "ASIAQJX4OBLU3IEPAT4S",
+      "cognitoAuthenticationProvider": null,
+      "user": "AROAQJX4OBLURSPIOCJAD:adnene.khalfa@primelab.io"
+    },
+    "domainName": "testPrefix.testDomainName",
+    "apiId": "p6tqcndkji"
+  },
+  "body": "{\"sharedWId\": \"user123.testnet\"}",
+  "isBase64Encoded": false
+}

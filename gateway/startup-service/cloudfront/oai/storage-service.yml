@@ -1,0 +1,6 @@
+Resources:
+  StorageServiceOriginAccessIdentity:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: Origin access identity used by storage-service cloudfront to serve objects through S3

@@ -1,0 +1,26 @@
+@import '~react-phone-input-2/lib/bootstrap.css';
+
+.flex {
+  display: flex;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+body {
+  height: 100vh;
+  font-family: inter;
+}
+
+#__next {
+  height: 100%;
+}

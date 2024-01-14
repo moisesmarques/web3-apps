@@ -1,0 +1,28 @@
+{
+  "payload": {
+    "receiverId" : "testwallet.near"
+  },
+  "wrongpayload": {
+    "fileId": "f123-djfhdih-dsdbvi",
+    "walletId": "titusWallset.near"
+  },
+  "emptyPayload": {},
+  "jwtMock": {
+    "lastName": "Kivite",
+    "userId": "_BE_Ou5exXqW-wFLuTxud",
+    "status": "active",
+    "created": 1646209318710,
+    "isPhoneVerified": false,
+    "email": "tkivite@gmail.com",
+    "firstName": "Titus",
+    "isEmailVerified": false,
+    "walletName": "titusWallet.near",
+    "walletId": "titusWallet.near",
+    "iat": 1646327133
+  },
+  "AuthCode": "yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsYXN0TmFtZSI6IlNhcmFzd2F0IiwidXNlcklkIjoiamsyQ01PZ0laTVFjdzlZVEpZa29tIiwic3RhdHVzIjoiYWN0aXZlIiwiY3JlYXRlZCI6MTY0ODk5OTQzNzQ4NCwiaXNQaG9uZVZlcmlmaWVkIjpmYWxzZSwiZW1haWwiOiJ0ZXN0MDMwNDIwMjJAeW9wbWFpbC5jb20iLCJmaXJzdE5hbWUiOiJNYW5pc2giLCJpc0VtYWlsVmVyaWZpZWQiOmZhbHNlLCJ3YWxsZXROYW1lIjoidGVzdDAzMDQyMDIyLnRlc3RuZXQiLCJpYXQiOjE2NDg5OTk1MzIsImV4cCI6MTY0OTA4NTkzMn0.yUbUl5FKurznGqEA1f_u5UoSVrrxozTfXGMi05KR06k",
+  "file": {
+    "version": "v1",
+    "folderId": "wallet.testnet"
+  }
+}

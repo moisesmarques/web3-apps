@@ -1,0 +1,49 @@
+{
+    "appCategoryInvalid": {
+      "description": "Gaming App"
+    },
+    "appCategoryData": [
+      {
+        "categoryId": {
+          "S": "yrsRAe9XD20eWpHxjnGr3"
+        },
+        "active": {
+          "BOOL": true
+        },
+        "updated": {
+          "N": "1648008315086"
+        },
+        "created": {
+          "N": "1648008315086"
+        },
+        "description": {
+          "S": "amy description32"
+        },
+        "name": {
+          "S": "Category Name"
+        }
+      },
+      {
+        "categoryId": {
+          "S": "Hv51tn1OanSKyynvAIpMg"
+        },
+        "active": {
+          "BOOL": true
+        },
+        "updated": {
+          "N": "1648117126275"
+        },
+        "created": {
+          "N": "1648117126275"
+        },
+        "description": {
+          "S": "This is Ashas's Category who is Shift 3 Backend Developer"
+        },
+        "name": {
+          "S": "Ashas's Category"
+        }
+      }
+    ],
+    "keyword_upto_50":"asdfasdfkjasklfjlksajdfjkasklfjaslkfjsafjklajsdlkfjlkasdfkljsakldjflkjasdflkjsalfkjasdlkfjlask",
+    "categories_upto_50":"adsfasdfsadfiushfisahfkasjhfhashfhsafhsafhasdofihasdfohsadhfkjsadhfkjsahfkjsdhafksadfjjsafkjaslfjasdfasfasdfasdfasdfasfasf"
+  }

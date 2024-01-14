@@ -1,0 +1,39 @@
+listFilesByFolder:
+  handler: lambda/listFilesByFolder/index.handler
+  description: "List of files by folder"
+  events:
+    - httpApi:
+        path: /wallets/{walletId}/storage/{folderId}/files/list
+        method: get
+        authorizer:
+          type: request
+          id: !ImportValue NearGatewayAuthorizerId
+  environment:
+    TABLE_NAME_FILES: near-files
+    TABLE_NAME_WALLETS: near-wallets
+    CLOUDFRONT_URL: ${self:custom.cdn.url.${self:provider.stage}}
+    CLOUDFRONT_SECRET_NAME: ${self:custom.file-service.cloudfront.secret-name}
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+      Resource:
+        - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/near-wallets
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+      Resource:
+        - ${self:custom.file-service.dynamodb.files.arn}
+        - ${self:custom.file-service.dynamodb.files.arn}/*
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+      Resource:
+        - ${self:custom.file-service.dynamodb.storage.arn}
+        - ${self:custom.file-service.dynamodb.storage.arn}/*
+    - Effect: Allow
+      Action:
+        - secretsmanager:GetSecretValue
+      Resource:
+        - arn:aws:secretsmanager:${aws:region}:${aws:accountId}:secret:/storage-service/cloudfront/signers*

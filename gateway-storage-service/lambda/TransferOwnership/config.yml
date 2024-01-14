@@ -1,0 +1,40 @@
+TransferOwnership:
+  handler: lambda/TransferOwnership/index.handler
+  description: "lamda function to transfer the ownership of a file to another wallet"
+  memorySize: 512
+  timeout: 10
+  environment:
+    TABLE_NAME_STORAGE_DATA: ${self:custom.dynamodb.StorageDataTable.name}
+    TABLE_NAME_WALLETS_DATA: ${self:custom.dynamodb.WalletsDataTable.name}
+    IAM_ROLE_ARN_WALLET_CROSS_ACCOUNT: ${self:custom.iam.WalletsCrossAcccountRole.arn}
+    BUCKET_NAME_STORAGE_DATA: ${self:custom.s3.StorageBucket.name}
+  events:
+    - http:
+        path: /wallets/{wId}/storage/files/{fileId}/ownership
+        method: put
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:UpdateItem
+        - dynamodb:PutItem
+        - dynamodb:GetItem
+        - dynamodb:DeleteItem
+        - dynamodb:Query
+      Resource:
+        - ${self:custom.dynamodb.StorageDataTable.arn}
+        - ${self:custom.dynamodb.StorageDataTable.arn}/*
+    - Effect: Allow
+      Action:
+        - sts:AssumeRole
+      Resource:
+        - ${self:custom.iam.WalletsCrossAcccountRole.arn}      
+    - Effect: Allow
+      Action:
+        - s3:CopyObject
+        - s3:PutObject
+        - s3:GetObject
+        - s3:DeleteObject
+      Resource:
+        - ${self:custom.s3.StorageBucket.arn}
+        - ${self:custom.s3.StorageBucket.arn}/*

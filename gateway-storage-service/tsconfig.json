@@ -1,0 +1,3 @@
+{
+  "extends": "@nearprime/eslint-config-serverless/tsconfig.json"
+}

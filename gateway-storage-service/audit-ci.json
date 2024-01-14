@@ -1,0 +1,7 @@
+{
+  "allowlist": ["minimist", "lodash"],
+  "package-manager": "yarn",
+  "output-format": "text",
+  "show-found": false,
+  "moderate": true
+}

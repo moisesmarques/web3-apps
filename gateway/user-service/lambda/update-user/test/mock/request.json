@@ -1,0 +1,75 @@
+{
+    "test1Event": {
+        "body": {
+            "firstName": "Mige",
+            "lastName": "Dev",
+            "email": "migele9661@vapaka.com"
+        },
+        "pathParameters":{},
+        "headers": {}
+    },
+    "test2Event": {
+        "body": {
+            "firstName": "Mige",
+            "lastName": "Dev",
+            "email": "migele9661@vapaka.com"
+        },
+        "pathParameters":{"userId": "login"},
+        "headers": {"Authorization": "eyJhbGciOiJIUzI1NiIsInR5"}
+    },
+    "test3Event": {
+        "body": {
+            "firstName": "Mige",
+            "lastName": "Dev",
+            "email": "migele9661@vapaka.com"
+        },
+        "pathParameters":{"userId": "12345"},
+        "headers": {"Authorization": ""}
+    },
+    "test4Event": {
+        "body": {
+            "firstName": "Mige",
+            "lastName": "Dev",
+            "email": "migele9661@vapaka.com"
+        },
+        "pathParameters":{"userId": "12345"},
+        "headers": {
+            "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGVkIjoxNjQ2MTMxMTMyNjkzLCJzdGF0dXMiOiJhY3RpdmUiLCJpc1Bob25lVmVyaWZpZWQiOmZhbHNlLCJpc0VtYWlsVmVyaWZpZWQiOmZhbHNlLCJmaXJzdE5hbWUiOiJBQSIsImxhc3ROYW1lIjoiQkIiLCJlbWFpbCI6Im5ubngtVVNFUi1zaWdudXBzNzk5QG1haWxpbmF0b3IuY29tIiwicGhvbmUiOiIrOTE4NzMzOTg4OTkwIiwiY291bnRyeUNvZGUiOiIrOTEiLCJ1c2VySWQiOiJodlJmbWg5WUlNTkg1ZUt0T1Y0R1giLCJpYXQiOjE2NDYxMzExMzMsImV4cCI6MTY0NjEzMTQzM30.Mcc5l7VL2qCoPUTDBOtTAhjxglT7o7STwPzxUhPj9KE"
+        }
+    },
+    "test5Event": {
+        "body": {
+            "firstName": "Mige",
+            "lastName": "Dev",
+            "email": "migele9661@vapaka.com"
+        },
+        "pathParameters":{"userId": "12345"},
+        "headers": {
+            "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGVkIjoxNjQ2MTMxMTMyNjkzLCJzdGF0dXMiOiJhY3RpdmUiLCJpc1Bob25lVmVyaWZpZWQiOmZhbHNlLCJpc0VtYWlsVmVyaWZpZWQiOmZhbHNlLCJmaXJzdE5hbWUiOiJBQSIsImxhc3ROYW1lIjoiQkIiLCJlbWFpbCI6Im5ubngtVVNFUi1zaWdudXBzNzk5QG1haWxpbmF0b3IuY29tIiwicGhvbmUiOiIrOTE4NzMzOTg4OTkwIiwiY291bnRyeUNvZGUiOiIrOTEiLCJ1c2VySWQiOiJodlJmbWg5WUlNTkg1ZUt0T1Y0R1giLCJpYXQiOjE2NDYxMzExMzMsImV4cCI6MTY0NjEzMTQzM30.Mcc5l7VL2qCoPUTDBOtTAhjxglT7o7STwPzxUhPj9KE"
+        }
+    },
+    "test6Event": {
+        "body": {
+            "firstName": "Mige",
+            "lastName": "Dev",
+            "phone": "9999999999",
+            "countryCode": "+91"
+        },
+        "pathParameters":{"userId": "12345"},
+        "headers": {
+            "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGVkIjoxNjQ2MTMxMTMyNjkzLCJzdGF0dXMiOiJhY3RpdmUiLCJpc1Bob25lVmVyaWZpZWQiOmZhbHNlLCJpc0VtYWlsVmVyaWZpZWQiOmZhbHNlLCJmaXJzdE5hbWUiOiJBQSIsImxhc3ROYW1lIjoiQkIiLCJlbWFpbCI6Im5ubngtVVNFUi1zaWdudXBzNzk5QG1haWxpbmF0b3IuY29tIiwicGhvbmUiOiIrOTE4NzMzOTg4OTkwIiwiY291bnRyeUNvZGUiOiIrOTEiLCJ1c2VySWQiOiJodlJmbWg5WUlNTkg1ZUt0T1Y0R1giLCJpYXQiOjE2NDYxMzExMzMsImV4cCI6MTY0NjEzMTQzM30.Mcc5l7VL2qCoPUTDBOtTAhjxglT7o7STwPzxUhPj9KE"
+        }
+    },
+    "test7Event": {
+        "body": {
+            "firstName": "Mige",
+            "lastName": "Dev",
+            "phone": "9999999999",
+            "countryCode": "+91"
+        },
+        "pathParameters":{"userId": "12345"},
+        "headers": {
+            "Authorization": "eyJhbGciOiJIUzzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGVkIjoxNjQ2MTMxMTMyNjkzLCJzdGF0dXMiOiJhY3RpdmUiLCJpc1Bob25lVmVyaWZpZWQiOmZhbHNlLCJpc0VtYWlsVmVyaWZpZWQiOmZhbHNlLCJmaXJzdE5hbWUiOiJBQSIsImxhc3ROYW1lIjoiQkIiLCJlbWFpbCI6Im5ubngtVVNFUi1zaWdudXBzNzk5QG1haWxpbmF0b3IuY29tIiwicGhvbmUiOiIrOTE4NzMzOTg4OTkwIiwiY291bnRyeUNvZGUiOiIrOTEiLCJ1c2VySWQiOiJodlJmbWg5WUlNTkg1ZUt0T1Y0R1giLCJpYXQiOjE2NDYxMzExMzMsImV4cCI6MTY0NjEzMTQzM30.Mcc5l7VL2qCoPUTDBOtTAhjxglT7o7STwPzxUhPj9KE"
+        }
+    }
+}

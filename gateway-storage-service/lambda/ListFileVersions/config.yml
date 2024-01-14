@@ -1,0 +1,38 @@
+ListFileVersions:
+  handler: lambda/ListFileVersions/index.handler
+  description: "List all versions of a file on S3"
+  memorySize: 256
+  timeout: 5
+  environment:
+    TABLE_NAME_STORAGE_DATA: ${self:custom.dynamodb.StorageDataTable.name}
+    SECRET_ARN_CLOUDFRONT_CDN_SIGNING_KEY: ${self:custom.secretsManager.CloudFrontCdnSigningKey.arn}
+    CLOUDFRONT_URL: cdn.${self:provider.stage}.${self:custom.defaults.hostedZoneSuffix}
+    STORAGEBUCKET_NAME: ${self:custom.s3.StorageBucket.name}
+    REGION: ${self:provider.region}
+  events:
+    - http:
+        path: /wallets/{wId}/storage/files/{fileId}/versions
+        method: get
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+      Resource:
+        - ${self:custom.dynamodb.StorageDataTable.arn}
+        - ${self:custom.dynamodb.StorageDataTable.arn}/*
+    - Effect: Allow
+      Action:
+        - s3:ListBucketVersions
+      Resource:
+        - ${self:custom.s3.StorageBucket.arn}
+    - Effect: Allow
+      Action:
+        - secretsmanager:GetSecretValue
+      Resource:
+        - ${self:custom.secretsManager.CloudFrontCdnSigningKey.arn}
+    - Effect: Allow
+      Action:
+        - kms:Decrypt
+      Resource:
+        - ${self:custom.kms.DefaultKMS.arn}

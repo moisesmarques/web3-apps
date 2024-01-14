@@ -1,0 +1,95 @@
+service: fiat-token-cron-service
+frameworkVersion: "3"
+
+plugins:
+  - serverless-dynamodb-local
+  - serverless-offline
+  - serverless-webpack
+
+package:
+  individually: true
+  excludeDevDependencies: true
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  lambdaHashingVersion: 20201221
+  region: ${file(../serverless-config.json):region}
+  apiGateway:
+    # Attach to an externally created REST API via its ID:
+    restApiId: ${ssm:/rest-service/apiGateway/restApi/id}
+    # Root resource ID, represent as / path
+    restApiRootResourceId: ${ssm:/rest-service/apiGateway/restApi/rootResourceId}    
+  environment:
+    DYNAMODB_FIAT_TOKENS_TABLE: 'near-fiat-tokens'
+    SECRET_KEY: ${file(../serverless-config.json):SECRET_KEY}
+  httpApi:
+    id: !ImportValue NearGatewayHttpApiId
+  iam:
+    role:
+      statements:
+        - Effect: 'Allow'
+          Action:
+            - 'dynamodb:Query'
+            - 'dynamodb:Scan'
+            - 'dynamodb:PutItem'
+            - 'dynamodb:UpdateItem'
+            - 'dynamodb:GetItem'
+          Resource:
+            - 'arn:aws:dynamodb:*:*:*'
+            - 'arn:aws:dynamodb:*:*:*/*/index/*'
+
+custom:
+#  dynamodb:
+#    stages:
+#      - dev
+#    start:
+#      port: 8000
+#      inMemory: true
+#      migrate: true # create tables on start
+  webpack:
+    webpackConfig: 'webpack.config.js'
+    packager: 'yarn'
+    excludeFiles: /**/*.test.js
+    includeModules:
+      forceExclude:
+        - aws-sdk
+    packagerOptions:
+      scripts:
+        - yarn autoclean --force
+functions:
+  create-fiat-token:
+    handler: create.handler
+    events:
+      - httpApi:
+          path: /fiat
+          method: post
+          authorizer:            
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+  update-fiat-token-price:
+    handler: update.handler
+    events:
+      - schedule: rate(1 minute)
+  get-fiat-token-price:
+    handler: get.handler
+    events:
+      - httpApi:
+          path: /fiat/{symbol}
+          method: get
+
+#resources: # CloudFormation template syntax from here on.
+#  Resources:
+#   NearApps:
+#     Type: AWS::DynamoDB::Table
+#     Properties:
+#       TableName: near-fiat-tokens
+#       AttributeDefinitions:
+#         - AttributeName: symbol
+#           AttributeType: S
+#       KeySchema:
+#         - AttributeName: symbol
+#           KeyType: HASH
+#       ProvisionedThroughput:
+#         ReadCapacityUnits: 1
+#         WriteCapacityUnits: 1

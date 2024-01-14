@@ -1,0 +1,222 @@
+service: app-service
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  stage: dev
+  runtime: nodejs14.x
+  region: ${file(../serverless-config.json):region}
+  apiGateway:
+    # Attach to an externally created REST API via its ID:
+    restApiId: ${ssm:/rest-service/apiGateway/restApi/id}
+    # Root resource ID, represent as / path
+    restApiRootResourceId: ${ssm:/rest-service/apiGateway/restApi/rootResourceId}
+  environment:
+    APP_LINK_BASE_URL: "APP_LINK_BASE_URL"
+    DYNAMO_APP_ACTION_MAPPING_TABLE: "near-app-actions-mapping"
+    DYNAMODB_WALLET_TABLE: near-wallets    
+    DYNAMO_APP_ACTION_TABLE: "near-app-actions-master"
+    DYNAMO_APP_CONNECTED_APPS: "near-connected-apps"
+    SECRET_KEY: ${file(../serverless-config.json):SECRET_KEY}
+    TOKEN_EXPIRY_IN_MILLISECONDS: '1d'
+    DEV_BASEURL: ${file(../serverless-config.json):DEV_BASE_URL}
+    PROD_BASEURL: ${file(../serverless-config.json):PROD_BASE_URL}
+    TABLE_NEAR_APPS: "near-apps"
+    DYNAMO_CONTACT_TABLE: "near-contacts"
+  httpApi:
+    id: !ImportValue NearGatewayHttpApiId
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - dynamodb:BatchGet*
+            - dynamodb:DescribeStream
+            - dynamodb:DescribeTable
+            - dynamodb:Get*
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:BatchWrite*
+            - dynamodb:CreateTable
+            - dynamodb:Delete*
+            - dynamodb:Update*
+            - dynamodb:PutItem
+            - ssm:DescribeParameters
+            - ssm:GetParameter
+            - ssm:GetParameters
+            - ses:SendEmail
+          Resource:
+            - "arn:aws:dynamodb:*:*:*"
+            - "arn:aws:ses:*"
+            - 'arn:aws:ssm:*' 
+
+functions:
+  apps-list:
+    handler: list.main
+    events:
+      - httpApi:
+          path: /apps
+          method: get
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+  apps-create:
+    handler: create.main
+    events:
+      - httpApi:
+          path: /apps
+          method: post
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+#      - http:
+#          path: /apps
+#          method: get
+#          authorizer:
+#            name: ${self:service}-JWTAuthorizer
+#            type: request
+#            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  apps-get:
+    handler: get.main
+    events:
+      - httpApi:
+          path: /apps/{appId}
+          method: get
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+#      - http:
+#          path: /apps/{appId}
+#          method: get
+#          authorizer:
+#            name: ${self:service}-JWTAuthorizer
+#            type: request
+#            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  apps-list-activity-get:
+    handler: list-app-activity.main
+    events:
+      - httpApi:
+          path: /apps/activity/{appId}
+          method: get
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+  apps-list-actions-get:
+    handler: list-app-actions.main
+    events:
+      - httpApi:
+          path: /apps/actions/{appId}
+          method: get
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId          
+  apps-list-connected:
+    handler: list-connected-apps.handler
+    events:
+      - httpApi:
+          path: /apps/connected
+          method: get
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+
+#      - http:
+#          path: /apps/activity/{appId}
+#          method: get
+#          authorizer:
+#            name: ${self:service}-JWTAuthorizer
+#            type: request
+#            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  apps-share:
+    handler: share.main
+    events:
+      - httpApi:
+          path: /apps/share
+          method: post
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+#      - http:
+#          path: /apps/share
+#          method: post
+#          authorizer:
+#            name: ${self:service}-JWTAuthorizer
+#            type: request
+#            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  apps-delete:
+    handler: delete.handler
+    events:
+      - httpApi:
+          path: /apps/delete/{appId}
+          method: delete
+  apps-retrieve-by-category:
+    handler: getByCategory.main
+    events:
+      - httpApi:
+          path: /apps/category
+          method: get
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+  apps-connect:
+    handler: connect.handler
+    events:
+      - httpApi:
+          path: /apps/connect
+          method: post
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+  apps-remove-connected:
+    handler: remove-app-connected.handler
+    events:
+      - httpApi:
+          path: /apps/connected/{appId}
+          method: delete
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+
+
+plugins:
+  - serverless-offline
+  - serverless-dynamodb-local
+  - serverless-webpack
+package:
+  individually: true
+  excludeDevDependencies: true
+
+custom:
+  webpack:
+    webpackConfig: 'webpack.config.js'
+    packager: 'yarn'
+    excludeFiles: /**/*.test.js
+    includeModules:
+      forceExclude:
+        - aws-sdk
+    packagerOptions:
+      scripts:
+        - yarn autoclean --force
+#   dynamodb:
+#     stages: 
+#       - dev
+#     start: 
+#       port: 8000
+#       inMemory: false
+#       migrate: true
+
+# resources: # CloudFormation template syntax from here on.
+#   Resources:
+#     NearApps:
+#       Type: AWS::DynamoDB::Table
+#       Properties:
+#         TableName: near-apps
+#         AttributeDefinitions:
+#           - AttributeName: appId
+#             AttributeType: S
+#         KeySchema:
+#           - AttributeName: appId
+#             KeyType: HASH
+#         ProvisionedThroughput:
+#           ReadCapacityUnits: 1
+#           WriteCapacityUnits: 1

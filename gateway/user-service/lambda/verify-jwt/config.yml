@@ -1,0 +1,13 @@
+verify-jwt:
+  handler: lambda/verify-jwt/index.handler
+  description: 'Validate JWT tokens'
+  events:
+    - httpApi:
+        path: /users/verify-jwt
+        method: post
+    # - http:
+    #     path: /users/verify-jwt
+    #     method: post
+    #     authorizer:
+    #       type: request
+    #       arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}

@@ -1,0 +1,45 @@
+CopyFile:
+  handler: lambda/CopyFile/index.handler
+  description: "lambda function to create a copy of file given fileId"
+  memorySize: 512
+  timeout: 10
+  environment:
+    TABLE_NAME_STORAGE_DATA: ${self:custom.dynamodb.StorageDataTable.name}
+    TABLE_NAME_WALLETS_DATA: ${self:custom.dynamodb.WalletsDataTable.name}
+    BUCKET_NAME_STORAGE_DATA: ${self:custom.s3.StorageBucket.name}
+    SECRET_ARN_CLOUDFRONT_CDN_SIGNING_KEY: ${self:custom.secretsManager.CloudFrontCdnSigningKey.arn}
+    CLOUDFRONT_URL: cdn.${self:provider.stage}.${self:custom.defaults.hostedZoneSuffix}
+    REGION: ${self:provider.region}
+  events:
+    - http:
+        path: /wallets/{wId}/storage/files/{fileId}/copy
+        method: put
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:UpdateItem
+        - dynamodb:PutItem
+        - dynamodb:GetItem
+        - dynamodb:Query
+      Resource:
+        - ${self:custom.dynamodb.StorageDataTable.arn}
+        - ${self:custom.dynamodb.StorageDataTable.arn}/*    
+    - Effect: Allow
+      Action:
+        - s3:CopyObject
+        - s3:PutObject
+        - s3:GetObject
+      Resource:
+        - ${self:custom.s3.StorageBucket.arn}
+        - ${self:custom.s3.StorageBucket.arn}/*
+    - Effect: Allow
+      Action:
+        - secretsmanager:GetSecretValue
+      Resource:
+        - ${self:custom.secretsManager.CloudFrontCdnSigningKey.arn}  
+    - Effect: Allow
+      Action:
+        - kms:Decrypt
+      Resource:
+        - ${self:custom.kms.DefaultKMS.arn}      

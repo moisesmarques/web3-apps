@@ -1,0 +1,23 @@
+{
+  "name": "createfolder",
+  "version": "0.0.1",
+  "description": "Endpoint to create new Folder",
+  "scripts": {
+    "npm:upgrade": "ncu -u && yarn --production",
+    "npm:check": "ncu"
+  },
+  "dependencies": {
+    "@types/uuid": "^8.3.4",
+    "uuid": "^8.3.2"
+  },
+  "peerDependencies": {
+    "@nearprime/client-dynamodb": "0.x",
+    "@nearprime/lambda-powertools-logger": "0.x",
+    "@nearprime/lambda-powertools-wrapper": "0.x",
+    "source-map-support": "0.x",
+    "@nearprime/core": "0.x",
+    "@nearprime/gateway-data-model": "0.x",
+    "@nearprime/lambda-middleware-http-parser": "0.x"
+  },
+  "license": "MIT"
+}

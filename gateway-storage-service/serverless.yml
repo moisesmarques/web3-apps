@@ -1,0 +1,95 @@
+service: ${self:custom.serviceNamePrefix}-service
+configValidationMode: error
+
+package: ${file(./node_modules/@nearprime/serverless/serverless.yml):package}
+plugins: ${file(./node_modules/@nearprime/serverless/serverless.yml):plugins}
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-1'}
+  timeout: 5
+  logRetentionInDays: ${self:custom.defaults.logRetentionInDays.${self:provider.stage}}
+  versionFunctions: false
+  tracing:
+    lambda: true
+  stackTags:
+    ServiceName: ${self:service}
+  layers: ${file(./node_modules/@nearprime/serverless/serverless.yml):provider.layers}
+
+  apiGateway:
+    # Attach to an externally created REST API via its ID:
+    restApiId: ${ssm:/${self:custom.serviceNamePrefix}-infra/apiGateway/APIGateway/restApiId}
+    restApiRootResourceId: ${ssm:/${self:custom.serviceNamePrefix}-infra/apiGateway/APIGateway/rootResourceId}
+
+  iam: ${file(./node_modules/@nearprime/serverless/serverless.yml):provider.iam}
+  # iam: 
+  #   WalletsCrossAcccountRole:
+  #     arn: arn:aws:iam::${self:custom.defaults.accounts.${self:provider.stage}.gateway-wallet}:role/gateway-wallet-${self:provider.stage}-CrossAccountRole
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    STAGE: ${self:provider.stage}
+    LOG_LEVEL: ${file(./config/config.${self:provider.stage}.json):LOG_LEVEL}
+    LOG_SAMPLE_RATE: ${file(./config/config.${self:provider.stage}.json):LOG_SAMPLE_RATE}
+    INTERCOM_EVENT_BUS: arn:aws:events:${aws:region}:${self:custom.defaults.accounts.${self:provider.stage}.gateway-intercom}:event-bus/gateway-intercom-${self:provider.stage}-MainEventBus
+    DEFAULT_EVENT_BUS: ${ssm:/${self:custom.serviceNamePrefix}-infra/eventbridge/MainEventBus/arn}
+
+custom:
+  defaults: ${file(./node_modules/@nearprime/serverless/serverless.yml):custom}
+  invokeLocalEnvironment: ${file(./invokeLocal.env)}
+  alerts: ${file(./node_modules/@nearprime/serverless/serverless.yml):custom.alerts}
+  scripts: ${file(./node_modules/@nearprime/serverless/serverless.yml):custom.scripts}
+  webpack: ${file(./node_modules/@nearprime/serverless/serverless.yml):custom.webpack}
+
+  serviceNamePrefix: gateway-storage
+
+  dynamodb:
+    StorageDataTable:
+      name: ${ssm:/${self:custom.serviceNamePrefix}-infra/dynamodb/DataTable/name}
+      arn: ${ssm:/${self:custom.serviceNamePrefix}-infra/dynamodb/DataTable/arn}
+      streamArn: ${ssm:/${self:custom.serviceNamePrefix}-infra/dynamodb/DataTable/streamArn}
+    WalletsDataTable:
+      name: ${ssm:/gateway-wallet-infra/dynamodb/DataTable/name}
+      arn: ${ssm:/gateway-wallet-infra/dynamodb/DataTable/arn}
+      streamArn: ${ssm:/gateway-wallet-infra/dynamodb/DataTable/streamArn}
+  secretsManager:
+    CloudFrontCdnSigningKey:
+      arn: ${ssm:/gateway-operation/secretsmanager/CloudFrontCdnSigningKey/arn}
+  s3:
+    StorageBucket:
+      name: ${ssm:/${self:custom.serviceNamePrefix}-infra/s3/StorageBucket/name}
+      arn: ${ssm:/${self:custom.serviceNamePrefix}-infra/s3/StorageBucket/arn}
+  kms:
+    DefaultKMS:
+      arn: ${ssm:/gateway-operation/kms/DefaultKMS/arn}
+  iam: 
+    WalletsCrossAcccountRole:
+      arn: arn:aws:iam::${self:custom.defaults.accounts.${self:provider.stage}.gateway-wallet}:role/gateway-wallet-${self:provider.stage}-CrossAccountRole
+    
+
+functions:
+  - ${file(./lambda/GetFolder/config.yml)}
+  - ${file(./lambda/CreateFolder/config.yml)}
+  - ${file(./lambda/DeleteFolders/config.yml)}
+  - ${file(./lambda/ListChildrenFolders/config.yml)}
+  - ${file(./lambda/CreateFile/config.yml)}
+  - ${file(./lambda/ListFileVersions/config.yml)}
+  - ${file(./lambda/GetFile/config.yml)}
+  - ${file(./lambda/TransferOwnership/config.yml)}
+  - ${file(./lambda/DeleteFiles/config.yml)}
+  - ${file(./lambda/ListChildrenFiles/config.yml)}
+  - ${file(./lambda/UpdateFolderAttributes/config.yml)}
+  - ${file(./lambda/CopyFile/config.yml)}
+  - ${file(./lambda/UpdateFileAttributes/config.yml)}
+  - ${file(./lambda/ListFilesSharedWithMe/config.yml)}
+  - ${file(./lambda/ListSharedFiles/config.yml)}
+  - ${file(./lambda/ShareFile/config.yml)}
+  - ${file(./lambda/UnShareFile/config.yml)}
+
+resources:
+  - Description: Stack holding Stateless resources for gateway-storage
+#  - ${file(./dynamodb/resources.yml)}
+#  - ${file(./s3/resources.yml)}
+#  - ${file(./sns/resources.yml)}
+#  - ${file(./sqs/resources.yml)}

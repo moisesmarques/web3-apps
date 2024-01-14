@@ -1,0 +1,198 @@
+service: transactionteam10-service
+
+frameworkVersion: "3"
+
+package:
+  individually: true
+  excludeDevDependencies: true
+  patterns:
+    - '!node-cli-layer.zip'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: ${file(../serverless-config.json):region}
+  stage: ${opt:stage, 'dev'}
+  timeout: 30
+  apiGateway:
+    # Attach to an externally created REST API via its ID:
+    restApiId: ${ssm:/rest-service/apiGateway/restApi/id}
+    # Root resource ID, represent as / path
+    restApiRootResourceId: ${ssm:/rest-service/apiGateway/restApi/rootResourceId}
+  httpApi:
+    id: !ImportValue NearGatewayHttpApiId
+  environment:
+    STAGE: ${self:provider.stage}
+    REGION: ${aws:region}
+    CONTRACTS_SERVICE_POST_SQS_MAINNET: 'https://sqs.us-east-2.amazonaws.com/015753658222/nearPendingQueue.fifo'
+    CONTRACTS_SERVICE_POST_SQS_TESTNET: 'https://sqs.us-east-2.amazonaws.com/015753658222/nearPendingQueueTest.fifo'
+    HASH_URL: 'https://api.dev.nearlogin.io/hashes'
+    CONTRACT_MINT_NFT_MAINNET: "nft.nearapps.near"
+    CONTRACT_MINT_NFT_TESTNET: "nft.naps.testnet"
+    CONTRACT_CREATE_ACCOUNT_MAINNET: 'near'
+    CONTRACT_CREATE_ACCOUNT_TESTNET: 'testnet'
+    CONTRACT_SEND_MAINNET: 'send-near.nearapps.near'
+    CONTRACT_SEND_TESTNET: 'send-near.naps.testnet'
+    CONTRACT_USERID_MAINNET: "v2.nearapps.near"
+    CONTRACT_USERID_TESTNET: "moisesmarques.testnet"
+    NETWORK_MAINNET: 'mainnet'
+    NETWORK_TESTNET: 'testnet'
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - dynamodb:BatchGet*
+            - dynamodb:DescribeStream
+            - dynamodb:DescribeTable
+            - dynamodb:Get*
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:BatchWrite*
+            - dynamodb:CreateTable
+            - dynamodb:Delete*
+            - dynamodb:Update*
+            - dynamodb:PutItem
+            - ssm:DescribeParameters
+            - ssm:GetParameter
+            - ssm:GetParameters
+          Resource:
+            - "arn:aws:dynamodb:*:*:*"
+            - "arn:aws:dynamodb:*:*:*/*/index/*"
+            - "arn:aws:ssm:*"
+        - Effect: "Allow"
+          Action:
+            - "lambda:InvokeFunction"
+            - "lambda:InvokeAsync"
+          Resource: "*"
+        - Effect: Allow
+          Action:
+            - sqs:*
+          Resource: "*"
+        - Effect: "Allow"
+          Action:
+            - logs:*
+            - ssm:*
+          Resource: "*"
+        - Effect: Allow
+          Action:
+            - secretsmanager:*
+          Resource: "*"
+
+functions:
+  transactions-list:
+    handler: list.main
+    events:
+      - httpApi:
+          path: /transactions/list
+          method: get
+  #      - http:
+  #          path: /transactions/list
+  #          method: get
+  #          authorizer:
+  #            name: ${self:service}-JWTAuthorizer
+  #            type: request
+  #            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  transactions-get:
+    handler: get.main
+    events:
+      - httpApi:
+          path: /transactions/{transactionId}
+          method: get
+  #      - http:
+  #          path: /transactions/{transactionId}
+  #          method: get
+  #          authorizer:
+  #            name: ${self:service}-JWTAuthorizer
+  #            type: request
+  #            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  transactions-create:
+    handler: create.main
+    events:
+      - httpApi:
+          path: /transactions
+          method: post
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+    #      - http:
+    #          path: /transactions
+    #          method: post
+    #          authorizer:
+    #            name: ${self:service}-JWTAuthorizer
+    #            type: request
+    #            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+    layers:
+      - arn:aws:lambda:us-east-1:${aws:accountId}:layer:near-cli:5
+
+plugins:
+  - serverless-offline
+  #  - serverless-bundle
+  #  - serverless-dotenv-plugin
+  #  - serverless-dynamodb-local
+  - serverless-webpack
+
+# resources:
+#   Resources:
+#     TransactionsCreatePermission:
+#       Type: AWS::Lambda::Permission
+#       Properties:
+#         Action: lambda:InvokeFunction
+#         FunctionName: !GetAtt TransactionsDashcreateLambdaFunction.Arn
+#         Principal: ${aws:accountId}
+
+
+# #This is just for testing locally, the devops teams is deploying the DynamoTables for us
+# resources:
+#   Resources:
+#     transactionsTable:
+#       Type: AWS::DynamoDB::Table
+#       Properties:
+#         TableName: near-transactions
+#         AttributeDefinitions:
+#           - AttributeName: transaction_id
+#             AttributeType: S
+#           - AttributeName: senderWalletId
+#             AttributeType: S
+#           - AttributeName: receiverWalletId
+#             AttributeType: S
+#         KeySchema:
+#           - AttributeName: transaction_id
+#             KeyType: HASH
+#         GlobalSecondaryIndexes:
+#           - IndexName: senderWalletId-Index
+#             KeySchema:
+#               - AttributeName: senderWalletId
+#                 KeyType: HASH
+#             Projection:
+#               ProjectionType: "ALL"
+#           - IndexName: receiverWalletId-Index
+#             KeySchema:
+#               - AttributeName: receiverWalletId
+#                 KeyType: HASH
+#             Projection:
+#               ProjectionType: "ALL"         
+#         BillingMode: PAY_PER_REQUEST
+
+custom:
+  webpack:
+    webpackConfig: 'webpack.config.js'
+    packager: 'yarn'
+    excludeFiles: /**/*.test.js
+    includeModules:
+      forceExclude:
+        - aws-sdk
+    packagerOptions:
+      scripts:
+        - yarn autoclean --force
+#   dynamodb:
+#     stages:
+#       - dev
+#     start:
+#       port: 8000
+#       inMemory: true
+#       heapInitial: 200m
+#       heapMax: 1g
+#       migrate: true
+#       seed: true
+#       convertEmptyValues: true

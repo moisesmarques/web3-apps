@@ -1,0 +1,48 @@
+{
+  "version": "2.0",
+  "routeKey": "PUT /wallets/{walletId}/storage/files/{fileId}/copy",
+  "rawPath": "/wallets/testWallet.testnet/storage/files/{fileId}/copy",
+  "rawQueryString": "",
+  "headers": {
+    "accept": "*/*",
+    "accept-encoding": "gzip, deflate, br",
+    "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cGRhdGVkIjoiMjAyMi0wMy0xMVQwNDoxMTozNy44MzdaIiwiY291bnRyeUNvZGUiOiIrMzMiLCJsYXN0TmFtZSI6IktoYWxmYSIsInVzZXJJZCI6IjlGMVNNVmJEQVQtaXVpVUlmeDZsXyIsInN0YXR1cyI6ImFjdGl2ZSIsImNyZWF0ZWQiOjE2NDY5NjMwNjQwMzEsImlzUGhvbmVWZXJpZmllZCI6ZmFsc2UsInBob25lIjoiNjU4MTgyNTI2IiwiZmlyc3ROYW1lIjoiQWRuZW5lIiwiaXNFbWFpbFZlcmlmaWVkIjpmYWxzZSwid0lkIjoidGVzdFdhbGxldC50ZXN0bmV0IiwiaWF0IjoxNjQ3NjQyODUxLCJleHAiOjE2NDc3MjkyNTF9.aM_6LV5GLGU66nkBXz85h2GrgwEQfr4ZTSQKKpbBevo",
+    "cache-control": "no-cache",
+    "content-length": "137",
+    "content-type": "application/json",
+    "host": "api.dev.nearlogin.io",
+    "postman-token": "38526a02-e461-4cdd-91bf-21be1c9e6c1c",
+    "user-agent": "PostmanRuntime/7.29.0",
+    "x-amzn-trace-id": "Root=1-623519b0-42a3ff2061fc8e45418138e7",
+    "x-forwarded-for": "54.86.50.139",
+    "x-forwarded-port": "443",
+    "x-forwarded-proto": "https"
+  },
+  "requestContext": {
+    "accountId": "227200131463",
+    "apiId": "bty54yixsa",
+    "authorizer": {
+      "lambda": null
+    },
+    "domainName": "api.dev.nearlogin.io",
+    "domainPrefix": "api",
+    "http": {
+      "method": "POST",
+      "path": "/wallets/testWallet.testnet/storage/files",
+      "protocol": "HTTP/1.1",
+      "sourceIp": "54.86.50.139",
+      "userAgent": "PostmanRuntime/7.29.0"
+    },
+    "requestId": "PNDznhcIoAMEMxw=",
+    "routeKey": "POST /wallets/{walletId}/storage/files",
+    "stage": "$default",
+    "time": "18/Mar/2022:23:45:52 +0000",
+    "timeEpoch": 1647647152547
+  },
+  "pathParameters": {
+    "wId": "testWallet.testnet",
+    "fileId": "2aed8083-f1ec-4b4d-9328-8de32b3d51eb"
+  },
+  "body": "{\n    \"receiverId\": \"eshwar.near\"\n}",
+  "isBase64Encoded": false
+}

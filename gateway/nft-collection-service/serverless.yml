@@ -1,0 +1,313 @@
+service: nft-collection-service
+frameworkVersion: '3'
+
+plugins:
+  - serverless-offline
+  - serverless-webpack
+
+package:
+  individually: true
+  excludeDevDependencies: true
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  lambdaHashingVersion: 20201221
+  region: ${file(../serverless-config.json):region}
+  apiGateway:
+    # Attach to an externally created REST API via its ID:
+    restApiId: ${ssm:/rest-service/apiGateway/restApi/id}
+    # Root resource ID, represent as / path
+    restApiRootResourceId: ${ssm:/rest-service/apiGateway/restApi/rootResourceId}
+  environment:
+    DYNAMODB_NFTS_TABLE: 'near-nfts'
+    DYNAMODB_NFT_COLLECTIONS_TABLE: 'near-nft-collections'
+    DYNAMODB_NFT_OFFERS_TABLE: 'near-nft-offers'
+    DYNAMODB_NFT_ACTIVITIES_TABLE: 'near-nft-activities'
+    DYNAMODB_NFT_SHARE_TABLE: 'near-nft-shares'
+    SECRET_KEY: ${file(../serverless-config.json):SECRET_KEY}
+  httpApi:
+    id: !ImportValue NearGatewayHttpApiId
+  iam:
+    role:
+      statements:
+        - Effect: 'Allow'
+          Action:
+            - 'dynamodb:Query'
+            - 'dynamodb:Scan'
+            - 'dynamodb:PutItem'
+            - 'dynamodb:UpdateItem'
+            - 'dynamodb:GetItem'
+            - 'dynamodb:BatchGetItem'
+            - 'dynamodb:BatchWriteItem'
+          Resource:
+            - 'arn:aws:dynamodb:*:*:*'
+            - 'arn:aws:dynamodb:*:*:*/*/index/*'
+
+functions:
+  retrieve-collections-by-owner:
+    handler: list.handler
+    events:
+      - httpApi:
+          path: /nfts/collections/list/{ownerId}
+          method: get
+  #      - http:
+  #          path: /nfts/collections/list/{ownerId}
+  #          method: get
+  #          authorizer:
+  #            name: ${self:service}-JWTAuthorizer
+  #            type: request
+  #            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  create-nft-collection:
+    handler: create.handler
+    events:
+      - httpApi:
+          path: /nfts/collections
+          method: post
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+  #      - http:
+  #          path: /nfts/collections
+  #          method: post
+  #          authorizer:
+  #            name: ${self:service}-JWTAuthorizer
+  #            type: request
+  #            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  update-nft-collection:
+    handler: update.handler
+    events:
+      - httpApi:
+          path: /nfts/collections/{nftCollectionId}
+          method: put
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+  #      - http:
+  #          path: /nfts/collections/{nftCollectionId}
+  #          method: put
+  #          authorizer:
+  #            name: ${self:service}-JWTAuthorizer
+  #            type: request
+  #            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  delete-nft-collection:
+    handler: delete.handler
+    events:
+      - httpApi:
+          path: /nfts/collections/{nftCollectionId}
+          method: delete
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+  #      - http:
+  #          path: /nfts/collections/{nftCollectionId}
+  #          method: delete
+  #          authorizer:
+  #            name: ${self:service}-JWTAuthorizer
+  #            type: request
+  #            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  get-nft-collection:
+    handler: get.handler
+    events:
+      - httpApi:
+          path: /nfts/collections/{nftCollectionId}
+          method: get
+  #      - http:
+  #          path: /nfts/collections/{nftCollectionId}
+  #          method: get
+  #          authorizer:
+  #            name: ${self:service}-JWTAuthorizer
+  #            type: request
+  #            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  list-all-collections:
+    handler: get-all-collection.handler
+    events:
+      - httpApi:
+          path: /nfts/collections
+          method: get
+  #      - http:
+  #          path: /nfts/collections
+  #          method: get
+  #          authorizer:
+  #            name: ${self:service}-JWTAuthorizer
+  #            type: request
+  #            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  set-price:
+    handler: price-limit.handler
+    events:
+      - httpApi:
+          path: /nfts/set-price-limit/{nftId}
+          method: post
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+  #      - http:
+  #          path: /nfts/set-price-limit/{nftId}
+  #          method: post
+  #          authorizer:
+  #            name: ${self:service}-JWTAuthorizer
+  #            type: request
+  #            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  make-token-offer:
+    handler: make-token-offer.handler
+    events:
+      - httpApi:
+          path: /nfts/make-token-offer/{nftId}
+          method: post
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+  #      - http:
+  #          path: /nfts/make-token-offer/{nftId}
+  #          method: post
+  #          authorizer:
+  #            name: ${self:service}-JWTAuthorizer
+  #            type: request
+  #            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  make-nft-offer:
+    handler: make-nft-offer.handler
+    events:
+      - httpApi:
+          path: /nfts/make-nft-offer/{nftId}
+          method: post
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+  #      - http:
+  #          path: /nfts/make-nft-offer/{nftId}
+  #          method: post
+  #          authorizer:
+  #            name: ${self:service}-JWTAuthorizer
+  #            type: request
+  #            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  list-offers-by-status:
+    handler: list-offers.handler
+    events:
+      - httpApi:
+          path: /nfts/offer/{status}/list/{nftId}
+          method: get
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+  #      - http:
+  #          path: /nfts/offer/{status}/list/{nftId}
+  #          method: get
+  #          authorizer:
+  #            name: ${self:service}-JWTAuthorizer
+  #            type: request
+  #            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  offer-accept-or-reject:
+    handler: handle-offer.handler
+    events:
+      - httpApi:
+          path: /nfts/handle/offer/{offerId}
+          method: patch
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+  #      - http:
+  #          path: /nfts/handle/offer/{offerId}
+  #          method: patch
+  #          authorizer:
+  #            name: ${self:service}-JWTAuthorizer
+  #            type: request
+  #            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  count-offer:
+    handler: counter-offer.handler
+    events:
+      - httpApi:
+          path: /nfts/count-offer/{nftId}
+          method: post
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+  #      - http:
+  #          path: /nfts/count-offer/{nftId}
+  #          method: post
+  #          authorizer:
+  #            name: ${self:service}-JWTAuthorizer
+  #            type: request
+  #            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  list-nft-activities:
+    handler: activities.handler
+    events:
+      - httpApi:
+          path: /nfts/{nftId}/activities
+          method: get
+  #      - http:
+  #          path: /nfts/{nftId}/activities
+  #          method: get
+  #          authorizer:
+  #            name: ${self:service}-JWTAuthorizer
+  #            type: request
+  #            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  create-nft-activity:
+    handler: create-nft-activity.handler
+    events:
+      - httpApi:
+          path: /nfts/activities
+          method: post
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+  #      - http:
+  #          path: /nfts/activities
+  #          method: post
+  #          authorizer:
+  #            name: ${self:service}-JWTAuthorizer
+  #            type: request
+  #            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  publish-token-offer:
+    handler: publish-token-offer.handler
+    events:
+      - httpApi:
+          path: /nfts/publish/token/offer/{nftId}
+          method: post
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+  #      - http:
+  #          path: /nfts/publish/token/offer/{nftId}
+  #          method: post
+  #          authorizer:
+  #            name: ${self:service}-JWTAuthorizer
+  #            type: request
+  #            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  publish-nft-offer:
+    handler: publish-nft-offer.handler
+    events:
+      - httpApi:
+          path: /nfts/publish/nft/offer/{nftId}
+          method: post
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+  #      - http:
+  #          path: /nfts/publish/nft/offer/{nftId}
+  #          method: post
+  #          authorizer:
+  #            name: ${self:service}-JWTAuthorizer
+  #            type: request
+  #            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+
+  nft-offer-period:
+    handler: offer-period.handler
+    events:
+      - httpApi:
+          path: /nfts/offer/{offerId}
+          method: get
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+
+custom:
+  webpack:
+    webpackConfig: 'webpack.config.js'
+    packager: 'yarn'
+    excludeFiles: /**/*.test.js
+    includeModules:
+      forceExclude:
+        - aws-sdk
+    packagerOptions:
+      scripts:
+        - yarn autoclean --force

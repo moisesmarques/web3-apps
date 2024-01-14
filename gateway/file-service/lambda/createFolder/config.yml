@@ -1,0 +1,36 @@
+createFolder:
+  handler: lambda/createFolder/index.handler
+  description: "Initiate file creation by generating a pre-signed S3 URL"
+  events:
+    - httpApi:
+        path: /wallets/{walletId}/storage/folders
+        method: post
+        authorizer:
+          type: request
+          id: !ImportValue NearGatewayAuthorizerId
+  environment:
+    TABLE_NAME_FOLDERS: near-storage
+    TABLE_NAME_WALLETS: near-wallets
+    PRIME_LAB_NAME_SPACE: '6ba7b810-9dad-11d1-80b4-00c04fd430c8'
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+      Resource:
+        - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/near-wallets
+        - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/near-storage
+    - Effect: Allow
+      Action:
+        - dynamodb:UpdateItem
+        - dynamodb:GetItem
+        - dynamodb:Query
+      Resource:
+        - ${self:custom.file-service.dynamodb.storage.arn}
+    - Effect: Allow
+      Action:
+        - s3:PutObject
+        - s3:PutObjectAcl
+        - s3:AbortMultipartUpload
+      Resource:
+        - Fn::Join: ["/", [!ImportValue FileServiceFilesBucketArn, "*"]]

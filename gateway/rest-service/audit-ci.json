@@ -1,0 +1,7 @@
+{
+  "allowlist": [1002401, 1002996, 1004036, 1004946, 1005512, 1006069],
+  "package-manager": "yarn",
+  "output-format": "text",
+  "show-found": false,
+  "moderate": true
+}

@@ -1,0 +1,46 @@
+{
+  "test1Response": {
+    "body": "{\"status\":false,\"message\":\"content should be JSON\"}",
+    "cookies": [],
+    "headers": {
+      "Access-Control-Allow-Credentials": true,
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json"
+    },
+    "statusCode": 400
+  },
+  "test2Response": {
+    "body": "{\"message\":\"walletName is a required field, \\\"refreshToken\\\" is required\"}",
+    "cookies": [],
+    "headers": {
+      "Access-Control-Allow-Credentials": true,
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json"
+    },
+    "statusCode": 400
+  },
+  "test3Response": {
+    "body": "{\"message\":\"Invalid user ID or does not exist\"}",
+    "cookies": [],
+    "headers": {
+      "Access-Control-Allow-Credentials": true,
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json"
+    },
+    "statusCode": 404
+  },
+  "test4Response": {
+    "body": "{\"jwtAccessToken\":\"jwtAccessTokenTestValue\",\"jwtRefreshToken\":\"jwtRefreshTokenTestValue\"}",
+    "cookies": [
+      "CloudFront-Policy=CloudFront-Policy_TEST_VALUE; Domain=undefined; Path=/rahul.testnet/; Secure; HttpOnly",
+      "CloudFront-Signature=CloudFront-Signature_TEST_VALUE; Domain=undefined; Path=/rahul.testnet/; Secure; HttpOnly",
+      "CloudFront-Key-Pair-Id=CloudFront-Key-Pair-Id_TEST_VALUE; Domain=undefined; Path=/rahul.testnet/; Secure; HttpOnly"
+    ],
+    "headers": {
+      "Access-Control-Allow-Credentials": true,
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json"
+    },
+    "statusCode": 201
+  }
+}

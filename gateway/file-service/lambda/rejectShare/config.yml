@@ -1,0 +1,33 @@
+rejectShare:
+  handler: lambda/rejectShare/index.handler
+  description: "Allows user to reject a permission access."
+  events:
+    - httpApi:
+        path: /wallets/{walletId}/storage/{fileId}/reject
+        method: post
+        authorizer:
+          type: request
+          id: !ImportValue NearGatewayAuthorizerId
+    - httpApi:
+        path: /wallets/{walletId}/files/{fileId}/reject
+        method: post
+        authorizer:
+          type: request
+          id: !ImportValue NearGatewayAuthorizerId
+  environment:
+    TABLE_NAME_FILES: ${self:custom.file-service.dynamodb.files.name}
+    TABLE_NAME_WALLETS: near-wallets
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:DeleteItem
+        - dynamodb:GetItem
+      Resource:
+        - ${self:custom.file-service.dynamodb.files.arn}
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+      Resource:
+        - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/near-wallets
+

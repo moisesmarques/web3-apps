@@ -1,0 +1,27 @@
+Resources:
+  DataOpenSearchService:
+    Type: AWS::OpenSearchService::Domain
+    Properties:
+      EngineVersion: 'OpenSearch_1.1'
+      ClusterConfig:
+        DedicatedMasterEnabled: false
+        InstanceCount: 2
+        ZoneAwarenessEnabled: false
+        InstanceType: t3.medium.search
+
+      EBSOptions:
+        EBSEnabled: true
+        VolumeType: gp2
+        VolumeSize: 20
+      AccessPolicies:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:
+              - es:*
+            Principal: "*"
+            Resource: "*"
+            Condition:
+              StringEquals:
+                aws:PrincipalOrgID:
+                  - o-rpavdz84pj

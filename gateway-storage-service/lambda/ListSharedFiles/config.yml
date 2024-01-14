@@ -1,0 +1,19 @@
+ListSharedFiles:
+  handler: lambda/ListSharedFiles/index.handler
+  description: "List shared files owned by a given walled Id"
+  memorySize: 512
+  timeout: 5
+  environment:
+    TABLE_NAME_STORAGE_DATA: ${self:custom.dynamodb.StorageDataTable.name}
+  events:
+    - http:
+        path: wallets/{wId}/storage/files/shared
+        method: get
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+      Resource:
+        - ${self:custom.dynamodb.StorageDataTable.arn}
+        - ${self:custom.dynamodb.StorageDataTable.arn}/*

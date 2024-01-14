@@ -1,0 +1,45 @@
+Resources:
+  StorageServiceCDNDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Comment: "Storage service cloudfront distribution"
+        Aliases:
+          - ${self:custom.cdn.subDomain.${self:provider.stage}}.cdn.nearlogin.io
+        PriceClass: PriceClass_100 # North America, Europe
+        Origins:
+          - Id:
+              Ref: StorageServiceFilesBucket
+            DomainName:
+              Fn::GetAtt: [StorageServiceFilesBucket, RegionalDomainName]
+            OriginCustomHeaders:
+              - HeaderName: Origin
+                HeaderValue: CloudFront
+            S3OriginConfig:
+              OriginAccessIdentity:
+                Fn::Join:
+                  - /
+                  - [origin-access-identity, cloudfront, {Ref: StorageServiceOriginAccessIdentity}]
+        DefaultCacheBehavior:
+          Compress: true
+          TargetOriginId:
+            Ref: StorageServiceFilesBucket
+          ViewerProtocolPolicy: "redirect-to-https"
+          ForwardedValues:
+            QueryString: false
+            Cookies:
+              Forward: none
+            Headers:
+              - Access-Control-Request-Headers
+              - Access-Control-Request-Method
+              # - Origin
+          AllowedMethods:
+            - GET
+            - HEAD
+            - OPTIONS
+        Enabled: true
+        HttpVersion: http2
+        ViewerCertificate:
+          AcmCertificateArn: !Ref StageRegionalSSLCertificate
+          SslSupportMethod: sni-only
+          MinimumProtocolVersion: TLSv1.2_2018

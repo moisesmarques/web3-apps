@@ -1,0 +1,26 @@
+Resources:
+######################################## API GATEWAY ###############################################
+  ApiGatewayRestApiIdSSM:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Description: REST API id for Near Gateway
+      Name: /rest-service/apiGateway/restApi/id
+      Type: 'String'
+      Value: !Ref ApiGatewayRestApi
+
+  ApiGatewayRestApiRootResourceIdSSM:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Description: Root resource ID for REST API of Near Gateway
+      Name: /rest-service/apiGateway/restApi/rootResourceId
+      Type: 'String'
+      Value: !GetAtt ApiGatewayRestApi.RootResourceId
+
+######################################## LAMBDA FUNCTION ###########################################
+  ApiGatewayAuthorizerLambdaFunctionSSM:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Description: JwtAuthorizer Lambda function arn
+      Name: /rest-service/lambda/JwtAuthorizer/arn
+      Type: 'String'
+      Value: !GetAtt JwtAuthorizerLambdaFunction.Arn

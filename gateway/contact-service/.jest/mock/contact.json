@@ -1,0 +1,178 @@
+{
+  "contactDetail": {
+    "contactId": "12XCAAASHHAJ23JS",
+    "userId": "12XCAAASHHAJ23JS",
+    "profilePhotoPath": "https://file.appserver.com/abcnft.png",
+    "fullName": "John Doe",
+    "firstName": "John",
+    "contactWalletId": "12XCAAASHHAJ23JS",
+    "phone": [
+      "+255611919191"
+    ],
+    "email": [
+      "johndoe@test.com"
+    ],
+    "status": "Accepted",
+    "created": 1641355923848,
+    "updated": 1641355923848
+  },
+  "contactDetail1": {
+    "contactId": "12XCAAASHHAJ23JS",
+    "userId": "12XCAAASHHAJ23JS",
+    "profilePhotoPath": "https://file.appserver.com/abcnft.png",
+    "fullName": "John Doe",
+    "firstName": "Johnny",
+    "contactWalletId": "12XCAAASHHAJ23JS",
+    "phone": [
+      "+255611919191"
+    ],
+    "email": [
+      "johndoe@test.com"
+    ],
+    "status": "Accepted",
+    "created": 1641355923848,
+    "updated": 1641355923848
+  },
+  "appCategoryInvalid": {
+    "description": "Gaming App"
+  },
+  "appCategoryData": {
+    "name": "Gaming",
+    "description": "All Gaming App"
+  },
+  "contactDataInvalid": {
+    "name": "Jon",
+    "lastName": "Mark",
+    "jobTitle": "Software Engineer"
+  },
+  "contactData": {
+    "firstName": "Jon",
+    "lastName": "Mark",
+    "jobTitle": "Software Engineer",
+    "email": [
+      {
+        "address": "johndoe@primelab.in",
+        "type": "corporative"
+      }
+    ],
+    "phone": [
+      {
+        "number": "+91415555267",
+        "type": "mobile"
+      }
+    ],
+    "address": [
+      {
+        "street": "St Saint Peter",
+        "city": "Unknown",
+        "region": "South East",
+        "country": "Cão Maior",
+        "postalCode": "123456789",
+        "type": "home"
+      }
+    ],
+    "companies": [
+      "Weiland"
+    ],
+    "groups": [
+      "Terraquian"
+    ],
+    "importSource": "UniIndexer",
+    "profilePhotoPath": "file.apiserver.profilePhoto.png",
+    "contactStatus": "invited"
+  },
+  "validPayload": [
+    {
+      "address": [],
+      "appId": "ZM28qr4cvFpiYPztLKKKw",
+      "companies": [],
+      "email": [
+        {
+          "address": "jas2695@hotmail.com",
+          "type": "home"
+        }
+      ],
+      "firstName": "Vipul",
+      "groups": [
+        "My Contacts"
+      ],
+      "importSource": "Google",
+      "jobTitle": "Backend Engineer",
+      "lastName": "Panchal",
+      "phone": []
+    }
+  ],
+  "invalidPayload": [
+    {
+      "address": [],
+      "appId": "ZM28qr4cvFpiYPztLKKKw",
+      "companies": [],
+      "email": [
+        {
+          "address": "jas2695@hotmail.com",
+          "type": "home"
+        }
+      ],
+      "firstName": "",
+      "groups": [
+        "My Contacts"
+      ],
+      "importSource": "Google",
+      "jobTitle": "Backend Engineer",
+      "lastName": "",
+      "phone": []
+    }
+  ],
+  "noEmailPayload": [
+    {
+      "address": [],
+      "appId": "ZM28qr4cvFpiYPztLKKKw",
+      "companies": [],
+      "firstName": "Vipul",
+      "groups": [
+        "My Contacts"
+      ],
+      "importSource": "Google",
+      "jobTitle": "Backend Engineer",
+      "lastName": "Panchal",
+      "phone": [
+        {
+          "number": "+91415555267",
+          "type": "mobile"
+        }
+      ]
+    }
+  ],
+  "noEmailAndPhonePayload": [
+    {
+      "address": [],
+      "appId": "ZM28qr4cvFpiYPztLKKKw",
+      "companies": [],
+      "email": [],
+      "firstName": "Vipul",
+      "groups": [
+        "My Contacts"
+      ],
+      "importSource": "Google",
+      "jobTitle": "Backend Engineer",
+      "lastName": "Panchal",
+      "phone": []
+    }
+  ],
+  "contactDetailwithValidContactId": {
+    "contactId": "12XCAAASHHAJ23JS",
+    "userId": "BE_Ou5exXqW-wFLuTxud",
+    "profilePhotoPath": "https://file.appserver.com/abcnft.png",
+    "fullName": "John Doe",
+    "contactWalletId": "BE_Ou5exXqW-wFLuTxud",
+    "phone": [
+      "+255611919191"
+    ],
+    "email": [
+      "johndoe@test.com"
+    ],
+    "status": "Accepted",
+    "created": 1641355923848,
+    "updated": 1641355923848
+  }
+}

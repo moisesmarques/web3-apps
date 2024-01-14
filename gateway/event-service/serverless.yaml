@@ -1,0 +1,52 @@
+service: event-service
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  stage: ${opt:stage, 'dev'}
+  runtime: nodejs14.x
+  region: us-east-2
+  environment:
+    REGION: ${aws:region}
+    ACCOUNT_ID: ${aws:accountId}
+    LOGFILE_SQS_URL: https://sqs.us-east-1.amazonaws.com/${aws:accountId}/callLogFile
+    ANALYTICS_SQS_URL: https://sqs.us-east-1.amazonaws.com/${aws:accountId}/callAnalytics
+    ANALYTICS_V2_SQS_URL: https://sqs.us-east-1.amazonaws.com/${aws:accountId}/callAnalyticsV2
+    POST_TRANSACTION_SQS_URL: https://sqs.us-east-1.amazonaws.com/${aws:accountId}/callPostTransaction
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - dynamodb:BatchGet*
+            - dynamodb:DescribeStream
+            - dynamodb:DescribeTable
+            - dynamodb:Get*
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:BatchWrite*
+            - dynamodb:CreateTable
+            - dynamodb:Delete*
+            - dynamodb:Update*
+            - dynamodb:PutItem
+          Resource: "arn:aws:dynamodb:*:*:*"
+        - Effect: "Allow"
+          Action:
+            - "lambda:InvokeFunction"
+            - "lambda:InvokeAsync"
+          Resource: "*"
+        - Effect: Allow
+          Action:
+            - "sqs:*"
+          Resource: "*"
+
+custom:
+  responseSQSArn:
+    dev: arn:aws:sqs:us-east-2:015753658222:nearResponseQueue.fifo # prod
+    sandbox: arn:aws:sqs:us-east-2:015753658222:nearResponseQueueTest.fifo # sandbox
+
+functions:
+  sqs-events-processor:
+    handler: process-sqs-events.main
+    events:
+      - sqs: ${self:custom.responseSQSArn.${self:provider.stage}}

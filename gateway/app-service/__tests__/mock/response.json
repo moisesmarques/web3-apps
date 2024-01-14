@@ -1,0 +1,28 @@
+{
+  "response":[
+    {
+      "contactId": "12XCAAASHHAJ23JS",
+      "profilePhotoPath": "https://file.appserver.com/abcnft.png",
+      "fullName": "John Doe",
+      "contactWalletId": "12XCAAASHHAJ23JS",
+      "phone": ["+255611919191"],
+      "email": ["johndoe@test.com"],
+      "status": "Accepted",
+      "created": 1641355923848,
+      "updated": 1641355923848
+    },
+    {
+      "contactId": "12XCAAASHHAJ23JS",
+      "userId": "12XCAAASHHAJ23JS",
+      "profilePhotoPath": "https://file.appserver.com/abcnft.png",
+      "fullName": "John Doe",
+      "contactWalletId": "12XCAAASHHAJ23JS",
+      "phone": ["+255611919191"],
+      "email": ["johndoe@test.com"],
+      "status": "Accepted",
+      "created": 1641355923848,
+      "updated": 1641355923848
+    }
+  ]
+}
+

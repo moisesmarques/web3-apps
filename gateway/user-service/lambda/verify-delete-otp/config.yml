@@ -1,0 +1,12 @@
+verify-delete-otp:
+  handler: lambda/verify-delete-otp/index.handler
+  events:
+    - httpApi:
+        path: /users/verify-delete-otp/verify
+        method: post
+    # - http:
+    #     path: /users/verify-delete-otp/verify
+    #     method: post
+    #     authorizer:
+    #       type: request
+    #       arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}

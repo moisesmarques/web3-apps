@@ -1,0 +1,45 @@
+{
+    "jwtMock" : {
+      "lastName": "Kivite",
+      "userId": "_BE_Ou5exXqW-wFLuTxud",
+      "status": "active",
+      "created": 1646209318710,
+      "isPhoneVerified": false,
+      "email": "tkivite@gmail.com",
+      "firstName": "Titus",
+      "isEmailVerified": false,
+      "walletName": "titusWallet.near",
+      "walletId": "titusWallet.near",
+      "iat": 1646327133
+    },
+    "myNft" : {
+        "title": "Ashas Test 1  Shift 3",
+        "description": "test nft from Ashas from Shift 3",
+        "categoryId": "XNwyaIOPKkfc1iFngXorm",
+        "filePath": "https://www.eathappyproject.com/wp-content/uploads/2020/08/home-decor.jpg",
+        "tags": ["nft", "eathappyproject", "Ashas"
+        ],
+        "ownerWalletId": "titusWallet.near",
+        "ownerId": "RZTiIbxAVfmhVAmdEYclm",
+        "nftId": "s2fwZUGh8FMbFVvkxjX3m",
+        "status": "pending",
+        "transactionId": "hgd2U_ECqKMK_7pN-qJAv",
+        "created": 1646990846334,
+        "update": 1646990846334
+      },
+      "AccessList": [
+        {
+            "requestDetails": {
+                "requesterId": "EipYwEU51-rigcIF2dgIu",
+                "createdAt": 1648525575369,
+                "nftId": "qa6ppFGWzzGViLdel7g_4",
+                "ownerId": "S9dlO-oiJGuXCGYlJPqkA",
+                "requestId": "lgRoD3FjbmC0wMfvs4foW"
+            }
+        }
+    ],
+    "AuthCode": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsYXN0TmFtZSI6Ikppa2FkYXJhIiwidXNlcklkIjoiUzlkbE8tb2lKR3VYQ0dZbEpQcWtBIiwic3RhdHVzIjoiYWN0aXZlIiwiY3JlYXRlZCI6MTY0NzkxNTUxNDY4NCwiaXNQaG9uZVZlcmlmaWVkIjpmYWxzZSwiZW1haWwiOiJqYXlkZWVwQG1haWxpbmF0b3IuY29tIiwiZmlyc3ROYW1lIjoiSmF5ZGVlcCIsImlzRW1haWxWZXJpZmllZCI6ZmFsc2UsIndhbGxldE5hbWUiOiJqYXlkZWVwLm5lYXIiLCJpYXQiOjE2NDg1OTQwNzgsImV4cCI6MTY0ODY4MDQ3OH0.YFrbC9R1c1lbyaUI4gg-lyvckRFOPsVMUPKge_PYVRI",
+    "nftId": "qa6ppFGWzzGViLdel7g_4",
+    "wrongnftId": "123",
+    "fakeNftId": "qa6ppFGWzzGViLdel7g_4@@"
+  }

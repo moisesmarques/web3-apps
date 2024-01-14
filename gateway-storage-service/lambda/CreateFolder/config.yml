@@ -1,0 +1,21 @@
+CreateFolder:
+  handler: lambda/CreateFolder/index.handler
+  description: "Endpoint to create new Folder"
+  memorySize: 128
+  timeout: 5
+  environment:
+    TABLE_NAME_STORAGE_DATA: ${self:custom.dynamodb.StorageDataTable.name}
+  events:
+    - http:
+        path: /wallets/{wId}/storage/folders
+        method: post
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:UpdateItem
+        - dynamodb:Query
+        - dynamodb:GetItem
+      Resource:
+        - ${self:custom.dynamodb.StorageDataTable.arn}
+        - ${self:custom.dynamodb.StorageDataTable.arn}/*

@@ -1,0 +1,53 @@
+getSharedFiles:
+  handler: lambda/getSharedFiles/index.handler
+  description: 'Allows user to retrieve shared files using walletId'
+  events:
+    - httpApi:
+        path: /wallets/{walletId}/storage/sharedFiles
+        method: get
+        authorizer:
+          type: request
+          id: !ImportValue NearGatewayAuthorizerId
+    - httpApi:
+        path: /wallets/{walletId}/files/sharedFiles
+        method: get
+        authorizer:
+          type: request
+          id: !ImportValue NearGatewayAuthorizerId
+  environment:
+    # Avoid using Ref here as this may create a Circular dependency between resources https://go.aws/3pk3Nup
+    ## TODO: use ${self:custom.startup-service.filesBucket.name} when # TODO: uncomment this section when https://github.com/nearcomponents/gateway/pull/14 is merged
+    BUCKET_NAME_FILES: ${self:custom.file-service.s3.files.name}
+    TABLE_NAME_FILES: ${self:custom.file-service.dynamodb.files.name}
+    ## TODO: use ${ssm:/dynamodb/wallet-service/wallets/name} when exported by Terraform
+    TABLE_NAME_WALLETS: near-wallets
+    CLOUDFRONT_URL: ${self:custom.cdn.url.${self:provider.stage}}
+    CLOUDFRONT_SECRET_NAME: ${self:custom.file-service.cloudfront.secret-name}
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+      Resource:
+        ## TODO: use ${ssm:/dynamodb/wallet-service/wallets/arn} when exported by Terraform
+        - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/near-wallets
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+      Resource:
+        - ${self:custom.file-service.dynamodb.files.arn}
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+      Resource:
+        - ${self:custom.file-service.dynamodb.files.arn}
+    - Effect: Allow
+      Action:
+        - s3:GetObject
+      Resource:
+        - Fn::Join: ['/', [!ImportValue FileServiceFilesBucketArn, '*']]
+    - Effect: Allow
+      Action:
+        - secretsmanager:GetSecretValue
+      Resource:
+        - arn:aws:secretsmanager:${aws:region}:${aws:accountId}:secret:/storage-service/cloudfront/signers*

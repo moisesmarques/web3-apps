@@ -1,0 +1,20 @@
+{
+  "name": "status",
+  "version": "0.0.1",
+  "description": "Returns 200 OK with json object when API is deployed",
+  "scripts": {
+    "npm:upgrade": "ncu -u && yarn --production",
+    "npm:check": "ncu"
+  },
+  "dependencies": {
+    "@dazn/lambda-powertools-logger": "^1.28.1",
+    "@nearprime/lambda-powertools-wrapper": "^0.0.1-alpha.1",
+    "@types/aws-lambda": "^8.10.93",
+    "aws-sdk": "^2.1094.0",
+    "bluebird": "^3.7.2",
+    "lodash": "^4.17.21",
+    "source-map-support": "^0.5.21"
+  },
+  "devDependencies": {},
+  "license": "MIT"
+}

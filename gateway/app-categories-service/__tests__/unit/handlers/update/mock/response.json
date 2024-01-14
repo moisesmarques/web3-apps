@@ -1,0 +1,9 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true
+    },
+    "body": "{\"message\":\"Contact added successfully!\",\"data\":{\"contactJSON\":{\"firstName\":\"Jon\",\"lastName\":\"Mark\",\"jobTitle\":\"Software Engineer\",\"email\":[{\"address\":\"johndoe@primelab.in\",\"type\":\"corporative\"}],\"phone\":[{\"number\":\"+91415555267\",\"type\":\"mobile\"}],\"address\":[{\"street\":\"St Saint Peter\",\"city\":\"Unknown\",\"region\":\"South East\",\"country\":\"Cão Maior\",\"postalCode\":\"123456789\",\"type\":\"home\"}],\"companies\":[\"Weiland\"],\"groups\":[\"Terraquian\"],\"importSource\":\"UniIndexer\",\"profilePhotoPath\":\"file.apiserver.profilePhoto.png\",\"contactStatus\":\"invited\",\"userId\":\"_BE_Ou5exXqW-wFLuTxud\",\"isFavorite\":false,\"contactId\":\"ARVAYmGX-86b3gtfRRJJe\"}}}"
+}

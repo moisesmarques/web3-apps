@@ -1,0 +1,27 @@
+ShareFile:
+  handler: lambda/ShareFile/index.handler
+  description: "Share File with another wallet"
+  memorySize: 256
+  timeout: 5
+  environment:
+    TABLE_NAME_STORAGE_DATA: ${self:custom.dynamodb.StorageDataTable.name}
+    TABLE_NAME_WALLETS_DATA: ${self:custom.dynamodb.WalletsDataTable.name}
+    IAM_ROLE_ARN_WALLET_CROSS_ACCOUNT: ${self:custom.iam.WalletsCrossAcccountRole.arn}
+  events:
+    - http:
+        path: /wallets/{wId}/storage/files/{fileId}/share
+        method: post
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - sts:AssumeRole
+      Resource:
+        - ${self:custom.iam.WalletsCrossAcccountRole.arn}
+    - Effect: Allow
+      Action:
+        - dynamodb:UpdateItem
+        - dynamodb:GetItem
+      Resource:
+        - ${self:custom.dynamodb.StorageDataTable.arn}
+        - ${self:custom.dynamodb.StorageDataTable.arn}/*

@@ -1,0 +1,14 @@
+Status:
+  handler: lambda/Status/index.handler
+  description: "Returns 200 OK with json object when API is deployed"
+  memorySize: 512
+  timeout: 15
+#  environment:
+#    CACHE_EXPIRY_MS: ${file(./config/config.${self:provider.stage}.json):CACHE_EXPIRY_MS}
+  events:
+    # REST API endpoint (API Gateway v1)
+    - http:
+        path: /
+        method: get
+  iamRoleStatementsInherit: true
+  iamRoleStatements: []

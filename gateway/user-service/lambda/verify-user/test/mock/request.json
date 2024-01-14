@@ -1,0 +1,29 @@
+{
+    "test1Event": {
+        "body": {}
+    },
+    "test2Event": {
+        "body": { 
+            "walletID": "mige.near",
+            "OTP":"858334"
+        }
+    },
+    "test3Event": {
+        "body": { 
+            "walletID": "mige.near",
+            "OTP":"858334"
+        }
+    },
+    "test4Event": {
+        "body": { 
+            "walletID": "mige.near",
+            "OTP":"858334"
+        }
+    },
+    "test5Event": {
+        "body": { 
+            "walletID": "mige.near",
+            "OTP":"858334"
+        }
+    }
+}

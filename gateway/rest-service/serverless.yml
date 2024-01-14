@@ -1,0 +1,67 @@
+service: rest-service
+variablesResolutionMode: 20210326
+configValidationMode: error
+
+package: ${file(./node_modules/@nearprime/serverless/serverless.yml):package}
+plugins: ${file(./node_modules/@nearprime/serverless/serverless.yml):plugins}
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-1'}
+  timeout: 5
+  logRetentionInDays: ${self:custom.defaults.logRetentionInDays.${self:provider.stage}}
+  versionFunctions: false
+  tracing:
+    lambda: true
+    apiGateway: true
+  layers: ${file(./node_modules/@nearprime/serverless/layers.js)}
+  eventBridge:
+    useCloudFormation: true
+  iam: ${file(./node_modules/@nearprime/serverless/serverless.yml):provider.iam}
+  endpointType: REGIONAL # ApiGateway Endpoint type
+  apiGateway:
+    description: REST API for Near Gateway services
+    binaryMediaTypes:
+      - '*/*'
+    metrics: true
+    shouldStartNameWithService: true
+#    resourcePolicy:
+#      - Sid: AllowAWSOrganisationAccounts
+#        Effect: Allow
+#        Principal: "*"
+#        Action: execute-api:Invoke
+#        Condition:
+#          StringEquals:
+#            aws:PrincipalOrgID:
+#              - o-rpavdz84pj
+#        Resource:
+#          - arn:aws:execute-api:${aws:region}:${aws:accountId}:*/*
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    STAGE: ${self:provider.stage}
+    LOG_LEVEL: ${file(./config/config.${self:provider.stage}.json):LOG_LEVEL}
+    LOG_SAMPLE_RATE: ${file(./config/config.${self:provider.stage}.json):LOG_SAMPLE_RATE}
+
+custom:
+  # arn:aws:wafv2:us-east-1:227200131463:regional/webacl/prod-waf/36ac6f44-b374-47af-a62c-ef6b656e628b
+  defaults: ${file(./node_modules/@nearprime/serverless/serverless.yml):custom}
+  invokeLocalEnvironment: ${file(./invokeLocal.env)}
+  alerts: ${file(./node_modules/@nearprime/serverless/serverless.yml):custom.alerts}
+  webpack: ${file(./node_modules/@nearprime/serverless/serverless.yml):custom.webpack}
+  # serverless-associate-waf plugin
+  associateWaf:
+    name: prod-waf
+    version: V2 #(optional) Regional | V2
+
+functions:
+- ${file(./lambda/JwtAuthorizer/config.yml)}
+- ${file(./lambda/Status/config.yml)}
+resources:
+  - Description: This service holds the REST API resources
+#### SSM
+  - ${file(./ssm/parameters.yml)}
+  # - ${file(./s3/resources.yml)}
+  # - ${file(./sns/resources.yml)}
+  # - ${file(./sqs/resources.yml)}

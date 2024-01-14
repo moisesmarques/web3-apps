@@ -1,0 +1,7 @@
+{
+  "entryPoints": ["src/components", "src/pages", "src/hooks", "src/modules"],
+  "exclude": "**/*+(.spec|.e2e|.stories).ts",
+  "out": "docs",
+  "readme": "./README.md",
+  "entryPointStrategy": "expand"
+}

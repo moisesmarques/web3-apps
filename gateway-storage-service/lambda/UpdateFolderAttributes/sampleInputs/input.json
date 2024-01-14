@@ -1,0 +1,73 @@
+{
+  "resource": "/wallets/testWallet.testnet/storage/folders/26d81a27-b2fb-45b9-a6ec-fa8c305b9fe1",
+  "path": "/wallets/testWallet.testnet/storage/folders/26d81a27-b2fb-45b9-a6ec-fa8c305b9fe1",
+  "httpMethod": "PUT",
+  "headers": {
+    "Accept": "*/*",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Cache-Control": "no-cache",
+    "Content-Type": "application/json",
+    "Host": "abkydxspsl.execute-api.us-east-1.amazonaws.com",
+    "Postman-Token": "e5b5ccbe-b6b6-41e4-a0f0-b1bb4eb2fe2b",
+    "User-Agent": "PostmanRuntime/7.26.8",
+    "X-Amzn-Trace-Id": "Root=1-6259d4ac-2d8d400906f4e6246085c1a1",
+    "x-api-key": "q67luwJgvW6bHC0A5Acvt8Wq4UaskpHn2njwNM6t",
+    "X-Forwarded-For": "190.167.122.50",
+    "X-Forwarded-Port": "443",
+    "X-Forwarded-Proto": "https"
+  },
+  "multiValueHeaders": {
+    "Accept": ["*/*"],
+    "Accept-Encoding": ["gzip, deflate, br"],
+    "Cache-Control": ["no-cache"],
+    "Content-Type": ["application/json"],
+    "Host": ["abkydxspsl.execute-api.us-east-1.amazonaws.com"],
+    "Postman-Token": ["e5b5ccbe-b6b6-41e4-a0f0-b1bb4eb2fe2b"],
+    "User-Agent": ["PostmanRuntime/7.26.8"],
+    "X-Amzn-Trace-Id": ["Root=1-6259d4ac-2d8d400906f4e6246085c1a1"],
+    "x-api-key": ["q67luwJgvW6bHC0A5Acvt8Wq4UaskpHn2njwNM6t"],
+    "X-Forwarded-For": ["190.167.122.50"],
+    "X-Forwarded-Port": ["443"],
+    "X-Forwarded-Proto": ["https"]
+  },
+  "queryStringParameters": null,
+  "multiValueQueryStringParameters": null,
+  "pathParameters": {
+    "wId": "testWallet.testnet",
+    "folderId": "26d81a27-b2fb-45b9-a6ec-fa8c305b9fe1"
+  },
+  "stageVariables": null,
+  "requestContext": {
+    "resourceId": "8o9zpn",
+    "resourcePath": "/wallets/testWallet.testnet/storage/folders/26d81a27-b2fb-45b9-a6ec-fa8c305b9fe1",
+    "httpMethod": "POST",
+    "extendedRequestId": "Qo4q_EUCoAMFgNg=",
+    "requestTime": "15/Apr/2022:20:25:16 +0000",
+    "path": "/wallets/testWallet.testnet/storage/folders/26d81a27-b2fb-45b9-a6ec-fa8c305b9fe1",
+    "accountId": "020930497257",
+    "protocol": "HTTP/1.1",
+    "stage": "sandbox",
+    "domainPrefix": "abkydxspsl",
+    "requestTimeEpoch": 1650054316563,
+    "requestId": "80a84603-7275-4da8-bd6b-0c14577978fa",
+    "identity": {
+      "cognitoIdentityPoolId": null,
+      "cognitoIdentityId": null,
+      "apiKey": "q67luwJgvW6bHC0A5Acvt8Wq4UaskpHn2njwNM6t",
+      "principalOrgId": null,
+      "cognitoAuthenticationType": null,
+      "userArn": null,
+      "userAgent": "PostmanRuntime/7.26.8",
+      "accountId": null,
+      "caller": null,
+      "sourceIp": "190.167.122.50",
+      "accessKey": null,
+      "cognitoAuthenticationProvider": null,
+      "user": null
+    },
+    "domainName": "abkydxspsl.execute-api.us-east-1.amazonaws.com",
+    "apiId": "abkydxspsl"
+  },
+  "body": "{\n    \"parentFolderId\": \"e2a141ac-fbf0-4a05-9777-161786613607\",\n    \"name\": \"folder15\",\n    \"storageProvider\": \"Google Drive\"\n}",
+  "isBase64Encoded": false
+}

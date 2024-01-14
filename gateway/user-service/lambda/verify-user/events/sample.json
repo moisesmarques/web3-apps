@@ -1,0 +1,48 @@
+{
+  "version": "2.0",
+  "routeKey": "POST /users/login/verify",
+  "rawPath": "/users/login/verify",
+  "rawQueryString": "",
+  "headers": {
+    "accept": "application/json, text/plain, */*",
+    "accept-encoding": "gzip, deflate, br",
+    "accept-language": "fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7",
+    "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cGRhdGVkIjoiMjAyMi0wMy0xMVQwNDoxMTozNy44MzdaIiwiY291bnRyeUNvZGUiOiIrMzMiLCJsYXN0TmFtZSI6IktoYWxmYSIsInVzZXJJZCI6IjlGMVNNVmJEQVQtaXVpVUlmeDZsXyIsInN0YXR1cyI6ImFjdGl2ZSIsImNyZWF0ZWQiOjE2NDY5NjMwNjQwMzEsImlzUGhvbmVWZXJpZmllZCI6ZmFsc2UsInBob25lIjoiNjU4MTgyNTI2IiwiZmlyc3ROYW1lIjoiQWRuZW5lIiwiaXNFbWFpbFZlcmlmaWVkIjpmYWxzZSwid2FsbGV0TmFtZSI6IjA2NTgxODI1MjYubmVhciIsImlhdCI6MTY0NzY2MjU4MCwiZXhwIjoxNjQ3NzQ4OTgwfQ.MixrL52gDZEL5GQZgzdMZX65ubDPVZUjcD6nR3xAM0Q",
+    "content-length": "45",
+    "content-type": "application/json",
+    "host": "api.dev.nearlogin.io",
+    "origin": "https://nftmakerapp.io",
+    "referer": "https://nftmakerapp.io/",
+    "sec-ch-ua": "\"(Not(A:Brand\";v=\"8\", \"Chromium\";v=\"99\", \"Google Chrome\";v=\"99\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"macOS\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "cross-site",
+    "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36",
+    "x-amzn-trace-id": "Root=1-6235565a-5ada699d17f6cfb37851700c",
+    "x-forwarded-for": "87.91.32.240",
+    "x-forwarded-port": "443",
+    "x-forwarded-proto": "https"
+  },
+  "requestContext": {
+    "accountId": "227200131463",
+    "apiId": "bty54yixsa",
+    "domainName": "api.dev.nearlogin.io",
+    "domainPrefix": "api",
+    "http": {
+      "method": "POST",
+      "path": "/users/login/verify",
+      "protocol": "HTTP/1.1",
+      "sourceIp": "87.91.32.240",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36"
+    },
+    "requestId": "PNpuMiLEoAMEMtA=",
+    "routeKey": "POST /users/login/verify",
+    "stage": "$default",
+    "time": "19/Mar/2022:04:04:42 +0000",
+    "timeEpoch": 1647662682668
+  },
+  "body": "{\"OTP\":\"562799\",\"walletID\":\"0658182526.near\"}",
+  "isBase64Encoded": false
+}

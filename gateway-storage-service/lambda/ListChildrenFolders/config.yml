@@ -1,0 +1,19 @@
+ListChildrenFolders:
+  handler: lambda/ListChildrenFolders/index.handler
+  description: "List all children folders for a given wallet ID and Parent Folder Id"
+  memorySize: 512
+  timeout: 5
+  environment:
+    TABLE_NAME_STORAGE_DATA: ${self:custom.dynamodb.StorageDataTable.name}
+  events:
+    - http:
+        path: wallets/{wId}/storage/folders/{folderId}/folders
+        method: get
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+      Resource:
+        - ${self:custom.dynamodb.StorageDataTable.arn}
+        - ${self:custom.dynamodb.StorageDataTable.arn}/*

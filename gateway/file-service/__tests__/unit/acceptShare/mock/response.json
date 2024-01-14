@@ -1,0 +1,20 @@
+{
+  "invalidAuthResponse": {
+    "message": "You are not authenticated"
+  },
+  "invalidParamsResponse": {
+    "message": "folderId missing in the request!"
+  },
+  "walletNotFoundResponse": {
+    "message": "Wallet 'demo777.testnet not found'"
+  },
+  "walletMissmatchResponse": {
+    "message": "Wallet associated with user mismatch with stored wallet"
+  },
+  "fileNotExistResponse": {
+    "message": "This file is not shared with this wallet"
+  },
+  "fileAlreadySharedResponse": {
+    "message": "This file was already shared and accepted"
+  }
+}

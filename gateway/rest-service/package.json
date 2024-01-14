@@ -1,0 +1,78 @@
+{
+  "name": "rest-service",
+  "version": "0.0.1",
+  "description": "This service holds the REST API resources",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "lambda/*"
+  ],
+  "scripts": {
+    "cm": "git-cz",
+    "cmr": "git-cz --retry",
+    "cmp": "git add src && yarn cm && git push",
+    "lint": "eslint --ignore-path .gitignore --ignore-pattern \\\"!**/.*\\\" src",
+    "fix": "yarn run lint --fix",
+    "stats": "OPEN_ANALYZER=true sls webpack",
+    "npm:upgrade": "ncu --upgrade && yarn",
+    "npm:upgrade-all": "node ./node_modules/@nearprime/serverless/scripts/npmUpgradeRecursive.js",
+    "npm:check": "ncu",
+    "test": "sls invoke test",
+    "predeploy": "node ./node_modules/@nearprime/serverless/scripts/predeploy",
+    "audit:ci": "node ./node_modules/@nearprime/serverless/scripts/audit",
+    "deploy": "sls deploy --verbose",
+    "remove-stack": "sls remove --verbose",
+    "deploy:production": "yarn deploy --stage production",
+    "deploy:staging": "yarn deploy --stage staging",
+    "deploy:sandbox": "yarn deploy --stage sandbox",
+    "deploy:dev": "yarn deploy --stage dev",
+    "remove:dev": "yarn remove-stack --stage dev"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.54.1",
+    "@aws-sdk/client-lambda": "^3.54.1",
+    "@nearprime/lambda-powertools-wrapper": "^0.0.1-alpha.1",
+    "@types/jsonwebtoken": "^8.5.8",
+    "clean-deep": "^3.4.0",
+    "debug": "^4.3.3",
+    "exponential-backoff": "^3.1.0",
+    "jsonwebtoken": "^8.5.1"    
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.7",
+    "@babel/plugin-proposal-class-properties": "^7.16.7",
+    "@babel/plugin-proposal-export-default-from": "^7.16.7",
+    "@babel/plugin-proposal-optional-chaining": "^7.16.7",
+    "@babel/plugin-proposal-private-methods": "^7.16.11",
+    "@babel/preset-env": "^7.16.11",
+    "@nearprime/eslint-config-serverless": "^0.0.1-alpha.3",
+    "@nearprime/serverless": "^0.0.1-alpha.11",
+    "aws-sdk": "^2.1094.0",
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^27.5.1",
+    "babel-loader": "^8.2.3",
+    "babel-plugin-minify-mangle-names": "^0.5.0",
+    "bluebird": "^3.7.2",
+    "debug": "^4.3.3",
+    "dotenv": "^16.0.0",
+    "eslint": "^8.11.0",
+    "husky": "^7.0.4",
+    "lodash": "^4.17.21",
+    "typescript": "^4.6.2",
+    "webpack": "^5.70.0"    
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog-emoji"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,js}": [
+      "prettier --ignore-path .eslintignore --write",
+      "cross-env NODE_ENV=development eslint --cache --format=pretty --fix"
+    ],
+    "*.{md,graphql}": [
+      "prettier --write"
+    ]
+  }
+}

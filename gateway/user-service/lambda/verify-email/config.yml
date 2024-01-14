@@ -1,0 +1,13 @@
+verify-email:
+  handler: lambda/verify-email/index.handler
+  description: 'Validate email'
+  events:
+    - httpApi:
+        path: /users/verify-email
+        method: post
+    # - http:
+    #     path: /users/verify-jwt
+    #     method: post
+    #     authorizer:
+    #       type: request
+    #       arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}

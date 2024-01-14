@@ -1,0 +1,32 @@
+completeStorageUpload:
+  handler: lambda/completeStorageUpload/index.handler
+  description: "Endpoint to confirm multipart upload termination"
+  events:
+    - httpApi:
+        path: /wallets/{walletId}/storage/{fileId}/completeUpload
+        method: post
+        authorizer:
+          type: request
+          id: !ImportValue NearGatewayAuthorizerId         
+#    - http:
+#        path: /wallets/{walletId}/files/{fileId}/completeUpload
+#        method: post
+#        authorizer:
+#          name: ${self:service}-JWTAuthorizer
+#          type: request
+#          arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  environment:
+    BUCKET_NAME_FILES: ${self:custom.file-service.s3.storage.name}
+    TABLE_NAME_FILES: ${self:custom.file-service.dynamodb.files.name}
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+      Resource:
+        - ${self:custom.file-service.dynamodb.files.arn}
+    - Effect: Allow
+      Action:
+        - s3:PutObject
+      Resource:
+        - "${self:custom.file-service.s3.storage.arn}/*"

@@ -1,0 +1,20 @@
+UpdateFileAttributes:
+  handler: lambda/UpdateFileAttributes/index.handler
+  description: "Endpoint to Update File Attributes"
+  memorySize: 128
+  timeout: 5
+  environment:
+    TABLE_NAME_STORAGE_DATA: ${self:custom.dynamodb.StorageDataTable.name}
+  events:
+    - http:
+        path: /wallets/{wId}/storage/files/{fileId}
+        method: put
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+  - Effect: Allow
+    Action:
+      - dynamodb:UpdateItem
+      - dynamodb:GetItem
+    Resource:
+      - ${self:custom.dynamodb.StorageDataTable.arn}
+      - ${self:custom.dynamodb.StorageDataTable.arn}/*

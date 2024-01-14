@@ -1,0 +1,19 @@
+ListFilesSharedWithMe:
+  handler: lambda/ListFilesSharedWithMe/index.handler
+  description: "List files shared with a given wallet ID"
+  memorySize: 512
+  timeout: 5
+  environment:
+    TABLE_NAME_STORAGE_DATA: ${self:custom.dynamodb.StorageDataTable.name}
+  events:
+    - http:
+        path: wallets/{wId}/storage/files/sharedWithMe
+        method: get
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+      Resource:
+        - ${self:custom.dynamodb.StorageDataTable.arn}
+        - ${self:custom.dynamodb.StorageDataTable.arn}/*

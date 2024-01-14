@@ -1,0 +1,20 @@
+balance-wallet:
+  handler: lambda/balance-wallet/index.handler
+  description: "Balance of wallet by walletId"
+  events:
+    - httpApi:
+        path: /wallets/balance/{walletId}
+        method: get
+        authorizer:
+          type: request
+          id: !ImportValue NearGatewayAuthorizerId
+#    - http:
+#        path: /wallets/balance/{walletId}
+#        method: get
+#        authorizer:
+#          name: ${self:service}-JWTAuthorizer
+#          type: request
+#          arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  environment:
+    TABLE_NAME_WALLETS: near-wallets
+    STAGE: ${self:provider.stage}

@@ -1,0 +1,9 @@
+Resources:
+  StageRegionalSSLCertificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: nearlogin.io
+      SubjectAlternativeNames:
+        - "*.nearlogin.io"
+        - "*.cdn.nearlogin.io"
+      ValidationMethod: DNS

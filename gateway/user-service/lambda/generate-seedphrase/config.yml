@@ -1,0 +1,12 @@
+generate-seedphrase:
+  handler: lambda/generate-seedphrase/index.handler
+  events:
+    - httpApi:
+        path: /users/seedphrase
+        method: post
+    # - http:
+    #     path: /users/seedphrase
+    #     method: post
+    #     authorizer:
+    #       type: request
+    #       arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}

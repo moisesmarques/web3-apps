@@ -1,0 +1,126 @@
+{
+    "test1Response": {
+        "body": "{\"errors\":[\"walletID is a required field\",\"OTP is a required field\"]}", 
+        "headers": {"Access-Control-Allow-Credentials": true, "Access-Control-Allow-Origin": "*", "Content-Type": "application/json"}, 
+        "statusCode": 400
+    },
+    "test2Response": {
+        "body": "{\"message\":\"Account ID not found\"}", 
+        "headers": {
+            "Access-Control-Allow-Credentials": true, 
+            "Access-Control-Allow-Origin": "*", 
+            "Content-Type": "application/json"}, 
+        "statusCode": 404
+    },
+    "test3Response": {
+        "body": "{\"message\":\"Invalid Account ID/OTP \"}", 
+        "headers": {
+            "Access-Control-Allow-Credentials": true, 
+            "Access-Control-Allow-Origin": "*", 
+            "Content-Type": "application/json"}, 
+        "statusCode": 404
+    },
+    "test4Response": {
+        "body": "{\"message\":\"OTP is expired\"}", 
+        "headers": {
+            "Access-Control-Allow-Credentials": true, 
+            "Access-Control-Allow-Origin": "*", 
+            "Content-Type": "application/json"}, 
+        "statusCode": 404
+    },
+    "test5Response": {
+        "body": "{\"jwtAccessToken\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdGF0dXMiOiJwZW5kaW5nIiwiY3JlYXRlZCI6IjIwMjItMDMtMDlUMTI6MTA6NDQuNTA0WiIsIndhbGxldElkIjoibWlnZS5uZWFyIiwidHJhbnNhY3Rpb25JZCI6ImNobnBOWTI4YkNRTWI2MEpCZ0NjWCIsImlzQmxvY2tjaGFpblZlcmlmaWVkIjoidmVyaWZpZWQiLCJreWNQcm92aWRlciI6Imt5Y19wcm92aWRlciIsImJhbGFuY2UiOiIwLjAwIiwicHVibGljS2V5IjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsInVwZGF0ZWQiOjE2NDY4Mjc4NTg4MTcsIndhbGxldE5hbWUiOiJtaWdlLm5lYXIiLCJzdG9yYWdlUHJvdmlkZXIiOiJzdG9yYWdlX3Byb3ZpZGVyIiwidXNlcklkIjoiT1A0QzVEQnRoazQwUDVPaXpQLUNnIiwiYmxvY2tjaGFpbkhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiYmxvY2tjaGFpblN0YXR1cyI6ImNvbXBsZXRlIiwiaWF0IjoxNjQ3NDMzMDA1LCJleHAiOjE2NDc1MTk0MDV9.-xviqoJBlhF0CRwurjUavzaK0NFRxqYvLce8V7apVRg\",\"jwtRefreshToken\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdGF0dXMiOiJwZW5kaW5nIiwiY3JlYXRlZCI6IjIwMjItMDMtMDlUMTI6MTA6NDQuNTA0WiIsIndhbGxldElkIjoibWlnZS5uZWFyIiwidHJhbnNhY3Rpb25JZCI6ImNobnBOWTI4YkNRTWI2MEpCZ0NjWCIsImlzQmxvY2tjaGFpblZlcmlmaWVkIjoidmVyaWZpZWQiLCJreWNQcm92aWRlciI6Imt5Y19wcm92aWRlciIsImJhbGFuY2UiOiIwLjAwIiwicHVibGljS2V5IjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsInVwZGF0ZWQiOjE2NDY4Mjc4NTg4MTcsIndhbGxldE5hbWUiOiJtaWdlLm5lYXIiLCJzdG9yYWdlUHJvdmlkZXIiOiJzdG9yYWdlX3Byb3ZpZGVyIiwidXNlcklkIjoiT1A0QzVEQnRoazQwUDVPaXpQLUNnIiwiYmxvY2tjaGFpbkhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiYmxvY2tjaGFpblN0YXR1cyI6ImNvbXBsZXRlIiwiaWF0IjoxNjQ3NDMzMDA1LCJleHAiOjE2NDc1MTk0MDV9.-xviqoJBlhF0CRwurjUavzaK0NFRxqYvLce8V7apVRg\",\"user\":{\"status\":\"pending\",\"created\":\"2022-03-09T12:10:44.504Z\",\"walletId\":\"mige.near\",\"transactionId\":\"chnpNY28bCQMb60JBgCcX\",\"isBlockchainVerified\":\"verified\",\"kycProvider\":\"kyc_provider\",\"balance\":\"0.00\",\"publicKey\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"updated\":1646827858817,\"walletName\":\"mige.near\",\"storageProvider\":\"storage_provider\",\"userId\":\"OP4C5DBthk40P5OizP-Cg\",\"blockchainHash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"blockchainStatus\":\"complete\"}}", 
+        "headers": {
+            "Access-Control-Allow-Credentials": true, 
+            "Access-Control-Allow-Origin": "*", 
+            "Content-Type": "application/json"}, 
+        "statusCode": 201
+    },
+    "dynamodGetResponse": {
+        "Item": {
+            "firstName": "test",
+            "lastName": "user",
+            "walletId": "testuser.near",
+            "email": "mock-test@primelab.io",
+            "phone": "+2551817181",
+            "dob": "2000-10-10"
+        }
+    },
+    "ssmGetParamResponse": {
+        "Parameter":{"Value": "dummysecret"}
+    },
+    "axiosGetErrorResponse": {
+        "response": {
+            "status": 400,
+            "message": "bad request"
+        }
+    },
+    "axiosGetResponse": {
+        "data": [
+            {
+                "status": "pending",
+                "created": "2022-03-09T12:10:44.504Z",
+                "walletId": "mige.near",
+                "transactionId": "chnpNY28bCQMb60JBgCcX",
+                "isBlockchainVerified": "verified",
+                "kycProvider": "kyc_provider",
+                "balance": "0.00",
+                "publicKey": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "updated": 1646827858817,
+                "walletName": "mige.near",
+                "storageProvider": "storage_provider",
+                "userId": "OP4C5DBthk40P5OizP-Cg",
+                "blockchainHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "blockchainStatus": "complete"
+            }
+        ]
+    },
+    "dynamodbQueryResponse": {
+        "Items": [
+            {
+                "status": "pending",
+                "created": "2022-03-09T12:10:44.504Z",
+                "walletId": "mige.near",
+                "transactionId": "chnpNY28bCQMb60JBgCcX",
+                "isBlockchainVerified": "verified",
+                "kycProvider": "kyc_provider",
+                "balance": "0.00",
+                "publicKey": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "updated": 1646827858817,
+                "walletName": "mige.near",
+                "storageProvider": "storage_provider",
+                "userId": "OP4C5DBthk40P5OizP-Cg",
+                "blockchainHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "blockchainStatus": "complete"
+            }
+        ],
+        "Count": 1
+    },
+    "dynamodbUpdateResponse": { 
+        "Attributes": {
+            "updated": "2022-03-10T06:17:19.364Z",
+            "lastName": "Dev",
+            "userId": "OP4C5DBthk40P5OizP-Cg",
+            "status": "active",
+            "created": 1646827843216,
+            "isPhoneVerified": false,
+            "email": "migele9661@vapaka.com",
+            "firstName": "Mige",
+            "isEmailVerified": false
+        }
+    },
+    "dynamodbScanErrorResponse": [
+        {
+            "status": "expired"
+        }
+    ],
+    "dynamodbScanResponse": [
+        {
+            "status": "active",
+            "created": 1646827843216,
+            "ttl": "dummy"
+
+        }
+    ],
+    "jwtToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdGF0dXMiOiJwZW5kaW5nIiwiY3JlYXRlZCI6IjIwMjItMDMtMDlUMTI6MTA6NDQuNTA0WiIsIndhbGxldElkIjoibWlnZS5uZWFyIiwidHJhbnNhY3Rpb25JZCI6ImNobnBOWTI4YkNRTWI2MEpCZ0NjWCIsImlzQmxvY2tjaGFpblZlcmlmaWVkIjoidmVyaWZpZWQiLCJreWNQcm92aWRlciI6Imt5Y19wcm92aWRlciIsImJhbGFuY2UiOiIwLjAwIiwicHVibGljS2V5IjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsInVwZGF0ZWQiOjE2NDY4Mjc4NTg4MTcsIndhbGxldE5hbWUiOiJtaWdlLm5lYXIiLCJzdG9yYWdlUHJvdmlkZXIiOiJzdG9yYWdlX3Byb3ZpZGVyIiwidXNlcklkIjoiT1A0QzVEQnRoazQwUDVPaXpQLUNnIiwiYmxvY2tjaGFpbkhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiYmxvY2tjaGFpblN0YXR1cyI6ImNvbXBsZXRlIiwiaWF0IjoxNjQ3NDMzMDA1LCJleHAiOjE2NDc1MTk0MDV9.-xviqoJBlhF0CRwurjUavzaK0NFRxqYvLce8V7apVRg"
+}

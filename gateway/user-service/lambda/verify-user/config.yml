@@ -1,0 +1,25 @@
+verify-user:
+  handler: lambda/verify-user/index.handler
+  description: ''
+  events:
+    - httpApi:
+        path: /users/login/verify
+        method: post
+    # - http:
+    #     path: /users/login/verify
+    #     method: post
+    #     authorizer:
+    #       type: request
+    #       arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  environment:
+    CLOUDFRONT_SECRET_NAME: /storage-service/cloudfront/signers
+    CLOUDFRONT_URL: storage.cdn.nearlogin.io
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - secretsmanager:GetSecretValue
+      Resource:
+        - arn:aws:secretsmanager:${aws:region}:${aws:accountId}:secret:/storage-service/cloudfront/signers*
+
+

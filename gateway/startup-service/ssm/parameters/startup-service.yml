@@ -1,0 +1,18 @@
+Resources:
+################################# OpenSearch #######################################################
+  DataOpenSearchServiceArnSSM:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Description: OpenSerch Data domain Arn
+      Name: /startup-service/opensearch/domain/data/arn
+      Type: 'String'
+      Value: !GetAtt DataOpenSearchService.Arn
+
+  DataOpenSearchServiceDomainEndpointSSM:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Description: OpenSerch Data domain Arn
+      Name: /startup-service/opensearch/domain/data/endpoint
+      Type: 'String'
+      Value: !GetAtt DataOpenSearchService.DomainEndpoint
+

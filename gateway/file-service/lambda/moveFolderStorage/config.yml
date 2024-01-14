@@ -1,0 +1,23 @@
+moveFolderStorage:
+  handler: lambda/moveFolderStorage/index.handler
+  description: "Allows user move folder based on its parentfolderId"
+  events:
+    - httpApi:
+        path: /wallets/{walletId}/storage/{folderId}/move
+        method: post
+        authorizer:
+          type: request
+          id: !ImportValue NearGatewayAuthorizerId
+  environment:
+    TABLE_NAME_FOLDERS: near-storage
+    TABLE_NAME_WALLETS: near-wallets
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+        - dynamodb:UpdateItem
+      Resource:
+        - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/near-storage
+        - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/near-wallets
+        - ${self:custom.file-service.dynamodb.storage.arn}

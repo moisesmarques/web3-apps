@@ -1,0 +1,23 @@
+onlyOfficeUpdateCallback:
+  handler: lambda/onlyOfficeUpdateCallback/index.handler
+  description: "Endpoint receive Only Office webhook callback after a file has been saved"
+  events:
+    - httpApi:
+        path: /wallets/{walletId}/storage/{fileId}/updateCallback
+        method: post
+  environment:
+    BUCKET_NAME_FILES: ${self:custom.file-service.s3.storage.name}
+    TABLE_NAME_FILES: ${self:custom.file-service.dynamodb.files.name}
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+        - dynamodb:UpdateItem
+      Resource:
+        - ${self:custom.file-service.dynamodb.files.arn}
+    - Effect: Allow
+      Action:
+        - s3:PutObject
+      Resource:
+        - "${self:custom.file-service.s3.storage.arn}/*"

@@ -1,0 +1,132 @@
+{
+  "ownerId": "S2kR0sVzo7YIgIgshE-jQ",
+  "bad_ownerId": "@@",
+  "collectionId": "9a_wLobPxNDKCPLmys7ip",
+  "nftId": "f353q50jg949",
+  "collectionName": "Awesome",
+  "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsYXN0TmFtZSI6IlNvbmFuaSIsInVzZXJJZCI6IjNJUkp5S1NGV2FiRGhDVllkTzRxMyIsInN0YXR1cyI6ImFjdGl2ZSIsImNyZWF0ZWQiOjE2NDg3ODI4NjE0NjQsImlzUGhvbmVWZXJpZmllZCI6ZmFsc2UsImVtYWlsIjoic29uYW5peWFzaGt1bWFyK3UwOEBnbWFpbC5jb20iLCJmaXJzdE5hbWUiOiJZYXNoIiwiaXNFbWFpbFZlcmlmaWVkIjpmYWxzZSwid2FsbGV0TmFtZSI6InNvbmFuaXlhc2hrdW1hcnUwOC50ZXN0bmV0IiwiaWF0IjoxNjQ5NzI1ODYyLCJleHAiOjE2NDk4MTIyNjJ9.nxQ10nRFX9VcOLKFkQHC8ICJswH2zl11g7ySTpeV_Fc",
+  "user": {
+    "countryCode": "+1",
+    "lastName": "Veranyan",
+    "userId": "18kT0iyaQzC5K4Bduye8s",
+    "status": "active",
+    "created": 1646236356985,
+    "isPhoneVerified": true,
+    "phone": "123456789",
+    "firstName": "Davit",
+    "isEmailVerified": false,
+    "walletName": "davit.near"
+  },
+  "nftCollections": [
+    {
+      "active": true,
+      "updated": 1646297186666,
+      "created": 1646297186666,
+      "collectionName": "New NFT",
+      "collectionId": "z1OrfyKY-4u0sCSFThYyX",
+      "ownerId": "S2kR0sVzo7YIgIgshE-jQ"
+    },
+    {
+      "active": false,
+      "updated": 1646297040886,
+      "created": 1646297040886,
+      "collectionName": "My NFT",
+      "collectionId": "9a_wLobPxNDKCPLmys7ip",
+      "ownerId": "S2kR0sVzo7YIgIgshE-jQ"
+    },
+    {
+      "active": true,
+      "updated": 1646297040886,
+      "created": 1646297040886,
+      "collectionName": "JD NFT",
+      "collectionId": "9a_wLobPxNDKCPLmys7ip",
+      "ownerId": "S2kR0sVzo7YIgIgshE-jD"
+    }
+  ],
+  "offers": [
+    {
+      "offerId": "WEGThgjuiG6HTF121",
+      "nftId": "f353q50jg942",
+      "userId": "sdtewer23234",
+      "offerType": "TOKEN",
+      "offerPrice": 5,
+      "action": "initial",
+      "status": "pending",
+      "expire": 1645024203868,
+      "created": 1645024203868,
+      "updated": 1645024203868
+    },
+    {
+      "offerId": "WEGThgjuiG6HTF121",
+      "nftId": "f353q50jg942",
+      "userId": "sdtewer23234",
+      "offerType": "TOKEN",
+      "offerPrice": 5,
+      "action": "initial",
+      "status": "pending",
+      "expire": 1645024203868,
+      "created": 1645024203868,
+      "updated": 1645024203868
+    }
+  ],
+  "nftPriceAndOffer": [
+    {
+      "contactId": "12XCAAASHHAJ23JS",
+      "profilePhotoPath": "https://file.appserver.com/abcnft.png",
+      "fullName": "John Doe",
+      "contactWalletId": "12XCAAASHHAJ23JS",
+      "phone": [
+        "+255611919191"
+      ],
+      "email": [
+        "johndoe@test.com"
+      ],
+      "status": "Accepted",
+      "created": 1641355923848,
+      "updated": 1641355923848
+    },
+    {
+      "contactId": "12XCAAASHHAJ23JS",
+      "userId": "12XCAAASHHAJ23JS",
+      "profilePhotoPath": "https://file.appserver.com/abcnft.png",
+      "fullName": "John Doe",
+      "contactWalletId": "12XCAAASHHAJ23JS",
+      "phone": [
+        "+255611919191"
+      ],
+      "email": [
+        "johndoe@test.com"
+      ],
+      "status": "Accepted",
+      "created": 1641355923848,
+      "updated": 1641355923848
+    }
+  ],
+  "myNFT": {
+    "nftId": "f353q50jg949",
+    "minPrice": 11
+  },
+  "sharedNft": {
+    "shareId": "ty52eVd4nvbXS0HmEmlJH",
+    "updated": "1649207281900",
+    "recipientWalletId": "jaydeep.near",
+    "nftId": "oSmim7vjKeRwUAGCEy5v1",
+    "created": "1649207281900",
+    "ownerWalletId": "jaydeep.testnet"
+  },
+  "newUser": {
+    "userId": "S9dlO-oiJGuXCGYlJPqkA",
+    "lastName": "Jikadara",
+    "status": "active",
+    "created": "1647915514684",
+    "isPhoneVerified": false,
+    "email": "jaydeep@mailinator.com",
+    "firstName": "Jaydeep",
+    "isEmailVerified": false,
+    "walletId": "jaydeep.near",
+    "walletName": "jaydeep.near"
+  },
+  "tokenOffer": {
+    "offerType": "TOKEN","offerNftId": "34343","expire": "1647515358818","userId": "12XCAAASHHAJ23JS"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "test1Event": {
+    "body": ""
+  },
+  "test2Event": {
+    "body": {}
+  },
+  "test3Event": {
+    "body": {
+      "walletName": "rahul.testnet",
+      "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsYXN0TmFtZSI6InJhaHVsdGVzdCIsInVzZXJJZCI6ImhHX2tKemNFbmFranJzS1hybFJVMSIsInN0YXR1cyI6ImFjdGl2ZSIsImNyZWF0ZWQiOjE2NDgxODk1ODkzMDIsImlzUGhvbmVWZXJpZmllZCI6ZmFsc2UsImVtYWlsIjoicmFodWx3cUBtYWlsaW5hdG9yLmNvbSIsImZpcnN0TmFtZSI6InJhaHVsIiwiaXNFbWFpbFZlcmlmaWVkIjpmYWxzZSwid2FsbGV0TmFtZSI6InJhaHVsd3EudGVzdG5ldCIsImlhdCI6MTY0ODYwMjQxMywiZXhwIjoxNjUxMTk0NDEzfQ.ibWNiXmMq_9yJS7ILMc4G0M5r8hFIsoieieTftueNFU"
+    },
+    "headers": {
+      "Access-Control-Allow-Credentials": true,
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json"
+    }
+  }
+}

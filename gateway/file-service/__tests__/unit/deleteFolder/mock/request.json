@@ -1,0 +1,62 @@
+{
+  "AuthCode": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsYXN0TmFtZSI6ImFiYyIsInVzZXJJZCI6ImpQR2RfV2c4RmZWVktzZEJ1NUl2MiIsInN0YXR1cyI6ImFjdGl2ZSIsImNyZWF0ZWQiOjE2NDkwMjMyNzczMzksImlzUGhvbmVWZXJpZmllZCI6ZmFsc2UsImVtYWlsIjoicmFodWwubGFkdW1vckBwcmltZWxhYi5pbyIsImZpcnN0TmFtZSI6ImRlbW9yYSIsImlzRW1haWxWZXJpZmllZCI6ZmFsc2UsIndhbGxldE5hbWUiOiJkZW1vNzc3LnRlc3RuZXQiLCJpYXQiOjE2NDkyMDQ3MjgsImV4cCI6MTY0OTI5MTEyOH0.RCk5WJIUu-Mq6Cji4CaIH8StIF9b0Bkvgqpa0lq0Fk4",
+
+"invalidAuthHandlerEvent": {
+  "pathParameters": { "walletId": "", "folderId": ""
+    },
+  "headers": {}
+  },
+
+"invalidParamsHandlerEvent": {
+  "pathParameters": { "walletId": "", "folderId": ""
+    },
+  "headers": {
+    "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsYXN0TmFtZSI6ImFiYyIsInVzZXJJZCI6ImpQR2RfV2c4RmZWVktzZEJ1NUl2MiIsInN0YXR1cyI6ImFjdGl2ZSIsImNyZWF0ZWQiOjE2NDkwMjMyNzczMzksImlzUGhvbmVWZXJpZmllZCI6ZmFsc2UsImVtYWlsIjoicmFodWwubGFkdW1vckBwcmltZWxhYi5pbyIsImZpcnN0TmFtZSI6ImRlbW9yYSIsImlzRW1haWxWZXJpZmllZCI6ZmFsc2UsIndhbGxldE5hbWUiOiJkZW1vNzc3LnRlc3RuZXQiLCJpYXQiOjE2NDkyMDQ3MjgsImV4cCI6MTY0OTI5MTEyOH0.RCk5WJIUu-Mq6Cji4CaIH8StIF9b0Bkvgqpa0lq0Fk4"
+    }
+  },
+
+"walletNotExistHandlerEvent": {
+  "pathParameters": { "walletId": "testuser123.near", "folderId": "f2c44718-12f6-4f4e-9813-18087726dccb"
+    },
+  "headers": {
+    "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsYXN0TmFtZSI6ImFiYyIsInVzZXJJZCI6ImpQR2RfV2c4RmZWVktzZEJ1NUl2MiIsInN0YXR1cyI6ImFjdGl2ZSIsImNyZWF0ZWQiOjE2NDkwMjMyNzczMzksImlzUGhvbmVWZXJpZmllZCI6ZmFsc2UsImVtYWlsIjoicmFodWwubGFkdW1vckBwcmltZWxhYi5pbyIsImZpcnN0TmFtZSI6ImRlbW9yYSIsImlzRW1haWxWZXJpZmllZCI6ZmFsc2UsIndhbGxldE5hbWUiOiJkZW1vNzc3LnRlc3RuZXQiLCJpYXQiOjE2NDkyMDQ3MjgsImV4cCI6MTY0OTI5MTEyOH0.RCk5WJIUu-Mq6Cji4CaIH8StIF9b0Bkvgqpa0lq0Fk4"
+    }
+  },
+
+"walletMissMatchHandlerEvent": {
+  "pathParameters": { "walletId": "demo777.testnet", "folderId": "f2c44718-12f6-4f4e-9813-18087726dccb"
+    },
+  "headers": {
+    "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsYXN0TmFtZSI6ImFiYyIsInVzZXJJZCI6ImpQR2RfV2c4RmZWVktzZEJ1NUl2MiIsInN0YXR1cyI6ImFjdGl2ZSIsImNyZWF0ZWQiOjE2NDkwMjMyNzczMzksImlzUGhvbmVWZXJpZmllZCI6ZmFsc2UsImVtYWlsIjoicmFodWwubGFkdW1vckBwcmltZWxhYi5pbyIsImZpcnN0TmFtZSI6ImRlbW9yYSIsImlzRW1haWxWZXJpZmllZCI6ZmFsc2UsIndhbGxldE5hbWUiOiJkZW1vNzc3LnRlc3RuZXQiLCJpYXQiOjE2NDkyMDQ3MjgsImV4cCI6MTY0OTI5MTEyOH0.RCk5WJIUu-Mq6Cji4CaIH8StIF9b0Bkvgqpa0lq0Fk4"
+    }
+  },
+
+"folderNotExistHandlerEvent": {
+  "pathParameters": { "walletId": "demo777.testnet", "folderId": "f2c44718-12f6-4f4e-9813-18087726dccb"
+    },
+  "headers": {
+    "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsYXN0TmFtZSI6ImFiYyIsInVzZXJJZCI6ImpQR2RfV2c4RmZWVktzZEJ1NUl2MiIsInN0YXR1cyI6ImFjdGl2ZSIsImNyZWF0ZWQiOjE2NDkwMjMyNzczMzksImlzUGhvbmVWZXJpZmllZCI6ZmFsc2UsImVtYWlsIjoicmFodWwubGFkdW1vckBwcmltZWxhYi5pbyIsImZpcnN0TmFtZSI6ImRlbW9yYSIsImlzRW1haWxWZXJpZmllZCI6ZmFsc2UsIndhbGxldE5hbWUiOiJkZW1vNzc3LnRlc3RuZXQiLCJpYXQiOjE2NDkyMDQ3MjgsImV4cCI6MTY0OTI5MTEyOH0.RCk5WJIUu-Mq6Cji4CaIH8StIF9b0Bkvgqpa0lq0Fk4"
+    }
+  },
+
+"validHandlerEvent": {
+  "pathParameters": { "walletId": "demo777.testnet", "folderId": "f2c44718-12f6-4f4e-9813-18087726dccb"
+    },
+  "headers": {
+    "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsYXN0TmFtZSI6ImFiYyIsInVzZXJJZCI6ImpQR2RfV2c4RmZWVktzZEJ1NUl2MiIsInN0YXR1cyI6ImFjdGl2ZSIsImNyZWF0ZWQiOjE2NDkwMjMyNzczMzksImlzUGhvbmVWZXJpZmllZCI6ZmFsc2UsImVtYWlsIjoicmFodWwubGFkdW1vckBwcmltZWxhYi5pbyIsImZpcnN0TmFtZSI6ImRlbW9yYSIsImlzRW1haWxWZXJpZmllZCI6ZmFsc2UsIndhbGxldE5hbWUiOiJkZW1vNzc3LnRlc3RuZXQiLCJpYXQiOjE2NDkyMDQ3MjgsImV4cCI6MTY0OTI5MTEyOH0.RCk5WJIUu-Mq6Cji4CaIH8StIF9b0Bkvgqpa0lq0Fk4"
+    }
+  },
+  "jwtMock": {
+    "lastName": "Kivite",
+    "userId": "_BE_Ou5exXqW-wFLuTxud",
+    "status": "active",
+    "created": 1646209318710,
+    "isPhoneVerified": false,
+    "email": "tkivite@gmail.com",
+    "firstName": "Titus",
+    "isEmailVerified": false,
+    "walletName": "titusWallet.near",
+    "walletId": "titusWallet.near",
+    "iat": 1646327133
+  }
+}

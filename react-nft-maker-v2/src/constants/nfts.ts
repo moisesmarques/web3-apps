@@ -1,0 +1,51 @@
+import { INftItemType } from '@/services/nft/list.service';
+
+export const NFTS: INftItemType[] = [
+  {
+    id: 'u8Kdjzrv-JHjGEebBE_66',
+    updatedAt: '12-01-2022',
+    actionType: 'Image',
+    status: 'active',
+    category: 'Digital Arts',
+    createdAt: '12-01-2021',
+    attributes: [],
+    description: 'my all time fav DP',
+    ownerId: 'd4fSX3_rAJyg044v8j7Em',
+    fileUrl: 'https://near-lambda-nft-files.s3.us-west-1.amazonaws.com/u8Kdjzrv-JHjGEebBE_66_original_IMG_1100.jpeg',
+    title: 'Profile Picture',
+    isSelected: false,
+  },
+  {
+    id: 'Tz71zINcJo1WsXgrG9Q2a',
+    updatedAt: '12-01-2021',
+    status: 'active',
+    category: 'Digital Arts',
+    createdAt: '12-01-2021',
+    attributes: [],
+    description: 'personal ',
+    actionType: 'mine',
+    ownerId: 'd4fSX3_rAJyg044v8j7Em',
+    fileUrl: 'https://near-lambda-nft-files.s3.us-west-1.amazonaws.com/Tz71zINcJo1WsXgrG9Q2a_original_IMG_0983.JPG',
+    title: 'new NFT',
+    isSelected: false,
+  },
+  {
+    id: 'iGXuHKEkiGDeEOHUMFk2E',
+    updatedAt: '12-05-2021',
+    actionType: 'Image',
+    status: 'active',
+    category: 'Digital Arts',
+    createdAt: '12-01-2021',
+    attributes: [
+      {
+        attributeName: 'duplicate',
+        attributeValue: 'new',
+      },
+    ],
+    description: 'new image tag',
+    ownerId: 'd4fSX3_rAJyg044v8j7Em',
+    fileUrl: 'https://near-lambda-nft-files.s3.us-west-1.amazonaws.com/iGXuHKEkiGDeEOHUMFk2E_original_IMG_1100.jpeg',
+    title: 'Image',
+    isSelected: false,
+  },
+];

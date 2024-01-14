@@ -1,0 +1,37 @@
+{
+  "version": "2.0",
+  "routeKey": "POST /wallets/{wId}/storage/files/{fileId}/share",
+  "rawPath": "/wallets/{wId}/storage/files/{fileId}/share",
+  "rawQueryString": "",
+  "headers": {
+    "content-type": "application/json",
+    "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwY2Y3NDQ5Zi1mNzIwLTQyNTQtYWQ5MC04ZDllZDQ2ZTdkN2UiLCJ3SWQiOiJleGFtcGxlLm5lYXIiLCJpYXQiOjE2NTEyNDU3NzEsImV4cCI6MjI1NjA0NTc3MX0.-vIel_UVHBMY23fg8jfq9gidVB-JRLPyVyBM5s9H_5w"
+  },
+  "requestContext": {
+    "accountId": "227200131463",
+    "apiId": "bty54yixsa",
+    "authorizer": {
+      "lambda": null
+    },
+    "domainName": "api.dev.nearlogin.io",
+    "domainPrefix": "api",
+    "http": {
+      "method": "POST",
+      "path": "/wallets/{wId}/storage/files/{fileId}/share",
+      "protocol": "HTTP/1.1",
+      "sourceIp": "54.86.50.139",
+      "userAgent": "PostmanRuntime/7.29.0"
+    },
+    "requestId": "PNDznhcIoAMEMxw=",
+    "routeKey": "POST /wallets/{wId}/storage/files/{fileId}/share",
+    "stage": "$default",
+    "time": "18/Mar/2022:23:45:52 +0000",
+    "timeEpoch": 1647647152547
+  },
+  "pathParameters": {
+    "wId": "example.near",
+    "fileId": "dcbfcd16-94b3-450c-9a90-47a2d3fdb9d3"
+  },
+  "body": "{\"receiverWId\": \"user123.testnet\"}",
+  "isBase64Encoded": false
+}

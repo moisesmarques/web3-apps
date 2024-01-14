@@ -1,0 +1,311 @@
+service: contacts-srv
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: ${file(../serverless-config.json):region}
+  stage: ${opt:stage, 'dev'}
+  profile: sandbox
+  timeout: 5
+  apiGateway:
+  #   # Attach to an externally created REST API via its ID:
+    restApiId: ${ssm:/rest-service/apiGateway/restApi/id}
+  #   # Root resource ID, represent as / path
+    restApiRootResourceId: ${ssm:/rest-service/apiGateway/restApi/rootResourceId}
+  httpApi:
+    id: !ImportValue NearGatewayHttpApiId
+  environment:
+    SECRET_KEY: ${file(../serverless-config.json):SECRET_KEY}
+    IS_OFFLINE: false
+    IMPORT_CONTACTS: 'near-contacts'
+    DYNAMODB_USER_TABLE: 'near-users'
+    DYNAMODB_WALLET_TABLE: 'near-wallets'
+    HOST: api.sandbox.nearlogin.io
+  #TODO: Need to remove extra permissions
+  iam:
+    role:
+      statements:
+        - Effect: 'Allow'
+          Action:
+            - dynamodb:BatchGet*
+            - dynamodb:DescribeStream
+            - dynamodb:DescribeTable
+            - dynamodb:Get*
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:BatchWrite*
+            - dynamodb:CreateTable
+            - dynamodb:Delete*
+            - dynamodb:Update*
+            - dynamodb:PutItem
+            - ssm:DescribeParameters
+            - ssm:GetParameter
+            - ssm:GetParameters
+            - ses:SendEmail
+            - ses:SendRawEmail
+          Resource:
+            - 'arn:aws:dynamodb:*:*:*'
+            - 'arn:aws:dynamodb:*:*:*/*/index/*'
+            - 'arn:aws:ssm:*'
+            - 'arn:aws:ses:*'
+
+functions:
+  createContact:
+    handler: create.main
+    events:
+      - httpApi:
+          path: /contacts/{userId}
+          method: post
+          # authorizer:
+          #   type: request
+          #   id: !ImportValue NearGatewayAuthorizerId
+#      - http:
+#          path: /contacts/{userId}
+#          method: post
+#          authorizer:
+#            name: ${self:service}-JWTAuthorizer
+#            type: request
+#            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  detailContact:
+    handler: details.main
+    events:
+      - httpApi:
+          path: /contacts/{contactId}
+          method: get
+          # authorizer:            
+          #   type: request
+          #   id: !ImportValue NearGatewayAuthorizerId              
+#      - http:
+#          path: /contacts/{contactId}
+#          method: get
+#          authorizer:
+#            name: ${self:service}-JWTAuthorizer
+#            type: request
+#            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  updateContact:
+    handler: update.main
+    events:
+      - httpApi:
+          path: /contacts/{contactId}
+          method: put
+          # authorizer:            
+          #   type: request
+          #   id: !ImportValue NearGatewayAuthorizerId              
+#      - http:
+#          path: /contacts/{contactId}
+#          method: put
+#          authorizer:
+#            name: ${self:service}-JWTAuthorizer
+#            type: request
+#            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  deleteContact:
+    handler: delete.main
+    events:
+      - httpApi:
+          path: /contacts
+          method: delete
+          authorizer:            
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId              
+#      - http:
+#          path: /contacts/{contactId}
+#          method: delete
+#          authorizer:
+#            name: ${self:service}-JWTAuthorizer
+#            type: request
+#            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  listContact:
+    handler: list.main
+    events:
+      - httpApi:
+          path: /contacts/{userId}/list
+          method: get
+          # authorizer:            
+          #   type: request
+          #   id: !ImportValue NearGatewayAuthorizerId              
+#      - http:
+#          path: /contacts/{userId}/list
+#          method: get
+#          authorizer:
+#            name: ${self:service}-JWTAuthorizer
+#            type: request
+#            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  blockContact:
+    handler: block.main
+    events:
+      - httpApi:
+          path: /contacts/{contactId}/block
+          method: patch
+          # authorizer:            
+          #   type: request
+          #   id: !ImportValue NearGatewayAuthorizerId              
+#      - http:
+#          path: /contacts/{contactId}/block
+#          method: patch
+#          authorizer:
+#            name: ${self:service}-JWTAuthorizer
+#            type: request
+#            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  importContact:
+    handler: import.main
+    events:
+      - httpApi:
+          path: /contacts/{userId}/import
+          method: post
+          # authorizer:            
+          #   type: request
+          #   id: !ImportValue NearGatewayAuthorizerId              
+#      - http:
+#          path: /contacts/{userId}/import
+#          method: post
+#          authorizer:
+#            name: ${self:service}-JWTAuthorizer
+#            type: request
+#            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  photoContact:
+    handler: photo.main
+    events:
+      - httpApi:
+          path: /contacts/{contactId}/photo
+          method: get
+          # authorizer:            
+          #   type: request
+          #   id: !ImportValue NearGatewayAuthorizerId              
+#      - http:
+#          path: /contacts/{contactId}/photo
+#          method: get
+#          authorizer:
+#            name: ${self:service}-JWTAuthorizer
+#            type: request
+#            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  favoriteContact:
+    handler: favorite.main
+    events:
+      - httpApi:
+          path: /contacts/{userId}/{contactId}/favorite
+          method: put
+          # authorizer:            
+          #   type: request
+          #   id: !ImportValue NearGatewayAuthorizerId              
+#      - http:
+#          path: /contacts/{userId}/{contactId}/favorite
+#          method: put
+#          authorizer:
+#            name: ${self:service}-JWTAuthorizer
+#            type: request
+#            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  inviteContact:
+    handler: invite.main
+    events:
+      - httpApi:
+          path: /contacts/{contactId}/invite
+          method: post
+          # authorizer:            
+          #   type: request
+          #   id: !ImportValue NearGatewayAuthorizerId              
+#      - http:
+#          path: /contacts/{contactId}/invite
+#          method: post
+#          authorizer:
+#            name: ${self:service}-JWTAuthorizer
+#            type: request
+#            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+plugins:
+  - serverless-offline
+  - serverless-dynamodb-local
+  - serverless-webpack
+
+package:
+  individually: true
+  excludeDevDependencies: true
+
+custom:
+#  dynamodb:
+#    stages:
+#      - dev
+#    start:
+#      port: 8000
+#      inMemory: true
+#      migrate: true
+  webpack:
+    webpackConfig: 'webpack.config.js'
+    packager: 'yarn'
+    excludeFiles: /**/*.test.js
+    includeModules:
+      forceExclude:
+        - aws-sdk
+    packagerOptions:
+      scripts:
+        - yarn autoclean --force
+
+
+#resources:
+# Resources:
+#   userTable:
+#     Type: AWS::DynamoDB::Table
+#     Properties:
+#       TableName: near-users
+#       AttributeDefinitions:
+#         - AttributeName: userId
+#           AttributeType: S
+#       KeySchema:
+#         - AttributeName: userId
+#           KeyType: HASH
+#       ProvisionedThroughput:
+#         ReadCapacityUnits: 1
+#         WriteCapacityUnits: 1
+#   contactTable:
+#     Type: AWS::DynamoDB::Table
+#     Properties:
+#       TableName: near-contacts
+#       AttributeDefinitions:
+#         - AttributeName: contactId
+#           AttributeType: S
+#       KeySchema:
+#         - AttributeName: contactId
+#           KeyType: HASH
+#       ProvisionedThroughput:
+#         ReadCapacityUnits: 1
+#         WriteCapacityUnits: 1
+#   otpTable:
+#     Type: AWS::DynamoDB::Table
+#     Properties:
+#       TableName: near-otp
+#       AttributeDefinitions:
+#         - AttributeName: userId
+#           AttributeType: S
+#         - AttributeName: ttl
+#           AttributeType: N
+#       KeySchema:
+#         - AttributeName: userId
+#           KeyType: HASH
+#         - AttributeName: ttl
+#           KeyType: RANGE
+#       ProvisionedThroughput:
+#         ReadCapacityUnits: 1
+#         WriteCapacityUnits: 1
+#   walletsTable:
+#     Type: AWS::DynamoDB::Table
+#     Properties:
+#       TableName: near-wallets
+#       AttributeDefinitions:
+#         - AttributeName: walletId
+#           AttributeType: S
+#         - AttributeName: userId
+#           AttributeType: S
+#       KeySchema:
+#         - AttributeName: walletId
+#           KeyType: HASH
+#       GlobalSecondaryIndexes:
+#         - IndexName: userId-Index
+#           KeySchema:
+#             - AttributeName: userId
+#               KeyType: HASH
+#           Projection:
+#             ProjectionType: 'ALL'
+#       BillingMode: PAY_PER_REQUEST
+#       ProvisionedThroughput:
+#         ReadCapacityUnits: 1
+#         WriteCapacityUnits: 1

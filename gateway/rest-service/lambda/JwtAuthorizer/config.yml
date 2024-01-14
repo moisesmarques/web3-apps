@@ -1,0 +1,17 @@
+JwtAuthorizer:
+  handler: lambda/JwtAuthorizer/index.handler
+  description: "A lambda function that reads Authorization header and validate the JWT token"
+  memorySize: 1024
+  timeout: 5
+#  environment:
+#    CACHE_EXPIRY_MS: ${file(./config/config.${self:provider.stage}.json):CACHE_EXPIRY_MS}
+  iamRoleStatementsInherit: true
+  iamRoleStatements: []
+#  - Effect: Allow
+#    Action:
+#    - s3:putObject
+#    - s3:putObjectTagging
+#    Resource:
+#      Fn::Join:
+#      - "/"
+#      - - Fn::GetAtt: [SpaceUnavailabilitiesBookingsBucket, Arn]

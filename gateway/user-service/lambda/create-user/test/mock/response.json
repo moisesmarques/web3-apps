@@ -1,0 +1,11 @@
+{
+  "ssmGetParamResponse": {
+    "Parameter": { "Value": "https://example.com" }
+  },
+  "axiosGetResponse": {
+    "data": {}
+  },
+  "dynamodbQueryResponse": {
+    "Count": 1
+  }
+}

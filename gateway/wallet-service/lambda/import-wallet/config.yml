@@ -1,0 +1,27 @@
+import-wallet:
+  handler: lambda/import-wallet/index.handler
+  description: "Import wallet"
+  events:
+    - httpApi:
+        path: /wallets/import
+        method: POST
+        authorizer:            
+          type: request
+          id: !ImportValue NearGatewayAuthorizerId                                           
+#    - http:
+#        path: /wallets/import
+#        method: POST
+#        authorizer:
+#          name: ${self:service}-JWTAuthorizer
+#          type: request
+#          arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  environment:
+    TABLE_NAME_WALLETS: near-wallets
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+        - dynamodb:UpdateItem
+      Resource:
+        - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/near-wallets

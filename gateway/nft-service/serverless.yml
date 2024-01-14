@@ -1,0 +1,334 @@
+service: nfts-service
+frameworkVersion: "3"
+
+plugins:
+  - serverless-offline
+  - serverless-webpack
+package:
+  individually: true
+  excludeDevDependencies: true
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  #lambdaHashingVersion: 20201221
+  httpApi:
+    id: !ImportValue NearGatewayHttpApiId
+  stage: ${opt:stage, 'dev'}
+  region: ${file(../serverless-config.json):region}
+  apiGateway:
+    # Attach to an externally created REST API via its ID:
+    restApiId: ${ssm:/rest-service/apiGateway/restApi/id}
+    # Root resource ID, represent as / path
+    restApiRootResourceId: ${ssm:/rest-service/apiGateway/restApi/rootResourceId}
+  environment:
+    DYNAMODB_NEAR_NFTS_TABLE: near-nfts
+    DYNAMODB_NEAR_NFTS_SHARED_TABLE: near-nft-shares
+    DYNAMODB_WALLET_TABLE: near-wallets
+    DYNAMODB_USER_TABLE: near-users
+    TABLE_NAME_USERS: near-users # TODO: remove the duplicate env var
+    TABLE_NAME_WALLETS: near-wallets
+    TABLE_NAME_CONTACTS: near-contacts
+    TABLE_NAME_NFT_COLLECTIONS: near-nft-collections
+    TABLE_NAME_NFT_CATEGORIES: near-nft-categories
+    TABLE_NAME_TRANSACTIONS: near-transactions
+    TABLE_NAME_NFT_ACCESS_REQUESTS: near-nft-access-requests
+    TABLE_NAME_FILES: near-files
+    SQS_URL_SEND_NFT_GIFT: !Ref sendNftGiftQueue
+    SECRET_KEY: ${file(../serverless-config.json):SECRET_KEY}
+    IS_OFFLINE: false
+    TOKEN_EXPIRY_IN_MILLISECONDS: "1d"
+    DEV_BASEURL: ${file(../serverless-config.json):DEV_BASE_URL}
+    PROD_BASEURL: ${file(../serverless-config.json):PROD_BASE_URL}
+    STAGE: ${self:provider.stage}
+    REGION: ${self:provider.region}
+  iam:
+    role:
+      statements:
+        ## TODO: granting such large privilege is dangerous. Replace with sls plugin role per function
+        - Effect: "Allow"
+          Action:
+            - "sns:Publish"
+          Resource: "*"
+        - Effect: Allow
+          Action:
+            - "ses:SendEmail"
+            - "ses:SendRawEmail"
+          Resource:
+            - "arn:aws:ses:*"
+        - Effect: "Allow"
+          Action:
+            - "dynamodb:Query"
+            - "dynamodb:Scan"
+            - "dynamodb:PutItem"
+            - "dynamodb:UpdateItem"
+            - "dynamodb:GetItem"
+            - "dynamodb:BatchGetItem"
+            - "dynamodb:BatchWriteItem"
+            - "ssm:GetParameter"
+            - "ssm:GetParameters"
+          Resource:
+            - "arn:aws:dynamodb:*:*:*"
+            - "arn:aws:dynamodb:*:*:*/*/index/*"
+            - arn:aws:ssm:*
+        - Effect: Allow
+          Action:
+            - sqs:Send*
+          Resource:
+            - !GetAtt sendNftGiftQueue.Arn
+
+custom:
+  webpack:
+    webpackConfig: "webpack.config.js"
+    packager: "yarn"
+    excludeFiles: /**/*.test.js
+    includeModules:
+      forceExclude:
+        - aws-sdk
+    packagerOptions:
+      scripts:
+        - yarn autoclean --force
+
+functions:
+  create-nft:
+    handler: create.handler
+    events:
+      - httpApi:
+          path: /nfts
+          method: post
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+  #      - http:
+  #          path: /nfts
+  #          method: post
+  #          authorizer:
+  #            name: ${self:service}-JWTAuthorizer
+  #            type: request
+  #            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  update-nft:
+    handler: update.handler
+    events:
+      - httpApi:
+          path: /nfts/update/{nftId}
+          method: patch
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+  #      - http:
+  #          path: /nfts/update/{nftId}
+  #          method: patch
+  #          authorizer:
+  #            name: ${self:service}-JWTAuthorizer
+  #            type: request
+  #            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  delete-nft:
+    handler: delete.handler
+    events:
+      - httpApi:
+          path: /nfts/{nftId}
+          method: delete
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+  #      - http:
+  #          path: /nfts/{nftId}
+  #          method: delete
+  #          authorizer:
+  #            name: ${self:service}-JWTAuthorizer
+  #            type: request
+  #            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  list:
+    handler: list.handler
+    events:
+      - httpApi:
+          path: /nfts/list
+          method: get
+  #      - http:
+  #          path: /nfts/list
+  #          method: get
+  #          authorizer:
+  #            name: ${self:service}-JWTAuthorizer
+  #            type: request
+  #            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  claim-nft:
+    handler: claim.handler
+    events:
+      - httpApi:
+          path: /nfts/{nftId}/claim/{claimToken}
+          method: get
+  #      - http:
+  #          path: /nfts/{nftId}/claim/{claimToken}
+  #          method: get
+  #          authorizer:
+  #            name: ${self:service}-JWTAuthorizer
+  #            type: request
+  #            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  get-nft:
+    handler: get.handler
+    events:
+      - httpApi:
+          path: /nfts/{nftId}
+          method: get
+  #      - http:
+  #          path: /nfts/{nftId}}
+  #          method: get
+  #          authorizer:
+  #            name: ${self:service}-JWTAuthorizer
+  #            type: request
+  #            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  send-nft:
+    handler: send.handler
+    events:
+      - httpApi:
+          path: /nfts/{nftId}/send
+          method: post
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+  #      - http:
+  #          path: /nfts/{nftId}/send
+  #          method: post
+  #          authorizer:
+  #            name: ${self:service}-JWTAuthorizer
+  #            type: request
+  #            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  gift-nft:
+    handler: gift.handler
+    events:
+      - httpApi:
+          path: /nfts/{nftId}/gift
+          method: post
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+  #      - http:
+  #          path: /nfts/{nftId}/gift
+  #          method: post
+  #          authorizer:
+  #            name: ${self:service}-JWTAuthorizer
+  #            type: request
+  #            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  swap-nft:
+    handler: swap.handler
+    events:
+      - httpApi:
+          path: /nfts/{nftId}/swap
+          method: post
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+  request-access-nft:
+    handler: requestAccess.handler
+    events:
+      - httpApi:
+          path: /nfts/{nftId}/request
+          method: post
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+
+  response-access-nft:
+    handler: responseAccess.handler
+    events:
+      - httpApi:
+          path: /nfts/request/{requestId}/{action}
+          method: post
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+
+  list-nft-requests:
+    handler: listRequests.handler
+    events:
+      - httpApi:
+          path: /nfts/{nftId}/requests
+          method: get
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+
+  #      - http:
+  #          path: /nfts/{nftId}/swap
+  #          method: post
+  #          authorizer:
+  #            name: ${self:service}-JWTAuthorizer
+  #            type: request
+  #            arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  sendGiftNft:
+    handler: sendGiftNft.handler
+    description: Triggered by sendNftGiftQueue to send transaction and email/sms notification
+    environment:
+      #TODO: use ssm to retrieve this value during deployment
+      SENDGRID_API_KEY: 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
+    timeout: 30
+    events:
+      - sqs:
+          arn: !GetAtt sendNftGiftQueue.Arn
+          batchSize: 10
+          maximumBatchingWindow: 10
+          functionResponseType: ReportBatchItemFailures
+
+  listByContactId:
+    handler: list-by-contact.handler
+    events:
+      - httpApi:
+          path: /nfts/list/contact/{contactId}
+          method: get
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+
+  listTransactionByContactId:
+    handler: list-transaction-by-contact.handler
+    events:
+      - httpApi:
+          path: /nfts/list/transaction/{contactId}
+          method: get
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+
+  share:
+    handler: share.handler
+    events:
+      - httpApi:
+          path: /nfts/{nftId}/share/{recipientWalletId}
+          method: post
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+
+  list-shared-nft:
+    handler: list-shared-nft.handler
+    events:
+      - httpApi:
+          path: /nfts/shared
+          method: get
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+
+  list-sharing-nft:
+    handler: list-sharing-nft.handler
+    events:
+      - httpApi:
+          path: /nfts/sharing
+          method: get
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId
+  revokeAccess:
+    handler: revokeAccess.handler
+    events:
+      - httpApi:
+          path: /nfts/request/{requestId}/revoke
+          method: post
+          authorizer:
+            type: request
+            id: !ImportValue NearGatewayAuthorizerId          
+
+resources:
+  - Description: NFT Service API stack
+  ### SQS
+  - ${file(./sqs/queue.yml)}

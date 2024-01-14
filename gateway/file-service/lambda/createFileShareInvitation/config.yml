@@ -1,0 +1,53 @@
+createFileShareInvitation:
+  handler: lambda/createFileShareInvitation/index.handler
+  description: 'Allows user to invite someone using email or phone to grant access to a file'
+  events:
+    - httpApi:
+        path: /wallets/{walletId}/storage/{fileId}/invite
+        method: post
+        authorizer:
+          type: request
+          id: !ImportValue NearGatewayAuthorizerId
+  environment:
+    CUSTOMER_IO_API_KEY: 1112ca5890c53ae137418ffafefb0360
+    TABLE_NAME_FILES: ${self:custom.file-service.dynamodb.files.name}
+    TABLE_NAME_FILES_INVITATION: ${self:custom.file-service.dynamodb.invitations.name}
+    ## TODO: use ${ssm:/dynamodb/wallet-service/wallets/name} when exported by Terraform
+    TABLE_NAME_WALLETS: near-wallets
+    TABLE_NAME_USERS: near-users
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:GetItem
+      Resource:
+        - ${self:custom.file-service.dynamodb.invitations.arn}
+    - Effect: Allow
+      Action:
+        - dynamodb:DeleteItem
+        - dynamodb:GetItem
+        - dynamodb:UpdateItem
+      Resource:
+        - ${self:custom.file-service.dynamodb.files.arn}
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+        - dynamodb:Query
+      Resource:
+        ## TODO: use ${ssm:/dynamodb/wallet-service/wallets/arn} when exported by Terraform
+        - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/near-wallets
+        - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/near-wallets/*
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+        - dynamodb:Query
+      Resource:
+        ## TODO: arn ssm variable not set
+        - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/near-users
+        - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/near-users/*
+    - Effect: 'Allow'
+      Action:
+        - 'sns:Publish'
+      Resource: '*'

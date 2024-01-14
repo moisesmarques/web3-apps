@@ -1,0 +1,27 @@
+updateFolder:
+  handler: lambda/updateFolder/index.handler
+  description: 'Update the folder by folderId'
+  events:
+    - httpApi:
+        path: /wallets/{walletId}/storage/folders/{folderId}
+        method: put
+        authorizer:
+          type: request
+          id: !ImportValue NearGatewayAuthorizerId
+  environment:
+    TABLE_NAME_FOLDERS: near-storage
+    TABLE_NAME_WALLETS: near-wallets
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+        - dynamodb:UpdateItem
+      Resource:
+        - ${self:custom.file-service.dynamodb.wallets.arn}
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource:
+        - ${self:custom.file-service.dynamodb.storage.arn}
+        - ${self:custom.file-service.dynamodb.storage.arn}/*

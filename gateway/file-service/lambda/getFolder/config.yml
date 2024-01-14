@@ -1,0 +1,35 @@
+getFolder:
+  handler: lambda/getFolder/index.handler
+  description: 'Allows user to retrieve folder details using the folderId'
+  events:
+    - httpApi:
+        path: /wallets/{walletId}/storage/folder/{folderId}
+        method: get
+        authorizer:
+          type: request
+          id: !ImportValue NearGatewayAuthorizerId
+  environment:
+    TABLE_NAME_FILES: ${self:custom.file-service.dynamodb.files.name}
+    TABLE_NAME_FOLDERS: ${ssm:/file-service/dynamodb/storage/name}
+    TABLE_NAME_WALLETS: ${ssm:/wallet-service/dynamodb/wallets/name}
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+      Resource:
+        - ${self:custom.file-service.dynamodb.wallets.arn}
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:GetItem
+      Resource:
+        - ${self:custom.file-service.dynamodb.storage.arn}
+        - ${self:custom.file-service.dynamodb.storage.arn}/*
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:GetItem
+      Resource:
+        - ${self:custom.file-service.dynamodb.files.arn}
+        - ${self:custom.file-service.dynamodb.files.arn}/*

@@ -1,0 +1,26 @@
+retrieve-wallet:
+  handler: lambda/retrieve-wallet/index.handler
+  description: "Fetch user wallet by userId"
+  events:
+    - httpApi:
+        path: /wallets/{walletId}
+        method: get
+        authorizer:            
+          type: request
+          id: !ImportValue NearGatewayAuthorizerId                                           
+#    - http:
+#        path: /wallets/{walletId}
+#        method: get
+#        authorizer:
+#          name: ${self:service}-JWTAuthorizer
+#          type: request
+#          arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}
+  environment:
+    TABLE_NAME_WALLETS: near-wallets
+  iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+      Resource:
+        - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/near-wallets

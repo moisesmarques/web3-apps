@@ -1,0 +1,111 @@
+{
+  "Records": [
+    {
+      "eventID": "10d83be5abcee6a457b090ee22a13e92",
+      "eventName": "MODIFY",
+      "eventVersion": "1.1",
+      "eventSource": "aws:dynamodb",
+      "awsRegion": "us-east-1",
+      "dynamodb": {
+        "ApproximateCreationDateTime": 1647958991,
+        "Keys": {
+          "walletId": {
+            "S": "0658182526.near"
+          }
+        },
+        "NewImage": {
+          "blockchainHash": {
+            "S": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "walletId": {
+            "S": "0658182526.near"
+          },
+          "storageProvider": {
+            "S": "storage_provider"
+          },
+          "kycProvider": {
+            "S": "kyc_provider"
+          },
+          "created": {
+            "S": "2022-03-11T01:44:24.252Z"
+          },
+          "blockchainStatus": {
+            "S": "complete"
+          },
+          "publicKey": {
+            "S": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "userId": {
+            "S": "9F1SMVbDAT-iuiUIfx6l_"
+          },
+          "transactionId": {
+            "S": "NECH51-iVKm9eAIExHu-w"
+          },
+          "balance": {
+            "S": "0.00"
+          },
+          "walletName": {
+            "S": "0658182526.near"
+          },
+          "isBlockchainVerified": {
+            "S": "verified"
+          },
+          "updated": {
+            "N": "1646963075801"
+          },
+          "status": {
+            "S": "pending"
+          }
+        },
+        "OldImage": {
+          "blockchainHash": {
+            "S": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "walletId": {
+            "S": "0658182526.near"
+          },
+          "storageProvider": {
+            "S": "storage_provider"
+          },
+          "kycProvider": {
+            "S": "kyc_provider"
+          },
+          "created": {
+            "S": "2022-03-11T01:44:24.252Z"
+          },
+          "blockchainStatus": {
+            "S": "complete"
+          },
+          "publicKey": {
+            "S": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "userId": {
+            "S": "9F1SMVbDAT-iuiUIfx6l_"
+          },
+          "transactionId": {
+            "S": "NECH51-iVKm9eAIExHu-w"
+          },
+          "balance": {
+            "S": "0.00"
+          },
+          "walletName": {
+            "S": "0658182526.near"
+          },
+          "isBlockchainVerified": {
+            "S": "verified"
+          },
+          "updated": {
+            "N": "1646963075801"
+          },
+          "status": {
+            "S": "completed"
+          }
+        },
+        "SequenceNumber": "184813500000000032093320747",
+        "SizeBytes": 897,
+        "StreamViewType": "NEW_AND_OLD_IMAGES"
+      },
+      "eventSourceARN": "arn:aws:dynamodb:us-east-1:227200131463:table/near-wallets/stream/2022-03-22T13:56:59.100"
+    }
+  ]
+}

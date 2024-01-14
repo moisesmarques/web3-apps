@@ -1,0 +1,36 @@
+{
+  "name": "fiat-token-service",
+  "version": "1.0.0",
+  "description": "fiat-token-service",
+  "author": "Davit Veranyan",
+  "license": "ISC",
+  "scripts": {
+    "test": "jest test/ --coverage --watch",
+    "sls_offline": "IS_LOCAL=true sls offline --noAuth",
+    "sls_dynamodb": "sls dynamodb start --stage sandbox",
+    "sls_deploy": "sls deploy --stage sandbox --verbose",
+    "bundle_test": "serverless-bundle test",
+    "db_admin": "dynamodb-admin"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1077.0",
+    "aws-xray-sdk": "^3.3.4",
+    "http-status-codes": "^2.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "nanoid": "^3.3.1",
+    "underscore": "^1.13.2",
+    "unirest": "^0.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.4",
+    "jest": "^27.5.1",
+    "serverless-dynamodb-local": "^0.2.40",
+    "serverless-offline": "^8.5.0",
+    "serverless-webpack": "^5.6.1",
+    "sinon": "^13.0.1",
+    "webpack": "^5.70.0",
+    "webpack-node-externals": "^3.0.0"
+  }
+}

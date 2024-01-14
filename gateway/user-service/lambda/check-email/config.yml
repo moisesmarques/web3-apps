@@ -1,0 +1,9 @@
+check-email:
+  handler: lambda/check-email/index.handler
+  events:
+    - httpApi:
+        path: /users/check/email
+        method: post                         
+    # - http:
+    #     path: /users/check/email
+    #     method: post

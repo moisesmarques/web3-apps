@@ -1,0 +1,15 @@
+delete-user:
+  handler: lambda/delete-user/index.handler
+  events:
+    - httpApi:
+        path: /users/delete/{userId}
+        method: delete
+        authorizer:            
+          type: request
+          id: !ImportValue NearGatewayAuthorizerId                                   
+    # - http:
+    #     path: /users/delete/{userId}
+    #     method: delete
+    #     authorizer:
+    #       type: request
+    #       arn: ${ssm:/rest-service/lambda/JwtAuthorizer/arn}

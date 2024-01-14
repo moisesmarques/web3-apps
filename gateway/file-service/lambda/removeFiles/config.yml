@@ -1,0 +1,40 @@
+removeFiles:
+  handler: lambda/removeFiles/index.handler
+  description: "deletes files from s3 and it invokes whenever a record in near-files is deleted"
+  events:
+    - stream:
+        type: dynamodb
+        batchSize: 1
+        startingPosition: TRIM_HORIZON
+        arn: ${self:custom.file-service.dynamodb.files.streamArn}
+        filterPatterns:
+          ## File was successfully deleted
+          - eventName: [REMOVE]
+  environment:
+    TABLE_NAME_FOLDERS: near-storage
+    TABLE_NAME_WALLETS: near-wallets
+    TABLE_NAME_FILES: near-files
+    BUCKET_NAME_FILES: ${self:custom.file-service.s3.files.name}
+    iamRoleStatementsInherit: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+      Resource:
+        - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/near-wallets
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource:
+        - ${self:custom.file-service.dynamodb.files.arn}
+        - ${self:custom.file-service.dynamodb.files.arn}/index/*
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource:
+        - - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/near-storage
+    - Effect: Allow
+      Action:
+        - s3:DeleteObject
+      Resource:
+        - Fn::Join: ["/", [!ImportValue FileServiceFilesBucketArn, "*"]]
